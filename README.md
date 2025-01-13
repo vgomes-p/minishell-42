@@ -1,1 +1,1 @@
-![cover](assets/cover-minishell.png)
+![cover](images/cover-minishell.png)
