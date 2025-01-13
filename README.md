@@ -1,1 +1,1 @@
-# minishell-42
+![cover](assets/cover-minishell.png)
