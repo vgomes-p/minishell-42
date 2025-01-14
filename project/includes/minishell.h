@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/13 18:57:28 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/14 01:48:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,10 @@ typedef struct s_minishell
 }	t_minishell;
 
 /* UTILS FUNCTIONS */
-void	ft_putchar(int fd, char ch);
+void	ft_putchar(char ch);
 
 /* FUNCTIONS */
 void	ms_inishell(t_minishell *shell);
 void	ms_interwin(t_minishell *shell);
-void	ms_window(t_minishell *shell);
 
 #endif
