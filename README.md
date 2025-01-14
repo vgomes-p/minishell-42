@@ -23,9 +23,7 @@ cd minishell-42/project
 make
 ```
 
-### 4 - Now call the program and map you want to play
-The maps you can call the program:
-#### Map test:
+### 4 - Now call the program
 ```bash
 ./minishell
 ```
