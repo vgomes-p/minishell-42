@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:10 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 18:34:46 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/14 19:01:35 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ms_inishell(t_minishell *shell)
 		exit (1);
 	}
 	ft_putstr("                         \033[1;7;36m");
-	ft_putstr("{Made by vgomes-p & sthrodri}\033[0m\n\n");
+	ft_putstr("{Made by vgomes-p & sthrodri\033[0m\n\n");
 	ft_putstr("\n\033[1;36m╔═════════════════════════════════════");
 	ft_putstr("═════════════════════════════════════════╗\n");
 	ft_putstr("║                            WELCOME T");
