@@ -30,6 +30,29 @@ The maps you can call the program:
 ./minishell
 ```
 
+# OTHER FUNCTIONS MINISHELL
+### 1 - Debug mode
+> To get into the debug mode, run:
+```bash
+make debug
+```
+### 2 - Dependencies
+> To see the program dependencies, run:
+```bash
+make depend
+```
+> and then
+```bash
+cat dependencies.mk
+```
+> or open the <dependencies.mk> on your favorite file reader.
+
+### 3 - Recreate
+> To recreate minishell, run:
+```bash
+make re
+```
+
 # CLEANING MINISHELL
 ### 1 - Go to the main dir
 ```bash
