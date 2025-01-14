@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ms_buildins_7.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 15:24:28 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 18:33:09 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/14 18:10:28 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/14 18:52:12 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ms_pwd(void)
 {
-	t_minishell	shell;
+	char	*cwd;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	ms_inishell(&shell);
-	ms_interwin(&shell);
-	free(shell.prompt);
-	return (0);
+	cwd = getcwd(NULL, 0);
+	if (cwd)
+	{
+		ft_putstr(cwd);
+		ft_putstr("\n");
+		free(cwd);
+	}
+	else
+		ft_putstr_fd("pwd: error\n", 2);
 }

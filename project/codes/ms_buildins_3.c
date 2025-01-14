@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   ms_buildins_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 15:24:28 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 18:33:09 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/14 17:32:54 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/14 17:47:30 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	ms_exit(char **args, t_minishell *shell)
 {
-	t_minishell	shell;
+	int	stat;
 
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	ms_inishell(&shell);
-	ms_interwin(&shell);
-	free(shell.prompt);
-	return (0);
+	stat = 0;
+	if (args[1])
+		stat = ft_atoi(args[1]);
+	shell->exit_stt = stat;
+	free(shell->prompt);
+	exit(stat);
 }

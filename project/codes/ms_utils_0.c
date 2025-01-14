@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 18:29:48 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 14:20:46 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:39:21 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,13 @@ void	ft_putstr(char *str)
 	{
 		while (*str)
 		{
-			write(1,str, 1);
+			write(1, str, 1);
 			str++;
 		}
 	}
+}
+
+int	ft_strcmp(const char *s1, const char *s2)
+{
+	return (ft_strncmp(s1, s2, 1000000));
 }

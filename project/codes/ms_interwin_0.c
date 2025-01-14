@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:10 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 14:45:55 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:34:46 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ms_inishell(t_minishell *shell)
 {
-	shell->prompt = ft_strdup("\033[1;36mminishell$ >\033[0m");
+	shell->prompt = ft_strdup("\033[1;36mminishell$ > \033[0m");
 	if (!shell->prompt)
 	{
 		perror("Error initializing prompt");
@@ -44,6 +44,7 @@ void	ms_interwin(t_minishell *shell)
 		}
 		if (*input)
 			add_history(input);
+		ms_process_buildin(input, shell);
 		free(input);
 	}
 	rl_clear_history();
