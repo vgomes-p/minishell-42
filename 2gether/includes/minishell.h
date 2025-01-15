@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 12:28:18 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/14 18:47:41 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		ft_strcmp(const char *s1, const char *s2);
 
 /* INTERWIN FUNCTIONS */
 void	ms_inishell(t_minishell *shell);
-void	ms_interact1(t_minishell *shell);
+void	ms_interwin(t_minishell *shell);
 
 /* BUILD_INS FUNCTIONS */
 void	ms_cd(char **args);

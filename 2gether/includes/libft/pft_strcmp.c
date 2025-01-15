@@ -1,26 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   pft_strcmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 15:24:28 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 12:28:43 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/15 14:00:39 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/15 14:07:18 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	t_minishell	shell;
-
-	(void)argc;
-	(void)argv;
-	(void)envp;
-	ms_inishell(&shell);
-	ms_interact1(&shell);
-	free(shell.prompt);
-	return (0);
+	return (ft_strncmp(s1, s2, 1000000));
 }
