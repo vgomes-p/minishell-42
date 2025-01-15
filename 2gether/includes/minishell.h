@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 18:47:41 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:36:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 /* STRUCTURES */
 typedef struct s_minishell
 {
+	char	**env;
 	char	*prompt;
 	int		exit_stt;
 	int		term_width;
@@ -45,15 +46,16 @@ int		ft_strcmp(const char *s1, const char *s2);
 
 /* INTERWIN FUNCTIONS */
 void	ms_inishell(t_minishell *shell);
-void	ms_interwin(t_minishell *shell);
+void	ms_interact0(t_minishell *shell);
 
 /* BUILD_INS FUNCTIONS */
 void	ms_cd(char **args);
+void	ms_env(void);
 void	ms_echo(char **args);
 void	ms_exit(char **args, t_minishell *shell);
 void	ms_env(void);
-void	ms_export(char **args);
-void	ms_unset(char **args);
+void	ms_export(char ***env, char **args);
+void	ms_unset(char ***env, char **args);
 void	ms_pwd(void);
 void	ms_exec_builtin(char **tokens, t_minishell *shell);
 void	ms_process_buildin(char *input, t_minishell *shell);

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:33:01 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 18:51:46 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:41:52 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,44 @@
 
 extern char	**environ;
 
-void	ms_export(char **args)
+static void	display_environment(char **env)
+{
+	int	index;
+
+	index = 0;
+	while (env[index])
+	{
+		ft_putstr(env[index]);
+		ft_putstr("\n");
+		index++;
+	}
+}
+
+static int	handle_variable_assignment(char ***env, char *arg)
 {
 	char	*equal_sign;
-	int		index;
 
-	if (args[1])
+	equal_sign = ft_strchr(arg, '=');
+	if (!equal_sign)
+		return (0);
+	*equal_sign = '\0';
+	if (ft_setenv(env, arg, equal_sign + 1, 1) == -1)
 	{
-		equal_sign = ft_strchr(args[1], '=');
-		if (equal_sign)
-		{
-			*equal_sign = '\0';
-			setenv(args[1], equal_sign + 1, 1);
-		}
-		else
-		{
-			index = 0;
-			while (environ[index])
-			{
-				ft_putstr(environ[index]);
-				ft_putstr("\n");
-				index++;
-			}
-		}
+		ft_putstr_fd("export: error setting variable\n", 2);
+		*equal_sign = '=';
+		return (-1);
 	}
-	else
-		ft_putstr_fd("export: usage: export VAR+VALUE\n", 2);
+	*equal_sign = '=';
+	return (1);
+}
+
+void	ms_export(char ***env, char **args)
+{
+	if (!args[1])
+	{
+		ft_putstr_fd("export: usage: export VAR=VALUE\n", 2);
+		return ;
+	}
+	if (handle_variable_assignment(env, args[1]) == 0)
+		display_environment(*env);
 }

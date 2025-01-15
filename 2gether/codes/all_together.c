@@ -6,11 +6,13 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:24:28 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 14:04:28 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:41:31 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+extern char	**environ;
 
 void	ms_cd(char **args)
 {
@@ -66,8 +68,6 @@ void	ms_exit(char **args, t_minishell *shell)
 	exit(stat);
 }
 
-extern char	**environ;
-
 void	ms_env(void)
 {
 	int	index;
@@ -81,41 +81,54 @@ void	ms_env(void)
 	}
 }
 
-extern char	**environ;
-
-void	ms_export(char **args)
+static void	display_environment(char **env)
 {
-	char	*equal_sign;
-	int		index;
+	int	index;
 
-	if (args[1])
+	index = 0;
+	while (env[index])
 	{
-		equal_sign = ft_strchr(args[1], '=');
-		if (equal_sign)
-		{
-			*equal_sign = '\0';
-			setenv(args[1], equal_sign + 1, 1);
-		}
-		else
-		{
-			index = 0;
-			while (environ[index])
-			{
-				ft_putstr(environ[index]);
-				ft_putstr("\n");
-				index++;
-			}
-		}
+		ft_putstr(env[index]);
+		ft_putstr("\n");
+		index++;
 	}
-	else
-		ft_putstr_fd("export: usage: export VAR+VALUE\n", 2);
 }
 
-void	ms_unset(char **args)
+static int	handle_variable_assignment(char ***env, char *arg)
+{
+	char	*equal_sign;
+
+	equal_sign = ft_strchr(arg, '=');
+	if (!equal_sign)
+		return (0);
+	*equal_sign = '\0';
+	if (ft_setenv(env, arg, equal_sign + 1, 1) == -1)
+	{
+		ft_putstr_fd("export: error setting variable\n", 2);
+		*equal_sign = '=';
+		return (-1);
+	}
+	*equal_sign = '=';
+	return (1);
+}
+
+void	ms_export(char ***env, char **args)
+{
+	if (!args[1])
+	{
+		ft_putstr_fd("export: usage: export VAR=VALUE\n", 2);
+		return ;
+	}
+	if (handle_variable_assignment(env, args[1]) == 0)
+		display_environment(*env);
+}
+
+void	ms_unset(char ***env, char **args)
 {
 	if (args[1])
 	{
-		unsetenv(args[1]);
+		if (ft_unsetenv(env, args[1]) == -1)
+			ft_putstr_fd("unset: error unsetting variable\n", 2);
 	}
 	else
 		ft_putstr_fd("unset: usage: unset VAR\n", 2);
@@ -147,9 +160,9 @@ void	ms_exec_builtin(char **tokens, t_minishell *shell)
 	else if (ft_strcmp(tokens[0], "env") == 0)
 		ms_env();
 	else if (ft_strcmp(tokens[0], "export") == 0)
-		ms_export(tokens);
+		ms_export(&(shell->env), tokens);
 	else if (ft_strcmp(tokens[0], "unset") == 0)
-		ms_unset(tokens);
+		ms_unset(&(shell->env), tokens);
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
 		ms_pwd();
 	else
@@ -195,7 +208,7 @@ void	ms_inishell(t_minishell *shell)
 	ft_putstr("════════════════════════════════════════╝\033[0m\n");
 }
 
-void	ms_interact1(t_minishell *shell)
+void	ms_interact0(t_minishell *shell)
 {
 	char	*input;
 
@@ -221,7 +234,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	shell.env = envp;
 	ms_inishell(&shell);
 	ms_interact1(&shell);
 	free(shell.prompt);

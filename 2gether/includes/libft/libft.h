@@ -17,6 +17,7 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <string.h>
+# include <malloc.h>
 
 /* MANDATORY LIBFT */
 char	*ft_itoa(int num);
@@ -57,6 +58,11 @@ char	*ft_strmapi(char const *str, char (*ftn)(unsigned int, char));
 /* PLUS LIBFT */
 void	ft_putchar(char ch);
 void	ft_putstr(char *str);
+int		ft_putenv(char ***env, char *str);
+void	*ft_realloc(void *ptr, size_t nwsize);
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_unsetenv(char ***env, const char *name);
+int		ft_setenv(char ***env, const char *name,
+			const char *value, int overwrite);
 
 #endif

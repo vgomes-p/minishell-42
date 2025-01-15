@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:24:28 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 12:28:43 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:42:34 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	(void)envp;
+	shell.env = envp;
 	ms_inishell(&shell);
-	ms_interact1(&shell);
+	ms_interact0(&shell);
 	free(shell.prompt);
 	return (0);
 }

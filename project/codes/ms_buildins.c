@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:11:40 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 18:48:01 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/15 16:34:21 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	ms_exec_builtin(char **tokens, t_minishell *shell)
 	else if (ft_strcmp(tokens[0], "env") == 0)
 		ms_env();
 	else if (ft_strcmp(tokens[0], "export") == 0)
-		ms_export(tokens);
+		ms_export(&(shell->env), tokens);
 	else if (ft_strcmp(tokens[0], "unset") == 0)
-		ms_unset(tokens);
+		ms_unset(&(shell->env), tokens);
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
 		ms_pwd();
 	else

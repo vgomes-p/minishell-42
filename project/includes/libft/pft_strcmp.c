@@ -1,40 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pft_realloc.c                                      :+:      :+:    :+:   */
+/*   pft_strcmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 14:21:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 15:34:26 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/15 14:00:39 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/15 14:07:18 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_realloc(void *ptr, size_t nwsize)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	void	*nwptr;
-	size_t	oldsz;
-
-	if (!ptr)
-		return (malloc(nwsize));
-	oldsz = malloc_usable_size(ptr);
-	if (nwsize == 0)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	nwptr = malloc(nwsize);
-	if (!nwptr)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	if (oldsz < nwsize)
-		ft_memcpy(nwptr, ptr, oldsz);
-	else
-		ft_memcpy(nwptr, ptr, nwsize);
-	free(ptr);
-	return (nwptr);
+	return (ft_strncmp(s1, s2, 1000000));
 }

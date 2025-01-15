@@ -1,35 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_utils_0.c                                       :+:      :+:    :+:   */
+/*   pft_realloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/13 18:29:48 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/14 18:39:21 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/15 14:21:44 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/15 15:34:26 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	ft_putchar(char ch)
+void	*ft_realloc(void *ptr, size_t nwsize)
 {
-	write(1, &ch, 1);
-}
+	void	*nwptr;
+	size_t	oldsz;
 
-void	ft_putstr(char *str)
-{
-	if (str)
+	if (!ptr)
+		return (malloc(nwsize));
+	oldsz = malloc_usable_size(ptr);
+	if (nwsize == 0)
 	{
-		while (*str)
-		{
-			write(1, str, 1);
-			str++;
-		}
+		free(ptr);
+		return (NULL);
 	}
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	return (ft_strncmp(s1, s2, 1000000));
+	nwptr = malloc(nwsize);
+	if (!nwptr)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	if (oldsz < nwsize)
+		ft_memcpy(nwptr, ptr, oldsz);
+	else
+		ft_memcpy(nwptr, ptr, nwsize);
+	free(ptr);
+	return (nwptr);
 }
