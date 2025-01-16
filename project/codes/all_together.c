@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:24:28 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/16 16:16:32 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:22:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void	ms_pwd(void)
 		free(cwd);
 	}
 	else
-		ft_putstr_fd("pwd: error\n", 2);
+		ft_putstr_fd("pwd: \033[1;31merror\033[0m\n", 2);
 }
 
 void	ms_exec_builtin(char **tokens, t_minishell *shell)
