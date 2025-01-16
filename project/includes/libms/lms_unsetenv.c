@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pft_unsetenv.c                                     :+:      :+:    :+:   */
+/*   lms_unsetenv.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:00:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 15:49:08 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:14:22 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libms.h"
 
 static int	find_env_var(char **env, const char *name)
 {
@@ -37,7 +37,7 @@ static void	shift_env_vars(char **env, int start_index)
 	env[start_index] = NULL;
 }
 
-int	ft_unsetenv(char ***env, const char *name)
+int	lms_unsetenv(char ***env, const char *name)
 {
 	int	index;
 

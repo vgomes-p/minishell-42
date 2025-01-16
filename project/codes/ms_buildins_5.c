@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:33:01 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/16 16:21:38 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:28:12 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	handle_variable_assignment(char ***env, char *arg)
 	if (!equal_sign)
 		return (0);
 	*equal_sign = '\0';
-	if (ft_setenv(env, arg, equal_sign + 1, 1) == -1)
+	if (lms_setenv(env, arg, equal_sign + 1, 1) == -1)
 	{
 		ft_putstr_fd("export: \033[1;31merror setting variable\033[0m\n", 2);
 		*equal_sign = '=';

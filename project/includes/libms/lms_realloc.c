@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pft_realloc.c                                      :+:      :+:    :+:   */
+/*   lms_realloc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:21:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 15:34:26 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:14:09 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libms.h"
 
-void	*ft_realloc(void *ptr, size_t nwsize)
+void	*lms_realloc(void *ptr, size_t nwsize)
 {
 	void	*nwptr;
 	size_t	oldsz;

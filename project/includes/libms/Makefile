@@ -6,23 +6,18 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 12:57:14 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/16 18:31:20 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/16 17:09:58 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		:=	libft.a
+NAME		:=	libms.a
 CC			:=	cc
 CFLAGS		:=	-Wall -Wextra -Werror
 AR			:=	ar -rcs
 RM			:=	rm -rf
 
-SRCS		:=	ft_isalpha.c ft_isdigit.c ft_strlen.c ft_isalnum.c ft_isascii.c \
-				ft_isprint.c ft_memset.c ft_bzero.c ft_memcpy.c ft_memmove.c \
-				ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c ft_strchr.c \
-				ft_strrchr.c ft_strncmp.c ft_memchr.c ft_memcmp.c ft_strnstr.c \
-				ft_atoi.c ft_calloc.c ft_strdup.c ft_substr.c ft_strjoin.c \
-				ft_strtrim.c ft_split.c ft_itoa.c ft_strmapi.c ft_striteri.c \
-				ft_putchar_fd.c ft_putstr_fd.c ft_putendl_fd.c ft_putnbr_fd.c
+SRCS		:=	lms_putchar.c lms_putstr.c lms_strcmp.c lms_putenv.c lms_setenv.c \
+				lms_unsetenv.c lms_realloc.c
 OBJS		:=	$(SRCS:.c=.o)
 
 DEFAULT		=	\033[0m
@@ -49,11 +44,11 @@ $(NAME): $(OBJS)
 
 clean:
 				$(RM) $(OBJS)
-				@echo -e "$(REYELLOW)Execution completed: libft was deleted!$(DEFAULT)"
+				@echo -e "$(REYELLOW)Execution completed: libms was deleted!$(DEFAULT)"
 
 fclean: clean
 			$(RM) $(NAME)
-			@echo -e "$(RERED)Execution completed: libft was completely deleted!$(DEFAULT)"
+			@echo -e "$(RERED)Execution completed: libms was completely deleted!$(DEFAULT)"
 
 re: fclean all
 

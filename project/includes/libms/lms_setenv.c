@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pft_setenv.c                                       :+:      :+:    :+:   */
+/*   lms_setenv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:00:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 15:27:14 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:13:43 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libms.h"
 
 static int	create_env_string(const char *name,
 							const char *value, char **result)
@@ -56,7 +56,7 @@ static int	update_existing_env(char **env, const char *name,
 
 static int	add_new_env(char ***env, char *env_in, int env_size)
 {
-	*env = ft_realloc(*env, sizeof(char *) * (env_size + 2));
+	*env = lms_realloc(*env, sizeof(char *) * (env_size + 2));
 	if (!(*env))
 	{
 		free(env_in);
@@ -67,7 +67,7 @@ static int	add_new_env(char ***env, char *env_in, int env_size)
 	return (0);
 }
 
-int	ft_setenv(char ***env, const char *name, const char *value, int overwrite)
+int	lms_setenv(char ***env, const char *name, const char *value, int overwrite)
 {
 	char	*env_in;
 	int		env_size;

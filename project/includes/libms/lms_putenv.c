@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pft_putenv.c                                       :+:      :+:    :+:   */
+/*   lms_putenv.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:00:21 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:28:03 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:13:57 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libms.h"
 
-int	ft_putenv(char ***env, char *str)
+int	lms_putenv(char ***env, char *str)
 {
 	char	*equal_sign;
 	char	*name;
@@ -26,5 +26,5 @@ int	ft_putenv(char ***env, char *str)
 	*equal_sign = '\0';
 	name = str;
 	value = equal_sign + 1;
-	return (ft_setenv(env, name, value, 1));
+	return (lms_setenv(env, name, value, 1));
 }

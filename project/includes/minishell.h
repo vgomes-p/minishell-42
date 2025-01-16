@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:36:03 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 18:23:55 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include "libft/libft.h"
+# include "libms/libms.h"
 # include <readline/history.h>
 # include <readline/readline.h>
 

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pft_strcmp.c                                       :+:      :+:    :+:   */
+/*   lms_strcmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/15 14:00:39 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 14:07:18 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 17:12:23 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libms.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+int	lms_strcmp(const char *s1, const char *s2)
 {
 	return (ft_strncmp(s1, s2, 1000000));
 }
