@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:13:15 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:32:20 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:20:46 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ms_cd(char **args)
 		if (home)
 			chdir(home);
 		else
-			ft_putstr_fd("cd: HOME not set\n", 2);
+			ft_putstr_fd("cd: \033[1;33mHOME not set\033[0m\n", 2);
 	}
 	else
 	{

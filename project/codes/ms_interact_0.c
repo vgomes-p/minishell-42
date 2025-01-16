@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:10 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:34:52 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:23:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ms_inishell(t_minishell *shell)
 	shell->prompt = ft_strdup("\033[1;36mminishell$ > \033[0m");
 	if (!shell->prompt)
 	{
-		perror("Error initializing prompt");
+		perror("\033[1;31mError initializing prompt\033[0m");
 		exit (1);
 	}
 	ft_putstr("                         \033[1;7;36m");

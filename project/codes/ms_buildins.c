@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:11:40 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:34:21 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:23:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ms_exec_builtin(char **tokens, t_minishell *shell)
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
 		ms_pwd();
 	else
-		ft_putstr_fd("command not found\n", 2);
+		ft_putstr_fd("\033[1;31mcommand not found!\n\033[0m", 2);
 }
 
 void	ms_process_buildin(char *input, t_minishell *shell)

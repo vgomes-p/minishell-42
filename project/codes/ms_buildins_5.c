@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:33:01 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:41:52 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:21:38 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	handle_variable_assignment(char ***env, char *arg)
 	*equal_sign = '\0';
 	if (ft_setenv(env, arg, equal_sign + 1, 1) == -1)
 	{
-		ft_putstr_fd("export: error setting variable\n", 2);
+		ft_putstr_fd("export: \033[1;31merror setting variable\033[0m\n", 2);
 		*equal_sign = '=';
 		return (-1);
 	}
@@ -49,7 +49,7 @@ void	ms_export(char ***env, char **args)
 {
 	if (!args[1])
 	{
-		ft_putstr_fd("export: usage: export VAR=VALUE\n", 2);
+		ft_putstr_fd("export: not enough args\nusage: export VAR=VALUE\n", 2);
 		return ;
 	}
 	if (handle_variable_assignment(env, args[1]) == 0)
