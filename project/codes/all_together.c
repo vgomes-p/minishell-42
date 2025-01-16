@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:24:28 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:41:31 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/16 16:16:32 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ms_cd(char **args)
 		if (home)
 			chdir(home);
 		else
-			ft_putstr_fd("cd: HOME not set\n", 2);
+			ft_putstr_fd("cd: \033[1;33mHOME not set\033[0m\n", 2);
 	}
 	else
 	{
@@ -104,7 +104,7 @@ static int	handle_variable_assignment(char ***env, char *arg)
 	*equal_sign = '\0';
 	if (ft_setenv(env, arg, equal_sign + 1, 1) == -1)
 	{
-		ft_putstr_fd("export: error setting variable\n", 2);
+		ft_putstr_fd("export: \033[1;31merror setting variable\033[0m\n", 2);
 		*equal_sign = '=';
 		return (-1);
 	}
@@ -116,7 +116,7 @@ void	ms_export(char ***env, char **args)
 {
 	if (!args[1])
 	{
-		ft_putstr_fd("export: usage: export VAR=VALUE\n", 2);
+		ft_putstr_fd("export: not enough args\nusage: export VAR=VALUE\n", 2);
 		return ;
 	}
 	if (handle_variable_assignment(env, args[1]) == 0)
@@ -128,10 +128,10 @@ void	ms_unset(char ***env, char **args)
 	if (args[1])
 	{
 		if (ft_unsetenv(env, args[1]) == -1)
-			ft_putstr_fd("unset: error unsetting variable\n", 2);
+			ft_putstr_fd("unset: \033[1;31merror unsetting variable\033[0m\n", 2);
 	}
 	else
-		ft_putstr_fd("unset: usage: unset VAR\n", 2);
+		ft_putstr_fd("unset: not enough args\nusage: unset VAR\n", 2);
 }
 
 void	ms_pwd(void)
@@ -166,7 +166,7 @@ void	ms_exec_builtin(char **tokens, t_minishell *shell)
 	else if (ft_strcmp(tokens[0], "pwd") == 0)
 		ms_pwd();
 	else
-		ft_putstr_fd("command not found\n", 2);
+		ft_putstr_fd("\033[1;31mcommand not found!\n\033[0m", 2);
 }
 
 void	ms_process_buildin(char *input, t_minishell *shell)
@@ -195,7 +195,7 @@ void	ms_inishell(t_minishell *shell)
 	shell->prompt = ft_strdup("\033[1;36mminishell$ > \033[0m");
 	if (!shell->prompt)
 	{
-		perror("Error initializing prompt");
+		perror("\033[1;31mError initializing prompt\033[0m");
 		exit (1);
 	}
 	ft_putstr("                         \033[1;7;36m");
@@ -236,7 +236,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	shell.env = envp;
 	ms_inishell(&shell);
-	ms_interact1(&shell);
+	ms_interact0(&shell);
 	free(shell.prompt);
 	return (0);
 }
