@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:10 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/16 16:23:24 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:21:14 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ void	ms_inishell(t_minishell *shell)
 		perror("\033[1;31mError initializing prompt\033[0m");
 		exit (1);
 	}
-	ft_putstr("                         \033[1;7;36m");
-	ft_putstr("{Made by vgomes-p & sthrodri\033[0m\n\n");
-	ft_putstr("\n\033[1;36m╔═════════════════════════════════════");
-	ft_putstr("═════════════════════════════════════════╗\n");
-	ft_putstr("║                            WELCOME T");
-	ft_putstr("O MINISHELL                              ║\n");
-	ft_putstr("╚══════════════════════════════════════");
-	ft_putstr("════════════════════════════════════════╝\033[0m\n");
+	lms_putstr("                         \033[1;7;36m");
+	lms_putstr("{Made by vgomes-p & sthrodri\033[0m\n\n");
+	lms_putstr("\n\033[1;36m╔═════════════════════════════════════");
+	lms_putstr("═════════════════════════════════════════╗\n");
+	lms_putstr("║                            WELCOME T");
+	lms_putstr("O MINISHELL                              ║\n");
+	lms_putstr("╚══════════════════════════════════════");
+	lms_putstr("════════════════════════════════════════╝\033[0m\n");
 }
 
 void	ms_interact0(t_minishell *shell)

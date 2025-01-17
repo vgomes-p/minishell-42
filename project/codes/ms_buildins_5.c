@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:33:01 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/16 18:28:12 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:23:43 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	display_environment(char **env)
 	index = 0;
 	while (env[index])
 	{
-		ft_putstr(env[index]);
-		ft_putstr("\n");
+		lms_putstr(env[index]);
+		lms_putstr("\n");
 		index++;
 	}
 }

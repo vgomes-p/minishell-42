@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/15 16:31:15 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/17 13:47:35 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,9 @@ MAPA		=	$(addprefix $(MAPA_DIR), $(MAPA_SRCS))
 LIBFT_DIR	=	includes/libft/
 LIBFT		=	$(LIBFT_DIR)libft.a
 
+LIBMS_DIR	=	includes/libms/
+LIBMS		=	$(LIBMS_DIR)libms.a
+
 LFLAGS		=	-lreadline
 TERMCAP		=	-ltermcap
 
@@ -59,15 +62,18 @@ $(OBJ_DIR)%.o: $(MAPA_DIR)%.c $(HEADER)
 			$(CC) $(FLAGS) -c $< -o $@
 			
 
-$(NAME): $(OBJ_M) $(LIBFT)
-			$(CC) $(FLAGS) $(OBJ_M) $(LIBFT) $(LFLAGS) $(TERMCAP) -o $(NAME)
+$(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
+			$(CC) $(FLAGS) $(OBJ_M) $(LIBMS) $(LIBFT) $(LFLAGS) $(TERMCAP) -o $(NAME)
 			@echo -e "$(REGREEN)Execution completed: $(NAME) created!$(DEFAULT)"
 
 $(LIBFT):
 			@make -C $(LIBFT_DIR)
 
+$(LIBMS): $(LIBFT)
+			@make -C $(LIBMS_DIR)
+
 debug: $(OBJ_M)
-			$(CC) $(FLAGS) $(OBJ_M) $(LIBFT) $(LFLAGS) $(TERMCAP) -o $(NAME)
+			$(CC) $(FLAGS) $(OBJ_M) $(LIBFT) $(LIBMS) $(LFLAGS) $(TERMCAP) -o $(NAME)
 			@echo -e "$(REPINK)Execution completed: $(NAME) created in debug mode!$(DEFAULT)"
 
 depend:
@@ -79,6 +85,7 @@ all:		$(NAME)
 clean:
 			@$(RM) $(OBJ_M)
 			@make clean -C $(LIBFT_DIR)
+			@make clean -C $(LIBMS_DIR)
 			@echo -e "$(REYELLOW)Execution completed: minishell was deleted!$(DEFAULT)"
 
 fclean: clean
@@ -86,6 +93,7 @@ fclean: clean
 			@$(RM) dependencies.mk
 			@$(RM) build/
 			@make fclean -C $(LIBFT_DIR)
+			@make fclean -C $(LIBMS_DIR)
 			@echo -e "$(RERED)Execution completed: minishell was completely deleted!$(DEFAULT)"
 
 re:			fclean all

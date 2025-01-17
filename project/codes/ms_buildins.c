@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:11:40 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/16 16:23:04 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/17 13:22:30 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,19 @@
 
 void	ms_exec_builtin(char **tokens, t_minishell *shell)
 {
-	if (ft_strcmp(tokens[0], "cd") == 0)
+	if (lms_strcmp(tokens[0], "cd") == 0)
 		ms_cd(tokens);
-	else if (ft_strcmp(tokens[0], "echo") == 0)
+	else if (lms_strcmp(tokens[0], "echo") == 0)
 		ms_echo(tokens);
-	else if (ft_strcmp(tokens[0], "exit") == 0)
+	else if (lms_strcmp(tokens[0], "exit") == 0)
 		ms_exit(tokens, shell);
-	else if (ft_strcmp(tokens[0], "env") == 0)
+	else if (lms_strcmp(tokens[0], "env") == 0)
 		ms_env();
-	else if (ft_strcmp(tokens[0], "export") == 0)
+	else if (lms_strcmp(tokens[0], "export") == 0)
 		ms_export(&(shell->env), tokens);
-	else if (ft_strcmp(tokens[0], "unset") == 0)
+	else if (lms_strcmp(tokens[0], "unset") == 0)
 		ms_unset(&(shell->env), tokens);
-	else if (ft_strcmp(tokens[0], "pwd") == 0)
+	else if (lms_strcmp(tokens[0], "pwd") == 0)
 		ms_pwd();
 	else
 		ft_putstr_fd("\033[1;31mcommand not found!\n\033[0m", 2);
