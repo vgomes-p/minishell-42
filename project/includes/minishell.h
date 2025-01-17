@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/15 16:36:04 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/17 14:43:06 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,19 @@ typedef struct s_minishell
 	int		term_height;
 }	t_minishell;
 
-/* UTILS FUNCTIONS */
-void	ft_putchar(char ch);
-void	ft_putstr(char *str);
-int		ft_strcmp(const char *s1, const char *s2);
+/* LIBMS FUNCTIONS */
+void	lms_putchar(char ch);
+void	lms_putstr(char *str);
+int		lms_strcmp(const char *s1, const char *s2);
+void	*lms_realloc(void *ptr, size_t nwsize);
 
-/* INTERWIN FUNCTIONS */
+/* INTERACT FUNCTIONS */
 void	ms_inishell(t_minishell *shell);
 void	ms_interact0(t_minishell *shell);
+int		lms_putenv(char ***env, char *str);
+int		lms_setenv(char ***env, const char *name,
+			const char *value, int overwrite);
+int		lms_unsetenv(char ***env, const char *name);
 
 /* BUILD_INS FUNCTIONS */
 void	ms_cd(char **args);
