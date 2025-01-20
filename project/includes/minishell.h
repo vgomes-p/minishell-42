@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/16 18:23:55 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:59:09 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	ms_env(void);
 void	ms_export(char ***env, char **args);
 void	ms_unset(char ***env, char **args);
 void	ms_pwd(void);
-void	ms_exec_builtin(char **tokens, t_minishell *shell);
+void	ms_exec_buildin(char **tokens, t_minishell *shell);
 void	ms_process_buildin(char *input, t_minishell *shell);
 
 /* PARSING FUNCTIONS */

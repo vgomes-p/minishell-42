@@ -6,13 +6,13 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 18:11:40 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/17 13:22:30 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/20 14:58:55 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ms_exec_builtin(char **tokens, t_minishell *shell)
+void	ms_exec_buildin(char **tokens, t_minishell *shell)
 {
 	if (lms_strcmp(tokens[0], "cd") == 0)
 		ms_cd(tokens);
@@ -43,7 +43,7 @@ void	ms_process_buildin(char *input, t_minishell *shell)
 		free(tokens);
 		return ;
 	}
-	ms_exec_builtin(tokens, shell);
+	ms_exec_buildin(tokens, shell);
 	index = 0;
 	while (tokens[index])
 	{
