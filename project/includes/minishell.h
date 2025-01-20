@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/20 14:58:02 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/20 17:57:06 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_minishell
 	int		exit_stt;
 	int		term_width;
 	int		term_height;
+	char	*error_message;
 }	t_minishell;
 
 /* LIBMS FUNCTIONS */
@@ -44,6 +45,10 @@ void	lms_putchar(char ch);
 void	lms_putstr(char *str);
 int		lms_strcmp(const char *s1, const char *s2);
 void	*lms_realloc(void *ptr, size_t nwsize);
+char	*lms_strncpy(char *dest, const char *src, size_t n);
+
+/* PARSING FUNCTIONS */
+int		ms_quotes(const char *input, int start, char **output);
 
 /* INTERACT FUNCTIONS */
 void	ms_inishell(t_minishell *shell);
@@ -62,9 +67,7 @@ void	ms_env(void);
 void	ms_export(char ***env, char **args);
 void	ms_unset(char ***env, char **args);
 void	ms_pwd(void);
-void	ms_exec_buildin(char **tokens, t_minishell *shell);
+void	ms_error(const char *msg, t_minishell *shell);
 void	ms_process_buildin(char *input, t_minishell *shell);
-
-/* PARSING FUNCTIONS */
 
 #endif

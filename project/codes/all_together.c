@@ -184,9 +184,68 @@ int	lms_unsetenv(char ***env, const char *name)
 	shift_env_vars(*env, index);
 	return (0);
 }
+/*NOVAAAAAS*/
+
+char	*lms_strncpy(char *dest, const char *src, size_t n)
+{
+	size_t cnt;
+
+	cnt = 0;
+	while (cnt < n && src[cnt] != '\0')
+	{
+		dest[cnt] = src[cnt];
+		cnt++;
+	}
+	while (cnt < n)
+	{
+		dest[cnt] = '\0';
+		cnt++;
+	}
+	return (dest);
+}
+
+char *lms_strndup(const char *str, size_t n)
+{
+	char *dup;
+
+	dup = (char *)malloc(n + 1);
+	if (!dup)
+		return (NULL);
+	lms_strncpy(dup, str, n);
+	dup[n] = '\0';
+	return (dup);
+}
+
 /* ************************** */
 /*      MINISHELL  CODES      */
 /* ************************** */
+
+/* ********* */
+/* parsing 1 */
+/* ********* */
+int	ms_quotes(const char *input, int start, char **output)
+{
+	int		pos;
+	char	quote;
+
+	pos = start;
+	quote = input[start - 1];
+	while (input[pos] != '\0')
+	{
+		if (input[pos] == quote)
+		{
+			*output = (char *)malloc(pos - start);
+			if (!(*output))
+				return (-1);
+			lms_strncpy(*output, input + start, pos - start);
+			(*output)[pos - start] = '\0';
+			return (1);
+		}
+		pos++;
+	}
+	return (-1);
+}
+
 
 extern char	**environ;
 
@@ -356,43 +415,85 @@ void	ms_pwd(void)
 /* build-ins */
 /* ********* */
 
-void	ms_exec_buildin(char **tokens, t_minishell *shell)
+void	ms_error(const char *msg, t_minishell *shell)
 {
-	if (lms_strcmp(tokens[0], "cd") == 0)
-		ms_cd(tokens);
-	else if (lms_strcmp(tokens[0], "echo") == 0)
-		ms_echo(tokens);
-	else if (lms_strcmp(tokens[0], "exit") == 0)
-		ms_exit(tokens, shell);
-	else if (lms_strcmp(tokens[0], "env") == 0)
-		ms_env();
-	else if (lms_strcmp(tokens[0], "export") == 0)
-		ms_export(&(shell->env), tokens);
-	else if (lms_strcmp(tokens[0], "unset") == 0)
-		ms_unset(&(shell->env), tokens);
-	else if (lms_strcmp(tokens[0], "pwd") == 0)
-		ms_pwd();
-	else
-		ft_putstr_fd("\033[1;31mcommand not found!\n\033[0m", 2);
+	if (shell)
+		shell->error_message = ft_strdup(msg);
+	ft_putstr_fd("Error!\n", 2);
 }
+
 
 void	ms_process_buildin(char *input, t_minishell *shell)
 {
 	char	**tokens;
-	int		index;
+	int		start;
+	int		pos;
+	char	*quote_content;
+	int		finalquote;
+	int		tokencnt;
+	char	*tokenstt;
+	int		index1;
 
-	tokens = ft_split(input, ' ');
-	if (!tokens || !tokens[0])
+	tokens = NULL;
+	pos = 0;
+	tokencnt = 0;
+	tokenstt = NULL;
+	while (input[pos])
 	{
-		free(tokens);
-		return ;
+		if (input[pos] == ' ')
+		{
+			pos++;
+			continue ;
+		}
+		if (input[pos] == '\'' || input[pos] == '\"')
+		{
+			quote_content = NULL;
+			finalquote = ms_quotes(input, pos + 1, &quote_content);
+			if (finalquote == -1)
+			{
+				ms_error("unmatched quotes detected", shell);
+				return ;
+			}
+			tokencnt++;
+			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
+			tokens[tokencnt -1 ] = quote_content;
+			tokens[tokencnt] = NULL;
+			pos += ft_strlen(quote_content) + 2;
+		}
+		else
+		{
+			start = pos;
+			while (input[pos] && input[pos] != ' ' && input[pos] != '\'' && input[pos] != '\"')
+				pos++;
+			tokenstt = lms_strndup(input + start, pos - start);
+			tokencnt++;
+			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
+			tokens[tokencnt - 1] = tokenstt;
+			tokens[tokencnt] = NULL;
+		}
 	}
-	ms_exec_buildin(tokens, shell);
-	index = 0;
-	while (tokens[index])
+	if (tokens && tokens[0])
 	{
-		free(tokens[index]);
-		index++;
+		if (lms_strcmp(tokens[0], "echo") == 0)
+			ms_echo(tokens);
+		else if (lms_strcmp(tokens[0], "env") == 0)
+			ms_env();
+		else if (lms_strcmp(tokens[0], "unset") == 0)
+			ms_unset(&(shell->env), tokens);
+		else if (lms_strcmp(tokens[0], "export") == 0)
+			ms_export(&(shell->env), tokens);
+		else if (lms_strcmp(tokens[0], "pwd") == 0)
+			ms_pwd();
+		else if (lms_strcmp(tokens[0], "cd") == 0)
+			ms_cd(tokens);
+		else
+			ms_error("\033[1;31mcommand not found!\n\033[0m", shell);
+	}
+	index1 = 0;
+	while (index1 < tokencnt)
+	{
+		free(tokens[index1]);
+		index1++;
 	}
 	free(tokens);
 }
