@@ -356,7 +356,7 @@ void	ms_pwd(void)
 /* build-ins */
 /* ********* */
 
-void	ms_exec_builtin(char **tokens, t_minishell *shell)
+void	ms_exec_buildin(char **tokens, t_minishell *shell)
 {
 	if (lms_strcmp(tokens[0], "cd") == 0)
 		ms_cd(tokens);
@@ -387,7 +387,7 @@ void	ms_process_buildin(char *input, t_minishell *shell)
 		free(tokens);
 		return ;
 	}
-	ms_exec_builtin(tokens, shell);
+	ms_exec_buildin(tokens, shell);
 	index = 0;
 	while (tokens[index])
 	{
