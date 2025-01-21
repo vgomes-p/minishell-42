@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/14 17:13:15 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/16 16:20:46 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/21 16:44:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,39 @@ void	ms_cd(char **args)
 		if (chdir(args[1]) == -1)
 			perror("cd");
 	}
+}
+
+void	ms_echo(char **args)
+{
+	int	index;
+	int	nwline;
+
+	index = 1;
+	nwline = 1;
+	if (args[1] && lms_strcmp(args[1], "-n") == 0)
+	{
+		nwline = 0;
+		index++;
+	}
+	while (args[index])
+	{
+		lms_putstr(args[index]);
+		if (args[index + 1])
+			lms_putstr(" ");
+		index++;
+	}
+	if (nwline)
+		lms_putstr("\n");
+}
+
+void	ms_exit(char **args, t_minishell *shell)
+{
+	int	stat;
+
+	stat = 0;
+	if (args[1])
+		stat = ft_atoi(args[1]);
+	shell->exit_stt = stat;
+	free(shell->prompt);
+	exit(stat);
 }
