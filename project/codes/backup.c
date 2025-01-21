@@ -216,23 +216,6 @@ char *lms_strndup(const char *str, size_t n)
 	return (dup);
 }
 
-char	*lms_strrchr(const char *str, int ch)
-{
-	char	*last_occurrence = NULL;
-
-	while (*str)
-	{
-		if (*str == (char)ch)
-			last_occurrence = (char *)str;
-		str++;
-	}
-	if (ch == '\0')
-		return ((char *)str);
-
-	return (last_occurrence);
-}
-
-
 /* ************************** */
 /*      MINISHELL  CODES      */
 /* ************************** */
@@ -553,34 +536,84 @@ void	ms_process_buildin(char *input, t_minishell *shell)
 		
 	cleanup_tokens(tokens);
 }
+// void	ms_process_buildin(char *input, t_minishell *shell)
+// {
+// 	char	**tokens;
+// 	int		start;
+// 	int		pos;
+// 	char	*quote_content;
+// 	int		finalquote;
+// 	int		tokencnt;
+// 	char	*tokenstt;
+// 	int		index1;
+
+// 	tokens = NULL;
+// 	pos = 0;
+// 	tokencnt = 0;
+// 	tokenstt = NULL;
+// 	while (input[pos])
+// 	{
+// 		if (input[pos] == ' ')
+// 		{
+// 			pos++;
+// 			continue ;
+// 		}
+// 		if (input[pos] == '\'' || input[pos] == '\"')
+// 		{
+// 			quote_content = NULL;
+// 			finalquote = ms_quotes(input, pos + 1, &quote_content);
+// 			if (finalquote == -1)
+// 			{
+// 				ms_error("unmatched quotes detected", shell);
+// 				return ;
+// 			}
+// 			tokencnt++;
+// 			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
+// 			tokens[tokencnt -1 ] = quote_content;
+// 			tokens[tokencnt] = NULL;
+// 			pos += ft_strlen(quote_content) + 2;
+// 		}
+// 		else
+// 		{
+// 			start = pos;
+// 			while (input[pos] && input[pos] != ' ' && input[pos] != '\'' && input[pos] != '\"')
+// 				pos++;
+// 			tokenstt = lms_strndup(input + start, pos - start);
+// 			tokencnt++;
+// 			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
+// 			tokens[tokencnt - 1] = tokenstt;
+// 			tokens[tokencnt] = NULL;
+// 		}
+// 	}
+// 	if (tokens && tokens[0])
+// 	{
+// 		if (lms_strcmp(tokens[0], "echo") == 0)
+// 			ms_echo(tokens);
+// 		else if (lms_strcmp(tokens[0], "env") == 0)
+// 			ms_env();
+// 		else if (lms_strcmp(tokens[0], "unset") == 0)
+// 			ms_unset(&(shell->env), tokens);
+// 		else if (lms_strcmp(tokens[0], "export") == 0)
+// 			ms_export(&(shell->env), tokens);
+// 		else if (lms_strcmp(tokens[0], "pwd") == 0)
+// 			ms_pwd();
+// 		else if (lms_strcmp(tokens[0], "cd") == 0)
+// 			ms_cd(tokens);
+// 		else
+// 			ms_error("\033[1;31mcommand not found!\n\033[0m", shell);
+// 	}
+// 	index1 = 0;
+// 	while (index1 < tokencnt)
+// 	{
+// 		free(tokens[index1]);
+// 		index1++;
+// 	}
+// 	free(tokens);
+// }
 
 /* ******** */
 /* interact */
 /* ******** */
-
-void	ms_pap(t_minishell *shell)
-{
-	char	*cwd;
-	char	*home;
-	char	*relativecwd;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		perror("getcwd");
-		return ;
-	}
-	home = getenv("HOME");
-	if (home && strstr(cwd, home) == cwd)
-	{
-		relativecwd = ft_strjoin("~", cwd + ft_strlen(home));
-		free(cwd);
-		cwd = relativecwd;
-	}
-	free(shell->prompt);
-	shell->prompt = ft_strjoin(cwd, "\033[1;36 | MINISHELL$ \033[0m");
-	free(cwd);
-}
 
 void	ms_inishell(t_minishell *shell)
 {
@@ -606,7 +639,6 @@ void	ms_interact0(t_minishell *shell)
 
 	while (1)
 	{
-		ms_pap(shell);
 		input = readline(shell->prompt);
 		if (!input)
 		{
