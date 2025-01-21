@@ -220,6 +220,17 @@ char *lms_strndup(const char *str, size_t n)
 /*      MINISHELL  CODES      */
 /* ************************** */
 
+/* ******* */
+/* utils 0 */
+/* ******* */
+
+void	ms_error(const char *msg, t_minishell *shell)
+{
+	if (shell)
+		shell->error_message = ft_strdup(msg);
+	ft_putstr_fd("Error!\n", 2);
+}
+
 /* ********* */
 /* parsing 1 */
 /* ********* */
@@ -411,92 +422,194 @@ void	ms_pwd(void)
 		ft_putstr_fd("pwd: \033[1;31merror\033[0m\n", 2);
 }
 
-/* ********* */
-/* build-ins */
-/* ********* */
 
-void	ms_error(const char *msg, t_minishell *shell)
+/* *********** */
+/* build-ins 8 */
+/* *********** */
+
+static void	handle_quotes(char *input, int *pos, int *tokencnt, char ***tokens, t_minishell *shell)
 {
-	if (shell)
-		shell->error_message = ft_strdup(msg);
-	ft_putstr_fd("Error!\n", 2);
-}
-
-
-void	ms_process_buildin(char *input, t_minishell *shell)
-{
-	char	**tokens;
-	int		start;
-	int		pos;
 	char	*quote_content;
 	int		finalquote;
-	int		tokencnt;
-	char	*tokenstt;
-	int		index1;
 
-	tokens = NULL;
+	quote_content = NULL;
+	finalquote = ms_quotes(input, *pos + 1, &quote_content);
+	if (finalquote == -1)
+	{
+		ms_error("unmatched quotes detected", shell);
+		return ;
+	}
+	(*tokencnt)++;
+	*tokens = lms_realloc(*tokens, sizeof(char *) * ((*tokencnt) + 1));
+	(*tokens)[*tokencnt - 1] = quote_content;
+	(*tokens)[*tokencnt] = NULL;
+	*pos += ft_strlen(quote_content) + 2;
+}
+
+static void	handle_non_quotes(char *input, int *pos, int *tokencnt, char ***tokens)
+{
+	int		start;
+	char	*tokenstt;
+
+	start = *pos;
+	while (input[*pos] && input[*pos] != ' ' && input[*pos] != '\'' && input[*pos] != '\"')
+	{
+		(*pos)++;
+	}
+	tokenstt = lms_strndup(input + start, *pos - start);
+	(*tokencnt)++;
+	*tokens = lms_realloc(*tokens, sizeof(char *) * ((*tokencnt) + 1));
+	(*tokens)[*tokencnt - 1] = tokenstt;
+	(*tokens)[*tokencnt] = NULL;
+}
+
+static void	process_input(char *input, char ***tokens, t_minishell *shell)
+{
+	int	pos;
+	int	tokencnt;
+
 	pos = 0;
 	tokencnt = 0;
-	tokenstt = NULL;
+	*tokens = NULL;
 	while (input[pos])
 	{
 		if (input[pos] == ' ')
 		{
 			pos++;
-			continue ;
+			continue;
 		}
 		if (input[pos] == '\'' || input[pos] == '\"')
-		{
-			quote_content = NULL;
-			finalquote = ms_quotes(input, pos + 1, &quote_content);
-			if (finalquote == -1)
-			{
-				ms_error("unmatched quotes detected", shell);
-				return ;
-			}
-			tokencnt++;
-			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
-			tokens[tokencnt -1 ] = quote_content;
-			tokens[tokencnt] = NULL;
-			pos += ft_strlen(quote_content) + 2;
-		}
+			handle_quotes(input, &pos, &tokencnt, tokens, shell);
 		else
-		{
-			start = pos;
-			while (input[pos] && input[pos] != ' ' && input[pos] != '\'' && input[pos] != '\"')
-				pos++;
-			tokenstt = lms_strndup(input + start, pos - start);
-			tokencnt++;
-			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
-			tokens[tokencnt - 1] = tokenstt;
-			tokens[tokencnt] = NULL;
-		}
+			handle_non_quotes(input, &pos, &tokencnt, tokens);
+		if (!*tokens)
+			return ;
 	}
-	if (tokens && tokens[0])
+}
+
+void	ms_tokenize_input(char *input, char ***tokens, t_minishell *shell)
+{
+	process_input(input, tokens, shell);
+}
+
+/* ********* */
+/* build-ins */
+/* ********* */
+static void	execute_builtin_command(char **tokens, t_minishell *shell)
+{
+	if (lms_strcmp(tokens[0], "echo") == 0)
+		ms_echo(tokens);
+	else if (lms_strcmp(tokens[0], "env") == 0)
+		ms_env();
+	else if (lms_strcmp(tokens[0], "unset") == 0)
+		ms_unset(&(shell->env), tokens);
+	else if (lms_strcmp(tokens[0], "export") == 0)
+		ms_export(&(shell->env), tokens);
+	else if (lms_strcmp(tokens[0], "pwd") == 0)
+		ms_pwd();
+	else if (lms_strcmp(tokens[0], "cd") == 0)
+		ms_cd(tokens);
+	else
+		ms_error("\033[1;31mcommand not found!\n\033[0m", shell);
+}
+
+static void	cleanup_tokens(char **tokens)
+{
+	int	index;
+
+	index = 0;
+	while (tokens && tokens[index])
 	{
-		if (lms_strcmp(tokens[0], "echo") == 0)
-			ms_echo(tokens);
-		else if (lms_strcmp(tokens[0], "env") == 0)
-			ms_env();
-		else if (lms_strcmp(tokens[0], "unset") == 0)
-			ms_unset(&(shell->env), tokens);
-		else if (lms_strcmp(tokens[0], "export") == 0)
-			ms_export(&(shell->env), tokens);
-		else if (lms_strcmp(tokens[0], "pwd") == 0)
-			ms_pwd();
-		else if (lms_strcmp(tokens[0], "cd") == 0)
-			ms_cd(tokens);
-		else
-			ms_error("\033[1;31mcommand not found!\n\033[0m", shell);
-	}
-	index1 = 0;
-	while (index1 < tokencnt)
-	{
-		free(tokens[index1]);
-		index1++;
+		free(tokens[index]);
+		index++;
 	}
 	free(tokens);
 }
+
+void	ms_process_buildin(char *input, t_minishell *shell)
+{
+	char	**tokens;
+
+	ms_tokenize_input(input, &tokens, shell);
+	if (tokens && tokens[0])
+		execute_builtin_command(tokens, shell);
+		
+	cleanup_tokens(tokens);
+}
+// void	ms_process_buildin(char *input, t_minishell *shell)
+// {
+// 	char	**tokens;
+// 	int		start;
+// 	int		pos;
+// 	char	*quote_content;
+// 	int		finalquote;
+// 	int		tokencnt;
+// 	char	*tokenstt;
+// 	int		index1;
+
+// 	tokens = NULL;
+// 	pos = 0;
+// 	tokencnt = 0;
+// 	tokenstt = NULL;
+// 	while (input[pos])
+// 	{
+// 		if (input[pos] == ' ')
+// 		{
+// 			pos++;
+// 			continue ;
+// 		}
+// 		if (input[pos] == '\'' || input[pos] == '\"')
+// 		{
+// 			quote_content = NULL;
+// 			finalquote = ms_quotes(input, pos + 1, &quote_content);
+// 			if (finalquote == -1)
+// 			{
+// 				ms_error("unmatched quotes detected", shell);
+// 				return ;
+// 			}
+// 			tokencnt++;
+// 			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
+// 			tokens[tokencnt -1 ] = quote_content;
+// 			tokens[tokencnt] = NULL;
+// 			pos += ft_strlen(quote_content) + 2;
+// 		}
+// 		else
+// 		{
+// 			start = pos;
+// 			while (input[pos] && input[pos] != ' ' && input[pos] != '\'' && input[pos] != '\"')
+// 				pos++;
+// 			tokenstt = lms_strndup(input + start, pos - start);
+// 			tokencnt++;
+// 			tokens = lms_realloc(tokens, sizeof(char *) * (tokencnt + 1));
+// 			tokens[tokencnt - 1] = tokenstt;
+// 			tokens[tokencnt] = NULL;
+// 		}
+// 	}
+// 	if (tokens && tokens[0])
+// 	{
+// 		if (lms_strcmp(tokens[0], "echo") == 0)
+// 			ms_echo(tokens);
+// 		else if (lms_strcmp(tokens[0], "env") == 0)
+// 			ms_env();
+// 		else if (lms_strcmp(tokens[0], "unset") == 0)
+// 			ms_unset(&(shell->env), tokens);
+// 		else if (lms_strcmp(tokens[0], "export") == 0)
+// 			ms_export(&(shell->env), tokens);
+// 		else if (lms_strcmp(tokens[0], "pwd") == 0)
+// 			ms_pwd();
+// 		else if (lms_strcmp(tokens[0], "cd") == 0)
+// 			ms_cd(tokens);
+// 		else
+// 			ms_error("\033[1;31mcommand not found!\n\033[0m", shell);
+// 	}
+// 	index1 = 0;
+// 	while (index1 < tokencnt)
+// 	{
+// 		free(tokens[index1]);
+// 		index1++;
+// 	}
+// 	free(tokens);
+// }
 
 /* ******** */
 /* interact */
