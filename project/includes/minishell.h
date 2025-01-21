@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/20 14:59:09 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/21 15:41:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <signal.h>
 # include <curses.h>
 # include <termcap.h>
+# include <stdbool.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include "libft/libft.h"
@@ -38,12 +39,14 @@ typedef struct s_minishell
 	int		exit_stt;
 	int		term_width;
 	int		term_height;
+	char	*error_message;
 }	t_minishell;
 
 /* UTILS FUNCTIONS */
-void	ft_putchar(char ch);
-void	ft_putstr(char *str);
-int		ft_strcmp(const char *s1, const char *s2);
+void	ms_error(const char *msg, t_minishell *shell);
+
+/* PARSING FUNCTIONS */
+int		ms_quotes(const char *input, int start, char **output);
 
 /* INTERWIN FUNCTIONS */
 void	ms_inishell(t_minishell *shell);
@@ -58,9 +61,7 @@ void	ms_env(void);
 void	ms_export(char ***env, char **args);
 void	ms_unset(char ***env, char **args);
 void	ms_pwd(void);
-void	ms_exec_buildin(char **tokens, t_minishell *shell);
+void	ms_tokenize_input(char *input, char ***tokens, t_minishell *shell);
 void	ms_process_buildin(char *input, t_minishell *shell);
-
-/* PARSING FUNCTIONS */
 
 #endif

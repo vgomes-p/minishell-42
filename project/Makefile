@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/17 13:47:35 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/21 15:41:36 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,8 +22,9 @@ H_DIR		=	includes/
 HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 
 MAPA_SRCS	=	ms_interact_0.c \
-				ms_buildins.c ms_buildins_1.c ms_buildins_2.c ms_buildins_3.c ms_buildins_4.c ms_buildins_5.c ms_buildins_6.c ms_buildins_7.c\
+				ms_buildins.c ms_buildins_1.c ms_buildins_2.c ms_buildins_3.c ms_buildins_4.c ms_buildins_5.c ms_buildins_6.c ms_buildins_7.c ms_buildins_8.c\
 				ms_parsing_0.c \
+				ms_utils_0.c \
 				minishell.c
 MAPA_DIR	=	codes/
 OBJ_DIR		=	build/

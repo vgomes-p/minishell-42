@@ -1,36 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_parsing_0.c                                     :+:      :+:    :+:   */
+/*   ms_utils_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/14 16:49:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/21 14:41:18 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/21 14:46:03 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/21 14:47:43 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ms_quotes(const char *input, int start, char **output)
+void	ms_error(const char *msg, t_minishell *shell)
 {
-	int		pos;
-	char	quote;
-
-	pos = start;
-	quote = input[start - 1];
-	while (input[pos] != '\0')
-	{
-		if (input[pos] == quote)
-		{
-			*output = (char *)malloc(pos - start);
-			if (!(*output))
-				return (-1);
-			lms_strncpy(*output, input + start, pos - start);
-			(*output)[pos - start] = '\0';
-			return (1);
-		}
-		pos++;
-	}
-	return (-1);
+	if (shell)
+		shell->error_message = ft_strdup(msg);
+	ft_putstr_fd("Error!\n", 2);
 }
