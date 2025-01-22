@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 12:57:14 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/21 14:37:36 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/22 17:16:45 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ AR			:=	ar -rcs
 RM			:=	rm -rf
 
 SRCS		:=	lms_putchar.c lms_putstr.c lms_strcmp.c lms_putenv.c lms_setenv.c \
-				lms_unsetenv.c lms_realloc.c lms_strncpy.c lms_strndup.c
+				lms_unsetenv.c lms_realloc.c lms_strncpy.c lms_strndup.c lms_strstr.c \
+				lms_joinstr_free.c
 OBJS		:=	$(SRCS:.c=.o)
 
 DEFAULT		=	\033[0m

@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/22 16:20:18 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/22 16:42:03 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ H_SRCS		=	minishell.h
 H_DIR		=	includes/
 HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 
-MAPA_SRCS	=	main.c
+MAPA_SRCS	=	main.c \
+				prompt.c
 MAPA_DIR	=	codes/
 OBJ_DIR		=	build/
 OBJ_M		=	$(addprefix $(OBJ_DIR), $(MAPA_SRCS:.c=.o))
