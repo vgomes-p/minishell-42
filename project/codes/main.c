@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:37 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/23 17:46:19 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:52:05 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(int argc, char **argv, char **envp)
 	shell.env = envp;
 	shell.prompt = NULL;
 	shell.exit_stt = 0;
-	welcome(&shell);
+	welcome();
 	ms_prompt(&shell);
 	free(shell.prompt);
 	return (0);
