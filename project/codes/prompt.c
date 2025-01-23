@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/22 17:20:01 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/23 13:33:29 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	pathedprompt(t_minishell *shell)
 	free(shell->prompt);
 	shell->prompt = ft_strjoin("\033[1;32m", cwd);
 	shell->prompt = lms_strjoin_free(shell->prompt, "\033[0m");
-	shell->prompt = lms_strjoin_free(shell->prompt, "\033[1;36m | minishell$ \033[0m");
+	shell->prompt = lms_strjoin_free(shell->prompt, "\033[1;36m minishell$ \033[0m");
 	free(cwd);
 }
 
@@ -47,7 +47,7 @@ void	welcome(t_minishell *shell)
 		exit (1);
 	}
 	lms_putstr("                         \033[1;7;36m");
-	lms_putstr("{Made by vgomes-p & sthrodri\033[0m\n\n");
+	lms_putstr("{Made by vgomes-p & sthrodri}\033[0m\n\n");
 	lms_putstr("\n\033[1;36m╔═════════════════════════════════════");
 	lms_putstr("═════════════════════════════════════════╗\n");
 	lms_putstr("║                            WELCOME T");
