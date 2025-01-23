@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/23 16:31:11 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:51:58 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,8 @@ static void	pathedprompt(t_minishell *shell)
 	free(cwd);
 }
 
-void	welcome(t_minishell *shell)
+void	welcome(void)
 {
-	shell->prompt = ft_strdup("\033[1;36m | minishell$ \033[0m");
-	if (!shell->prompt)
-	{
-		perror("\033[1;31Error starting prompt\033[0m");
-		exit (1);
-	}
 	lms_putstr("                         \033[1;7;36m");
 	lms_putstr("{Made by vgomes-p & sthrodri}\033[0m\n\n");
 	lms_putstr("\n\033[1;36m╔═════════════════════════════════════");
