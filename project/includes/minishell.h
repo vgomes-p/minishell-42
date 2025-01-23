@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/22 17:11:30 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/23 18:50:49 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_minishell
 }	t_minishell;
 
 /* PROMPT */
-void	welcome(t_minishell *shell);
+void	welcome(void);
 void	ms_prompt(t_minishell *shell);
 
 #endif
