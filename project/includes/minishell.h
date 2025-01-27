@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/23 18:51:44 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:39:15 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <signal.h>
 # include <curses.h>
+# include "mscolor.h"
 # include <termcap.h>
 # include <stdbool.h>
 # include <sys/wait.h>
