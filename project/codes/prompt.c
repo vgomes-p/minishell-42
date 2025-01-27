@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/23 18:48:49 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/27 13:50:58 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,22 +32,22 @@ static void	pathedprompt(t_minishell *shell)
 		cwd = relative_cwd;
 	}
 	free(shell->prompt);
-	shell->prompt = ft_strjoin("\033[1;32m", cwd);
-	shell->prompt = lms_strjoin_free(shell->prompt, "\033[0m");
-	shell->prompt = lms_strjoin_free(shell->prompt, "\033[1;36m minishell$ \033[0m");
+	shell->prompt = ft_strjoin(GREEN, cwd);
+	shell->prompt = lms_strjoin_free(shell->prompt, RESET);
+	shell->prompt = lms_strjoin_free(shell->prompt, CYAN " minishell$ " RESET);
 	free(cwd);
 }
 
 void	welcome(void)
 {
-	lms_putstr("                         \033[1;7;36m");
-	lms_putstr("{Made by vgomes-p & sthrodri}\033[0m\n\n");
-	lms_putstr("\n\033[1;36m╔═════════════════════════════════════");
+	lms_putstr("                         ");
+	lms_putstr(RECYAN "{Made by vgomes-p & sthrodri}" RESET "\n\n");
+	lms_putstr("\n" CYAN "╔═════════════════════════════════════");
 	lms_putstr("═════════════════════════════════════════╗\n");
 	lms_putstr("║                            WELCOME T");
 	lms_putstr("O MINISHELL                              ║\n");
 	lms_putstr("╚══════════════════════════════════════");
-	lms_putstr("════════════════════════════════════════╝\033[0m\n");
+	lms_putstr("════════════════════════════════════════╝" RESET "\n");
 }
 
 void	ms_prompt(t_minishell *shell)
@@ -60,7 +60,7 @@ void	ms_prompt(t_minishell *shell)
 		input = readline(shell->prompt);
 		if (!input)
 		{
-			printf("exit\n");
+			printf(RED "exit" RESET "\n");
 			break ;
 		}
 		if (*input)

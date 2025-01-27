@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/22 16:42:03 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/27 13:33:26 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ $(LIBMS): $(LIBFT)
 			@make -C $(LIBMS_DIR)
 
 debug: $(OBJ_M)
-			$(CC) $(FLAGS) $(OBJ_M) $(LIBFT) $(LIBMS) $(LFLAGS) $(TERMCAP) -o $(NAME)
+			$(CC) $(FLAGS) $(DEBUG_FLAGS) $(OBJ_M) $(LIBFT) $(LIBMS) $(LFLAGS) $(TERMCAP) -o $(NAME)
 			@echo -e "$(REPINK)Execution completed: $(NAME) created in debug mode!$(DEFAULT)"
 
 depend:
