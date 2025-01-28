@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/27 14:57:25 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/28 15:15:34 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ H_DIR		=	includes/
 HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 
 MAPA_SRCS	=	main.c \
-				prompt.c
+				prompt.c \
+				token0.c token1.c
 MAPA_DIR	=	codes/
 OBJ_DIR		=	build/
 OBJ_M		=	$(addprefix $(OBJ_DIR), $(MAPA_SRCS:.c=.o))

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token.c                                            :+:      :+:    :+:   */
+/*   token0.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:10:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/28 14:43:37 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:29:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_token	*mktoken(char *value, t_token_tp type)
 	token = malloc(sizeof(t_token));
 	if (!token)
 		return (NULL);
-	token->value = ft_strdub(value);
+	token->value = ft_strdup(value);
 	token->type = type;
 	token->next = NULL;
 	return (token);
@@ -34,7 +34,7 @@ static bool	is_operator(char *str)
 
 static t_token	get_token_type(char *token, t_token *current, int is_first)
 {
-	t_token	type;
+	t_token_tp	type;
 
 	if (is_operator(token))
 	{
@@ -50,9 +50,9 @@ static t_token	get_token_type(char *token, t_token *current, int is_first)
 			type = HEREDOC;
 	}
 	else if (is_first || (current && current->type == PIPE))
-		type = COMMAND;
+		type = CMD;
 	else
-		type = ARGUMENT;
+		type = ARG;
 	return (type);
 }
 
@@ -70,8 +70,7 @@ t_token	*tokening(char *input)
 	index = 0;
 	while (split[index])
 	{
-		nwtoken = mktoken(split[index],
-				get_token_type(split[index], current, index == 0));
+		nwtoken = mktoken(split[index], type);
 		if (!nwtoken)
 			return (NULL);
 		if (!head)

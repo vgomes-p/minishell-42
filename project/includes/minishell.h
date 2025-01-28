@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/28 14:34:52 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/28 15:21:37 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef enum e_token_tp
 {
 	CMD,
 	ARG,
-	PIPE
+	PIPE,
 	APPEND,
 	HEREDOC,
 	REDIR_IN,
@@ -72,5 +72,8 @@ typedef struct s_exec_tree
 /* PROMPT */
 void	welcome(void);
 void	ms_prompt(t_minishell *shell);
+t_token	*tokening(char *input);
+bool	valid_syntax(t_token *tokens);
+char	**ms_split_quote(const char *input);
 
 #endif
