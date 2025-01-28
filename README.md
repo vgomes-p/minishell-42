@@ -1,5 +1,7 @@
 ![cover](images/cover-minishell.png)
 
+> Para esse projeto eu criei uma biblioteca socorro (https://github.com/vgomes-p/libms-42)
+
 
 # RUNNING MINISHELL
 ![print_minishell](images/minishell_print.png)
