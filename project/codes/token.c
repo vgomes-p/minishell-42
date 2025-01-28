@@ -6,77 +6,104 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:10:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/27 17:46:04 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:43:37 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_token	*tokening(const char *input)
+static t_token	*mktoken(char *value, t_token_tp type)
 {
-	t_token		head;
-	t_token		*current;
-	int			index;
-	char		quote;
-	int			start;
-	t_token_tp	type;
+	t_token	*token;
 
+	token = malloc(sizeof(t_token));
+	if (!token)
+		return (NULL);
+	token->value = ft_strdub(value);
+	token->type = type;
+	token->next = NULL;
+	return (token);
+}
+
+static bool	is_operator(char *str)
+{
+	return (lms_strcmp(str, "|") == 0 || lms_strcmp(str, ">") == 0
+		|| lms_strcmp(str, "<") == 0 || lms_strcmp(str, ">>") == 0
+		|| lms_strcmp(str, "<<") == 0);
+}
+
+static t_token	get_token_type(char *token, t_token *current, int is_first)
+{
+	t_token	type;
+
+	if (is_operator(token))
+	{
+		if (lms_strcmp(token, "|") == 0)
+			type = PIPE;
+		else if (lms_strcmp(token, ">") == 0)
+			type = REDIR_OUT;
+		else if (lms_strcmp(token, ">>") == 0)
+			type = REDIR_APPEND;
+		else if (lms_strcmp(token, "<") == 0)
+			type = REDIR_IN;
+		else if (lms_strcmp(token, "<<") == 0)
+			type = HEREDOC;
+	}
+	else if (is_first || (current && current->type == PIPE))
+		type = COMMAND;
+	else
+		type = ARGUMENT;
+	return (type);
+}
+
+t_token	*tokening(char *input)
+{
+	char	**split;
+	t_token	*head;
+	t_token	*current;
+	t_token	*nwtoken;
+	int		index;
+
+	split = ft_split(input, ' ');
 	head = NULL;
 	current = NULL;
 	index = 0;
-
-	while (input[index] != '\0')
+	while (split[index])
 	{
-		if (input[index] == ' ' || input[index] == '\t')
-		{
-			index++;
-			continue;
-		}
-		else if (input[index] == '\'' || input[index] == '"')
-		{
-			quote = input[index++];
-			start = index;
-			while (input[index] != '\0' && input[index] != quote)
-				index++;
-			if (input[index] == quote)
-			{
-				add_token(&head, &current, ft_substr(input, start, index - start), ARG)
-				index++;
-			}
-			else
-			{
-				handle_error("unclosed quote");
-				free_tokens(head);
-				return (NULL);
-			}
-		}
-		else if (input[index] == '>' || input[index] == '<' || input[index] == '|')
-		{
-			type = PIPE;
-			if (input[index] == '>')
-			{
-				type = (input[index + 1] == '>') ? APPEND : REDIR_OUT;
-				index += (type == APPEND) ? 2 : 1;
-			}
-			else if (input[index] == '<')
-			{
-				type = REDIR_IN;
-				index++;
-			}
-			else
-				index ++;
-			add_token(&head, &current, ft_substr(input, index - 1, 1), type);
-		}
+		nwtoken = mktoken(split[index],
+				get_token_type(split[index], current, index == 0));
+		if (!nwtoken)
+			return (NULL);
+		if (!head)
+			head = nwtoken;
 		else
-		{
-			start = index;
-			while (input[index] != '\0' && input[index] != ' ' && input[index] != '\t' &&
-				input[index] != '>' && input[index] != '<' && input[index] != '|')
-			{
-				index++;
-			}
-			add_token(&head, &current, ft_substr(input, start, index - start), CMD);
-		}
+			current->next = nwtoken;
+		current = nwtoken;
+		index++;
 	}
 	return (head);
+}
+
+bool	valid_syntax(t_token *tokens)
+{
+	t_token	*current;
+
+	current = tokens;
+	while (current)
+	{
+		if (current->type == PIPE || current->type == REDIR_OUT
+			|| current->type == REDIR_IN || current->type == REDIR_APPEND
+			|| current->type == HEREDOC)
+		{
+			if (!current->next || (current->next->type != ARG
+					&& current->next->type != CMD))
+			{
+				printf(RED "Syntax error: '%s' operator without args.\n" RESET,
+					current->value);
+				return (false);
+			}
+		}
+		current = current->next;
+	}
+	return (true);
 }

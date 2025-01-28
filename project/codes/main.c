@@ -6,15 +6,15 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:37 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/23 18:50:17 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:03:09 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
-	t_minishell shell;
+	t_minishell	shell;
 
 	(void)argc;
 	(void)argv;
@@ -26,4 +26,3 @@ int main(int argc, char **argv, char **envp)
 	free(shell.prompt);
 	return (0);
 }
-

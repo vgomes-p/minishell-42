@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/27 17:31:36 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/28 14:34:52 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,13 @@ typedef enum e_token_tp
 {
 	CMD,
 	ARG,
+	PIPE
+	APPEND,
+	HEREDOC,
 	REDIR_IN,
 	REDIR_OUT,
-	APPEND,
-	PIPE
+	REDIR_APPEND,
+	SYNTAX_ERROR,
 }	t_token_tp;
 
 typedef struct s_token
@@ -58,9 +61,16 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
+typedef struct s_exec_tree
+{
+	char				*cmd;
+	t_token_tp			type;
+	struct s_exec_tree	*left;
+	struct s_exec_tree	*right;
+}	t_exec_tree;
+
 /* PROMPT */
 void	welcome(void);
 void	ms_prompt(t_minishell *shell);
-t_token	*tokening(const char *input);
 
 #endif
