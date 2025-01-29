@@ -6,59 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/28 14:50:16 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/29 14:52:11 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/29 15:18:31 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <malloc.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <stdbool.h>
-
-void	*ft_memset(void *buffer, int value, size_t len)
-{
-	while (len--)
-		*(unsigned char *)(buffer + len) = value;
-	return (buffer);
-}
-
-void	ft_bzero(void *str, size_t nby)
-{
-	ft_memset(str, 0, nby);
-}
-
-void	*ft_calloc(size_t num_el, size_t numby)
-{
-	void	*memaloc;
-	size_t	finsize;
-
-	memaloc = NULL;
-	finsize = num_el * numby;
-	if (num_el == 0 || numby == 0 || finsize / num_el != numby)
-		return (NULL);
-	memaloc = malloc(finsize);
-	if (memaloc)
-		ft_bzero(memaloc, finsize);
-	return (memaloc);
-}
-size_t	ft_strlen(const char *var)
-{
-	size_t	cnt;
-
-	cnt = 0;
-	while (var[cnt] != '\0')
-	{
-		cnt++;
-	}
-	return (cnt);
-}
 
 static bool	is_quotes(char ch)
 {

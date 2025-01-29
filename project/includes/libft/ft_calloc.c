@@ -19,8 +19,9 @@ void	*ft_calloc(size_t num_el, size_t numby)
 
 	memaloc = NULL;
 	finsize = num_el * numby;
-	if (!num_el || !numby || !(num_el != finsize / numby))
-		memaloc = malloc(finsize);
+	if (num_el == 0 || numby == 0 || finsize / num_el != numby)
+		return (NULL);
+	memaloc = malloc(finsize);
 	if (memaloc)
 		ft_bzero(memaloc, finsize);
 	return (memaloc);
