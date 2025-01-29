@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/27 13:50:58 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/29 13:33:50 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ms_prompt(t_minishell *shell)
 		input = readline(shell->prompt);
 		if (!input)
 		{
-			printf(RED "exit" RESET "\n");
+			printf(RED "\nSee you soon, goodbye!" RESET "\n");
 			break ;
 		}
 		if (*input)

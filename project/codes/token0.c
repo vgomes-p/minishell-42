@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:10:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/28 15:29:02 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/28 17:50:46 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ static bool	is_operator(char *str)
 		|| lms_strcmp(str, "<<") == 0);
 }
 
-static t_token	get_token_type(char *token, t_token *current, int is_first)
+t_token_tp	get_token_type(char *token, t_token *current, int is_first)
 {
 	t_token_tp	type;
 
+	type = ARG;
 	if (is_operator(token))
 	{
 		if (lms_strcmp(token, "|") == 0)
@@ -51,8 +52,6 @@ static t_token	get_token_type(char *token, t_token *current, int is_first)
 	}
 	else if (is_first || (current && current->type == PIPE))
 		type = CMD;
-	else
-		type = ARG;
 	return (type);
 }
 
@@ -70,7 +69,8 @@ t_token	*tokening(char *input)
 	index = 0;
 	while (split[index])
 	{
-		nwtoken = mktoken(split[index], type);
+		nwtoken = mktoken(split[index],
+				get_token_type(split[index], current, index == 0));
 		if (!nwtoken)
 			return (NULL);
 		if (!head)

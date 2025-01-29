@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/28 15:21:37 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/29 14:07:39 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,12 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-typedef struct s_exec_tree
-{
-	char				*cmd;
-	t_token_tp			type;
-	struct s_exec_tree	*left;
-	struct s_exec_tree	*right;
-}	t_exec_tree;
 
 /* PROMPT */
 void	welcome(void);
 void	ms_prompt(t_minishell *shell);
 t_token	*tokening(char *input);
 bool	valid_syntax(t_token *tokens);
-char	**ms_split_quote(const char *input);
+char	**ms_split_quotes(const char *input);
 
 #endif
