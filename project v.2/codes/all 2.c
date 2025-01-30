@@ -242,7 +242,7 @@ void	ms_cd(char **args)
 		if (home)
 			chdir(home);
 		else
-			ft_putstr_fd("cd: \033[1;33mHOME not set\033[0m\n", 2);
+			ft_putstr_fd("cd: " RED "HOME not set" RESET, 2);
 	}
 	else
 	{
@@ -324,7 +324,7 @@ static int	handle_variable_assignment(char ***env, char *arg)
 	*equal_sign = '\0';
 	if (lms_setenv(env, arg, equal_sign + 1, 1) == -1)
 	{
-		ft_putstr_fd("export: \033[1;31merror setting variable\033[0m\n", 2);
+		ft_putstr_fd("export: " RED "merror setting variable" RESET, 2);
 		*equal_sign = '=';
 		return (-1);
 	}
@@ -355,7 +355,7 @@ void	ms_pwd(void)
 		free(cwd);
 	}
 	else
-		ft_putstr_fd("pwd: \033[1;31merror\033[0m\n", 2);
+		ft_putstr_fd("pwd: " RED "error" RESET, 2);
 }
 
 void	ms_unset(char ***env, char **args)
@@ -363,7 +363,7 @@ void	ms_unset(char ***env, char **args)
 	if (args[1])
 	{
 		if (lms_unsetenv(env, args[1]) == -1)
-			ft_putstr_fd("unset: \033[1;31merror unsetting variable\033[0m\n", 2);
+			ft_putstr_fd("unset: " RED "error unsetting variable\n" RESET, 2);
 	}
 	else
 		ft_putstr_fd("unset: not enough args\nusage: unset VAR\n", 2);
@@ -438,7 +438,7 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	else
 	{
 		free(args);
-		return (1);
+		return (0);
 	}
 	free(args);
 	return (1);
