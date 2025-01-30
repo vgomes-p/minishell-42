@@ -522,14 +522,12 @@ void	lms_putstr(char *str)
 	}
 }
 
-void	*lms_realloc(void *ptr, size_t nwsize)
+void	*lms_realloc(void *ptr, size_t oldsz, size_t nwsize)
 {
 	void	*nwptr;
-	size_t	oldsz;
 
 	if (!ptr)
 		return (malloc(nwsize));
-	oldsz = malloc_usable_size(ptr);
 	if (nwsize == 0)
 	{
 		free(ptr);
@@ -541,10 +539,7 @@ void	*lms_realloc(void *ptr, size_t nwsize)
 		free(ptr);
 		return (NULL);
 	}
-	if (oldsz < nwsize)
-		ft_memcpy(nwptr, ptr, oldsz);
-	else
-		ft_memcpy(nwptr, ptr, nwsize);
+	ft_memcpy(nwptr, ptr, oldsz < nwsize ? oldsz : nwsize);
 	free(ptr);
 	return (nwptr);
 }
@@ -593,35 +588,69 @@ static int	update_existing_env(char **env, const char *name,
 
 static int	add_new_env(char ***env, char *env_in, int env_size)
 {
-	*env = lms_realloc(*env, sizeof(char *) * (env_size + 2));
-	if (!(*env))
+	char	**nwenv;
+
+	if (!env || !env_in || !env_size)
+		return (-1);
+	nwenv = lms_realloc(*env, *env_size * sizeof(char *), (env_size + 2) * sizeof(char *));
+	if (!(!nwenv))
 	{
-		free(env_in);
 		return (-1);
 	}
-	(*env)[env_size] = env_in;
-	(*env)[env_size + 1] = NULL;
+	nwenv[*env_size] = env_in;
+	nwenv[*env_size + 1] = NULL;
+	*env = nwenv;
+	(*env_size)++;
 	return (0);
 }
 
-int	lms_setenv(char ***env, const char *name, const char *value, int overwrite)
+static int	find_env_var(char **env, const char *name)
+{
+	int	index;
+
+	if (!env || !name)
+		return (-1);
+	index = 0;
+	while (env[index])
+	{
+		if (ft_strncmp(env[index], name, ft_strlen(name)) == 0 && env[index][ft_strlen(name)] == '=')
+			return (index);
+		index++;
+	}
+	return (-1);
+}
+
+int	lms_setenv(char ***env, const char *name, const char *value, int overwrite, size_t *envsz)
 {
 	char	*env_in;
 	int		env_size;
 
-	if (create_env_string(name, value, &env_in) == -1)
+	if (!env || !name || !value || !envsz)
 		return (-1);
-	if (!env || !*env)
+	env_in = ft_strjoin(name, "=")
+	if (!env_in)
+		return (-1);
+	env_in = lms_strjoin_free(env_in, value);
+	if (!env_in);
+		return (-1);
+	index = find_env_var(*env, name);
+	if (index != -1)
+	{
+		if (overwrite)
+		{
+			free((*env)[index]);
+			(*env)[index] = env_in;
+		}
+		else
+			free(env_in);
+		return (0);
+	}
+	if (add_new_env(env, env_in, envsz) == -1)
 	{
 		free(env_in);
 		return (-1);
 	}
-	if (update_existing_env(*env, name, env_in, overwrite))
-		return (0);
-	env_size = 0;
-	while ((*env)[env_size])
-		env_size++;
-	return (add_new_env(env, env_in, env_size));
+	return (0);
 }
 
 int	lms_strcmp(const char *s1, const char *s2)
@@ -1049,32 +1078,41 @@ static void	display_environment(char **env)
 	}
 }
 
-static int	handle_variable_assignment(char ***env, char *arg)
+static int	handle_variable_assignment(char ***env, char *arg, size_t *env_size)
 {
 	char	*equal_sign;
+	char	*name;
+	char	*value;
+	int		ret;
 
+	if (!env || !arg || !env_size)
+		return (-1);
 	equal_sign = ft_strchr(arg, '=');
 	if (!equal_sign)
 		return (0);
-	*equal_sign = '\0';
-	if (lms_setenv(env, arg, equal_sign + 1, 1) == -1)
+	name = ft_substr(arg, 0,equal_sign - arg);
+	if (!name)
+		return (-1);
+	value = ft_subdup(equal_sign + 1);
+	if (!value)
 	{
-		ft_putstr_fd("export: " RED "merror setting variable" RESET, 2);
-		*equal_sign = '=';
+		free(name);
 		return (-1);
 	}
-	*equal_sign = '=';
-	return (1);
+	ret = lms_setenv(env, name, value, 1, env_size);
+	free(name);
+	free(value);
+	return (ret);
 }
 
-void	ms_export(char ***env, char **args)
+void	ms_export(char ***env, char **args, size_t *env_size)
 {
 	if (!args[1])
 	{
-		ft_putstr_fd("export: not enough args\nusage: export VAR=VALUE\n", 2);
+		display_environment(*env);
 		return ;
 	}
-	if (handle_variable_assignment(env, args[1]) == 0)
+	if (handle_variable_assignment(env, args[1], env_size) == 0)
 		display_environment(*env);
 }
 
@@ -1093,15 +1131,15 @@ void	ms_pwd(void)
 		ft_putstr_fd("pwd: " RED "error" RESET, 2);
 }
 
-void	ms_unset(char ***env, char **args)
+void	ms_unset(char ***env, char **args, size_t *env_size)
 {
-	if (args[1])
+	if (!args[1])
 	{
-		if (lms_unsetenv(env, args[1]) == -1)
-			ft_putstr_fd("unset: " RED "error unsetting variable\n" RESET, 2);
+		ft_putstr_fd("unset: " YELLOW "missing arguments\n" RESET, 2);
+		return ;
 	}
-	else
-		ft_putstr_fd("unset: not enough args\nusage: unset VAR\n", 2);
+	if (lms_unsetenv(env, args[1], env_size) == -1)
+		ft_putstr_fd("unset: " RED "variable not found\n" RESET, 2);
 }
 
 void	exec_extern(t_token *tokens, t_minishell *shell)
@@ -1265,15 +1303,17 @@ void	ms_prompt(t_minishell *shell)
 }
 
 
-char	**dup_env(char **envp)
+char	**dup_env(char **envp, size_t *envsz)
 {
 	char	**nwenv;
 	int		cnt;
 	int		index;
 
 	cnt = 0;
-	while (envp[cnt])
-		cnt++;
+	if (envp)
+		while (envp[cnt])
+			cnt++;
+	*envsz = cnt;
 	nwenv = ft_calloc(cnt + 1, sizeof(char *));
 	if (!nwenv)
 		return (NULL);
@@ -1298,7 +1338,7 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	shell.env = dup_env(envp);
+	shell.env = dup_env(envp, &shell.env_size);
 	shell.prompt = NULL;
 	shell.exit_stt = 0;
 	welcome();
