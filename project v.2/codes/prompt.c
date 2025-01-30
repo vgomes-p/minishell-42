@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/29 18:48:45 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:52:56 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	ms_prompt(t_minishell *shell)
 		free_tokens(tokens);
 		return ;
 	}
-	if (!exec_builtin(tokens, shell))
+	if (exec_builtin(tokens, shell) == 0)
 		exec_extern(tokens, shell);
 	free(input);
 	free_tokens(tokens);

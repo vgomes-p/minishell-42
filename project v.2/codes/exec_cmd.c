@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:36:18 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/29 17:30:14 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:51:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	else
 	{
 		free(args);
-		return (1);
+		return (0);
 	}
 	free(args);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 17:10:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/29 18:26:45 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/30 16:50:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,29 @@ t_token	*tokening(char *input)
 	t_token	*head;
 	t_token	*current;
 	t_token	*nwtoken;
-	int		index;
+	int		index0;
+	int		index1;
 
 	split = ms_split_quotes(input);
 	if (!split)
 		return (NULL);
 	head = NULL;
 	current = NULL;
-	index = 0;
-	while (split[index])
+	index0 = 0;
+	while (split[index0])
 	{
-		nwtoken = mktoken(split[index],
-				get_token_type(split[index], current, index == 0));
+		nwtoken = mktoken(split[index0],
+				get_token_type(split[index0], current, index0 == 0));
 		if (!nwtoken)
 		{
+			index1 = 0;
+			while (split[index1])
+			{
+				free(split[index1]);
+				index1++;
+			}
 			free(split);
+			free_tokens(head);
 			return (NULL);
 		}
 		if (!head)
@@ -83,7 +91,13 @@ t_token	*tokening(char *input)
 		else
 			current->next = nwtoken;
 		current = nwtoken;
-		index++;
+		index0++;
+	}
+	index1 = 0;
+	while (split[index1])
+	{
+		free(split[index1]);
+		index1++;
 	}
 	free(split);
 	return (head);

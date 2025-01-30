@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/29 17:19:10 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/30 17:42:49 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ typedef struct s_token
 
 
 /* PROMPT */
+char		**dup_env(char **envp);
+
 void		welcome(void);
 void		ms_prompt(t_minishell *shell);
 t_token		*tokening(char *input);

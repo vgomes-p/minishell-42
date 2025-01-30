@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/29 16:43:31 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/30 17:43:26 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ H_SRCS		=	minishell.h
 H_DIR		=	includes/
 HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 
-MAPA_SRCS	=	main.c \
+MAPA_SRCS	=	main.c main_utils.c\
 				prompt.c \
 				token0.c token1.c token_utils.c\
 				cd.c echo.c env.c exit.c export.c pwd.c unset.c \
