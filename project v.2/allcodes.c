@@ -1131,15 +1131,15 @@ void	ms_pwd(void)
 		ft_putstr_fd("pwd: " RED "error" RESET, 2);
 }
 
-void	ms_unset(char ***env, char **args, size_t *env_size)
+void	ms_unset(char ***env, char **args)
 {
-	if (!args[1])
+	if (args[1])
 	{
-		ft_putstr_fd("unset: " YELLOW "missing arguments\n" RESET, 2);
-		return ;
+		if (lms_unsetenv(env, args[1]) == -1)
+			ft_putstr_fd("unset: " RED "error unsetting variable\n" RESET, 2);
 	}
-	if (lms_unsetenv(env, args[1], env_size) == -1)
-		ft_putstr_fd("unset: " RED "variable not found\n" RESET, 2);
+	else
+		ft_putstr_fd("unset: not enough args\nusage: unset VAR\n", 2);
 }
 
 void	exec_extern(t_token *tokens, t_minishell *shell)
