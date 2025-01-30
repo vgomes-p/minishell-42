@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 13:19:55 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/28 13:42:05 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/28 13:22:26 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/30 12:29:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ms_pwd(void)
+void	ms_cd(char **args)
 {
-	char	*cwd;
+	char	*home;
 
-	cwd = getcwd(NULL, 0);
-	if (cwd)
+	if (!args[1])
 	{
-		lms_putstr(cwd);
-		lms_putstr("\n");
-		free(cwd);
+		home = getenv("HOME");
+		if (home)
+			chdir(home);
+		else
+			ft_putstr_fd("cd: " RED "HOME not set" RESET, 2);
 	}
 	else
-		ft_putstr_fd("pwd: \033[1;31merror\033[0m\n", 2);
+	{
+		if (chdir(args[1]) == -1)
+			perror("cd");
+	}
 }

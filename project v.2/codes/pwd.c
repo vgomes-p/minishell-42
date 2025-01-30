@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/28 13:20:17 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/28 13:42:04 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/28 13:19:55 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/30 12:30:57 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ms_unset(char ***env, char **args)
+void	ms_pwd(void)
 {
-	if (args[1])
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (cwd)
 	{
-		if (lms_unsetenv(env, args[1]) == -1)
-			ft_putstr_fd("unset: \033[1;31merror unsetting variable\033[0m\n", 2);
+		lms_putstr(cwd);
+		lms_putstr("\n");
+		free(cwd);
 	}
 	else
-		ft_putstr_fd("unset: not enough args\nusage: unset VAR\n", 2);
+		ft_putstr_fd("pwd: " RED "error" RESET, 2);
 }
