@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/30 17:42:49 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:36:34 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@
 typedef struct s_minishell
 {
 	char	**env;
+	size_t	env_size;
 	char	*prompt;
 	int		exit_stt;
 	int		term_width;
 	int		term_height;
 	char	*error_message;
+	
 }	t_minishell;
 
 typedef enum e_token_tp
@@ -63,7 +65,7 @@ typedef struct s_token
 
 
 /* PROMPT */
-char		**dup_env(char **envp);
+char		**dup_env(char **envp, size_t *envsz);
 
 void		welcome(void);
 void		ms_prompt(t_minishell *shell);
@@ -79,10 +81,10 @@ int			count_tokens(t_token *tokens);
 void		ms_cd(char **args);
 void		ms_echo(char **args);
 void		ms_exit(char **args, t_minishell *shell);
-void		ms_export(char ***env, char **args);
+void		ms_export(char ***env, char **args, size_t *env_size);
 void		ms_pwd(void);
 void		ms_env(void);
-void		ms_unset(char ***env, char **args);
+int			ms_unset(char ***env, char **args, size_t *env_size);
 
 void		exec_extern(t_token *tokens, t_minishell *shell);
 int			exec_builtin(t_token *tokens, t_minishell *shell);

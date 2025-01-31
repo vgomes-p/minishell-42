@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/29 16:36:18 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/30 16:51:04 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/01/31 14:24:15 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	else if (lms_strcmp(args[0], "exit") == 0)
 		ms_exit(args, shell);
 	else if (lms_strcmp(args[0], "export") == 0)
-		ms_export(&(shell->env), args);
+		ms_export(&(shell->env), args, &(shell->env_size));
 	else if (lms_strcmp(args[0], "pwd") == 0)
 		ms_pwd();
 	else if (lms_strcmp(args[0], "unset") == 0)
-		ms_unset(&(shell->env), args);
+		ms_unset(&(shell->env), args, &(shell->env_size));
 	else
 	{
 		free(args);

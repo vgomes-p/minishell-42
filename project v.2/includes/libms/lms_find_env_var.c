@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lms_putenv.c                                       :+:      :+:    :+:   */
+/*   lms_find_env_var.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 14:00:21 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/31 14:43:21 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/01/31 14:18:42 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/01/31 14:21:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
 
-int	lms_putenv(char ***env, char *str, size_t envsz)
+int	lms_find_env_var(char **env, const char *name)
 {
-	char	*equal_sign;
-	char	*name;
-	char	*value;
+	int	index;
+	size_t	nmlen;
 
-	if (!env || !str)
+	if (!env || !name)
 		return (-1);
-	equal_sign = ft_strchr(str, '=');
-	if (!equal_sign)
-		return (-1);
-	*equal_sign = '\0';
-	name = str;
-	value = equal_sign + 1;
-	return (lms_setenv(env, name, value, 1, &envsz));
+	nmlen = ft_strlen(name);
+	index = 0;
+	while (env[index])
+	{
+		if (ft_strncmp(env[index], name, nmlen) == 0
+			&& env[index][nmlen] == '=')
+			return (index);
+		index++;
+	}
+	return (-1);
 }
