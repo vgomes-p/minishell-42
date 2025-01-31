@@ -6,14 +6,14 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/01/30 17:43:26 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/01/31 15:54:08 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME		=	minishell
 CC			=	cc
 FLAGS		=	-Wall -Wextra -Werror -I $(H_DIR) -I $(LIBFT_DIR)
-DEBUG_FLAGS	=	-g -fsanitize=address
+DEBUG_FLAGS	=	-g3 -fsanitize=address
 RM			=	rm -rf
 
 # path and files
