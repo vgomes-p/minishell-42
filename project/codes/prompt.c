@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:13:41 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:58:09 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static char	*pathedprompt(t_minishell *shell)
 {
-	(void)shell;
 	char	*cwd;
 	char	*home;
 	char	*relative_cwd;
 	char	*prompt;
 
+	(void)shell;
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
@@ -52,10 +52,8 @@ void	welcome(void)
 	lms_putstr("════════════════════════════════════════╝" RESET "\n");
 }
 
-void	ms_prompt(t_minishell *shell)
+static void	handle_input(t_minishell *shell, char **input)
 {
-	char	*input;
-	t_token	*tokens;
 	char	*prompt;
 
 	prompt = pathedprompt(shell);
@@ -64,21 +62,28 @@ void	ms_prompt(t_minishell *shell)
 		ft_putstr_fd(RED "Error: Failed to generate prompt\n" RESET, 2);
 		return ;
 	}
-	input = readline(prompt);
+	*input = readline(prompt);
 	free(prompt);
-	if (!input)
+	if (!*input)
 	{
 		ft_putstr_fd(PINK "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
 		free(shell->prompt);
 		rl_clear_history();
 		exit(shell->exit_stt);
 	}
-	if (input[0] == '\0')
+	if ((*input)[0] == '\0')
 	{
-		free(input);
+		free(*input);
+		*input = NULL;
 		return ;
 	}
-	add_history(input);
+	add_history(*input);
+}
+
+static void	process_command(char *input, t_minishell *shell)
+{
+	t_token	*tokens;
+
 	tokens = tokening(input);
 	if (!tokens)
 	{
@@ -93,6 +98,15 @@ void	ms_prompt(t_minishell *shell)
 	}
 	if (exec_builtin(tokens, shell) == 0)
 		exec_extern(tokens, shell);
-	free(input);
 	free_tokens(tokens);
+	free(input);
+}
+
+void	ms_prompt(t_minishell *shell)
+{
+	char	*input;
+
+	handle_input(shell, &input);
+	if (input)
+		process_command(input, shell);
 }
