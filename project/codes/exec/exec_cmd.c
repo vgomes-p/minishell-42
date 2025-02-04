@@ -6,22 +6,21 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:17:44 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:56:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	exec_extern(t_token *tokens, t_minishell *shell)
+static char	**prepare_args(t_token *tokens)
 {
 	char	**args;
-	pid_t	pid;
 	int		index0;
 	t_token	*current;
 
 	args = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
 	if (!args)
-		return ;
+		return (NULL);
 	current = tokens;
 	index0 = 0;
 	while (current)
@@ -30,6 +29,17 @@ void	exec_extern(t_token *tokens, t_minishell *shell)
 		current = current->next;
 	}
 	args[index0] = NULL;
+	return (args);
+}
+
+void	exec_extern(t_token *tokens, t_minishell *shell)
+{
+	char	**args;
+	pid_t	pid;
+
+	args = prepare_args(tokens);
+	if (!args)
+		return ;
 	pid = fork();
 	if (pid == 0)
 	{
@@ -42,20 +52,20 @@ void	exec_extern(t_token *tokens, t_minishell *shell)
 	else if (pid < 0)
 		perror(RED "fork" RESET);
 	else
-		waitpid(pid, NULL, 0);/*colocar WNOHANG no lugar do 0 se der timeout*/
+		waitpid(pid, NULL, 0);
 	free(args);
 }
 
-int	exec_builtin(t_token *tokens, t_minishell *shell)
+static char	**prepare_builtin_args(t_token *tokens)
 {
 	char	**args;
 	t_token	*current;
 	int		index0;
 
-	current = tokens;
 	args = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
 	if (!args)
-		return (-1);
+		return (NULL);
+	current = tokens;
 	index0 = 0;
 	while (current)
 	{
@@ -63,7 +73,18 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 		current = current->next;
 	}
 	args[index0] = NULL;
+	return (args);
+}
 
+int	exec_builtin(t_token *tokens, t_minishell *shell)
+{
+	char	**args;
+	int		ret;
+
+	args = prepare_builtin_args(tokens);
+	if (!args)
+		return (-1);
+	ret = 1;
 	if (lms_strcmp(args[0], "cd") == 0)
 		ms_cd(args);
 	else if (lms_strcmp(args[0], "echo") == 0)
@@ -75,10 +96,7 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	else if (lms_strcmp(args[0], "pwd") == 0)
 		ms_pwd();
 	else
-	{
-		free(args);
-		return (0);
-	}
+		ret = 0;
 	free(args);
-	return (1);
+	return (ret);
 }

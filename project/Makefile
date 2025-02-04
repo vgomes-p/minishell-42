@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/04 16:09:51 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/04 16:54:33 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 MAIN_SRCS	=	main.c main_utils.c prompt.c
 MAIN_DIR	=	codes/
 
-TOKEN_SRCS	=	token0.c token1.c token_utils.c
+TOKEN_SRCS	=	token0.c token1.c token_utils0.c token_utils1.c
 TOKEN_DIR	=	codes/tokens/
 
 BUILDIN_SRCS	=	cd.c echo.c env.c exit.c pwd.c 
