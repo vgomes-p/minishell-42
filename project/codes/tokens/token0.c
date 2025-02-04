@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:19:00 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:47:37 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,6 @@ static t_token	*mktoken(char *value, t_token_tp type)
 	token->type = type;
 	token->next = NULL;
 	return (token);
-}
-
-static bool	is_operator(char *str)
-{
-	return (lms_strcmp(str, "|") == 0 || lms_strcmp(str, ">") == 0
-		|| lms_strcmp(str, "<") == 0 || lms_strcmp(str, ">>") == 0
-		|| lms_strcmp(str, "<<") == 0);
 }
 
 t_token_tp	get_token_type(char *token, t_token *current, int is_first)
@@ -55,19 +48,25 @@ t_token_tp	get_token_type(char *token, t_token *current, int is_first)
 	return (type);
 }
 
-t_token	*tokening(char *input)
+static void	free_split_array(char **split)
 {
-	char	**split;
-	t_token	*head;
+	int	index1;
+
+	index1 = 0;
+	while (split[index1])
+	{
+		free(split[index1]);
+		index1++;
+	}
+	free(split);
+}
+
+static t_token	*create_token_list(char **split, t_token *head)
+{
 	t_token	*current;
 	t_token	*nwtoken;
 	int		index0;
-	int		index1;
 
-	split = ms_split_quotes(input);
-	if (!split)
-		return (NULL);
-	head = NULL;
 	current = NULL;
 	index0 = 0;
 	while (split[index0])
@@ -76,13 +75,7 @@ t_token	*tokening(char *input)
 				get_token_type(split[index0], current, index0 == 0));
 		if (!nwtoken)
 		{
-			index1 = 0;
-			while (split[index1])
-			{
-				free(split[index1]);
-				index1++;
-			}
-			free(split);
+			free_split_array(split);
 			free_tokens(head);
 			return (NULL);
 		}
@@ -93,36 +86,20 @@ t_token	*tokening(char *input)
 		current = nwtoken;
 		index0++;
 	}
-	index1 = 0;
-	while (split[index1])
-	{
-		free(split[index1]);
-		index1++;
-	}
-	free(split);
 	return (head);
 }
 
-bool	valid_syntax(t_token *tokens)
+t_token	*tokening(char *input)
 {
-	t_token	*current;
+	char	**split;
+	t_token	*head;
 
-	current = tokens;
-	while (current)
-	{
-		if (current->type == PIPE || current->type == REDIR_OUT
-			|| current->type == REDIR_IN || current->type == REDIR_APPEND
-			|| current->type == HEREDOC)
-		{
-			if (!current->next || (current->next->type != ARG
-					&& current->next->type != CMD))
-			{
-				printf(RED "Syntax error: '%s' operator without args.\n" RESET,
-					current->value);
-				return (false);
-			}
-		}
-		current = current->next;
-	}
-	return (true);
+	split = ms_split_quotes(input);
+	if (!split)
+		return (NULL);
+	head = NULL;
+	head = create_token_list(split, head);
+	if (head)
+		free_split_array(split);
+	return (head);
 }

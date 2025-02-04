@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:21:56 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:52:37 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,6 @@ typedef struct s_minishell
 	int		term_width;
 	int		term_height;
 	char	*error_message;
-	
 }	t_minishell;
 
 typedef enum e_token_tp
@@ -78,26 +77,28 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-
 /* PROMPT */
 char		**dup_env(char **envp, size_t *envsz);
 
 void		welcome(void);
-void		ms_prompt(t_minishell *shell);
 t_token		*tokening(char *input);
+void		ms_prompt(t_minishell *shell);
+char		**ms_split_quotes(const char *input);
+char		**ms_split_quotes(const char *input);
 t_token_tp	get_token_type(char *token, t_token *current, int is_first);
-char		**ms_split_quotes(const char *input);
-bool		valid_syntax(t_token *tokens);
-char		**ms_split_quotes(const char *input);
 
+bool		is_quotes(char ch);
+bool		is_operator(char *str);
 void		free_tokens(t_token *tokens);
 int			count_tokens(t_token *tokens);
+void		cleanup_tokens(char **tokens, int token_cnt);
+bool		valid_syntax(t_token *tokens);
 
+void		ms_env(void);
+void		ms_pwd(void);
 void		ms_cd(char **args);
 void		ms_echo(char **args);
 void		ms_exit(char **args, t_minishell *shell);
-void		ms_pwd(void);
-void		ms_env(void);
 
 void		exec_extern(t_token *tokens, t_minishell *shell);
 int			exec_builtin(t_token *tokens, t_minishell *shell);
