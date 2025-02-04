@@ -6,23 +6,25 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/27 13:51:46 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:13:41 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	pathedprompt(t_minishell *shell)
+static char	*pathedprompt(t_minishell *shell)
 {
+	(void)shell;
 	char	*cwd;
 	char	*home;
 	char	*relative_cwd;
+	char	*prompt;
 
 	cwd = getcwd(NULL, 0);
 	if (!cwd)
 	{
 		perror("getcwd");
-		return ;
+		return (NULL);
 	}
 	home = getenv("HOME");
 	if (home && lms_strstr(cwd, home) == cwd)
@@ -31,11 +33,11 @@ static void	pathedprompt(t_minishell *shell)
 		free(cwd);
 		cwd = relative_cwd;
 	}
-	free(shell->prompt);
-	shell->prompt = ft_strjoin(GREEN, cwd);
-	shell->prompt = lms_strjoin_free(shell->prompt, RESET);
-	shell->prompt = lms_strjoin_free(shell->prompt, CYAN " minishell$ " RESET);
+	prompt = ft_strjoin(GREEN, cwd);
+	prompt = lms_strjoin_free(prompt, RESET);
+	prompt = lms_strjoin_free(prompt, CYAN " minishell$ " RESET);
 	free(cwd);
+	return (prompt);
 }
 
 void	welcome(void)
@@ -53,19 +55,44 @@ void	welcome(void)
 void	ms_prompt(t_minishell *shell)
 {
 	char	*input;
+	t_token	*tokens;
+	char	*prompt;
 
-	while (1)
+	prompt = pathedprompt(shell);
+	if (!prompt)
 	{
-		pathedprompt(shell);
-		input = readline(shell->prompt);
-		if (!input)
-		{
-			printf(RED "exit" RESET "\n");
-			break ;
-		}
-		if (*input)
-			add_history(input);
-		free(input);
+		ft_putstr_fd(RED "Error: Failed to generate prompt\n" RESET, 2);
+		return ;
 	}
-	rl_clear_history();
+	input = readline(prompt);
+	free(prompt);
+	if (!input)
+	{
+		ft_putstr_fd(PINK "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
+		free(shell->prompt);
+		rl_clear_history();
+		exit(shell->exit_stt);
+	}
+	if (input[0] == '\0')
+	{
+		free(input);
+		return ;
+	}
+	add_history(input);
+	tokens = tokening(input);
+	if (!tokens)
+	{
+		ft_putstr_fd(RED "Error: Tokenination has failed\n" RESET, 2);
+		return ;
+	}
+	if (!valid_syntax(tokens))
+	{
+		ft_putstr_fd(RED "Syntax error\n" RESET, 2);
+		free_tokens(tokens);
+		return ;
+	}
+	if (exec_builtin(tokens, shell) == 0)
+		exec_extern(tokens, shell);
+	free(input);
+	free_tokens(tokens);
 }

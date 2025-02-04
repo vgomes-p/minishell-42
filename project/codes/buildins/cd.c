@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lms_realloc.c                                      :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 14:21:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/31 14:13:11 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/04 16:13:12 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/04 16:13:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "../includes/minishell.h"
 
-void	*lms_realloc(void *ptr, size_t oldsz, size_t nwsize)
+void	ms_cd(char **args)
 {
-	void	*nwptr;
+	char	*home;
 
-	if (!ptr)
-		return (malloc(nwsize));
-	if (nwsize == 0)
+	if (!args[1])
 	{
-		free(ptr);
-		return (NULL);
+		home = getenv("HOME");
+		if (home)
+			chdir(home);
+		else
+			ft_putstr_fd(RED "cd: HOME not set" RESET, 2);
 	}
-	nwptr = malloc(nwsize);
-	if (!nwptr)
+	else
 	{
-		free(ptr);
-		return (NULL);
+		if (chdir(args[1]) == -1)
+			perror("cd");
 	}
-	ft_memcpy(nwptr, ptr, oldsz < nwsize ? oldsz : nwsize);
-	free(ptr);
-	return (nwptr);
 }

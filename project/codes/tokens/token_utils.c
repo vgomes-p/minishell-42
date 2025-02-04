@@ -1,35 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lms_realloc.c                                      :+:      :+:    :+:   */
+/*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 14:21:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/31 14:13:11 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/04 16:18:22 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/04 16:18:31 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "../includes/minishell.h"
 
-void	*lms_realloc(void *ptr, size_t oldsz, size_t nwsize)
+int	count_tokens(t_token *tokens)
 {
-	void	*nwptr;
+	int	count;
+	t_token	*current;
 
-	if (!ptr)
-		return (malloc(nwsize));
-	if (nwsize == 0)
+	count = 0;
+	current = tokens;
+	while (current)
 	{
-		free(ptr);
-		return (NULL);
+		count++;
+		current = current->next;
 	}
-	nwptr = malloc(nwsize);
-	if (!nwptr)
+	return (count);
+}
+
+void	free_tokens(t_token *tokens)
+{
+	t_token	*current;
+	t_token	*next;
+
+	current = tokens;
+	while (current)
 	{
-		free(ptr);
-		return (NULL);
+		next = current->next;
+		if (current->value)
+			free(current->value);
+		free(current);
+		current = next;
 	}
-	ft_memcpy(nwptr, ptr, oldsz < nwsize ? oldsz : nwsize);
-	free(ptr);
-	return (nwptr);
 }
