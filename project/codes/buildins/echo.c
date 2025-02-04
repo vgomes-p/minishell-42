@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mscolor.h                                          :+:      :+:    :+:   */
+/*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 13:36:14 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/27 13:37:27 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/04 16:12:45 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/04 16:15:21 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MSCOLOR_H
-# define MSCOLOR_H
+#include "../includes/minishell.h"
 
-# define RESET		"\033[0m"
-# define RED		"\033[1;31m"
-# define CYAN		"\033[1;36m"
-# define PINK		"\033[1;35m"
-# define GREEN		"\033[1;32m"
-# define YELLOW		"\033[1;33m"
-# define REWHITE	"\033[1;7;97m"
-# define RECYAN		"\033[1;7;36m"
-# define REPINK		"\033[1;7;35m"
-# define RERED		"\033[1;7;31m"
-# define REGREEN	"\033[1;7;32m"
-# define REYELLOW	"\033[1;7;33m"
+void	ms_echo(char **args)
+{
+	int	index;
+	int	nwline;
 
-#endif
+	index = 1;
+	nwline = 1;
+	if (args[1] && lms_strcmp(args[1], "-n") == 0)
+	{
+		nwline = 0;
+		index++;
+	}
+	while (args[index])
+	{
+		lms_putstr(args[index]);
+		if (args[index + 1])
+			lms_putstr(" ");
+		index++;
+	}
+	if (nwline)
+		lms_putstr("\n");
+}
