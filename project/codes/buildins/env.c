@@ -1,35 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lms_realloc.c                                      :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/15 14:21:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/01/31 14:13:11 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/04 16:13:56 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/04 16:15:16 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "../includes/minishell.h"
 
-void	*lms_realloc(void *ptr, size_t oldsz, size_t nwsize)
+extern char	**environ;
+
+void	ms_env(void)
 {
-	void	*nwptr;
+	int	index;
 
-	if (!ptr)
-		return (malloc(nwsize));
-	if (nwsize == 0)
+	index = 0;
+	while (environ[index])
 	{
-		free(ptr);
-		return (NULL);
+		lms_putstr(environ[index]);
+		lms_putstr("\n");
+		index++;
 	}
-	nwptr = malloc(nwsize);
-	if (!nwptr)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	ft_memcpy(nwptr, ptr, oldsz < nwsize ? oldsz : nwsize);
-	free(ptr);
-	return (nwptr);
 }

@@ -1,31 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   main_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 16:23:37 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:10:13 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/04 16:10:30 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/04 16:15:27 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+char	**dup_env(char **envp, size_t *envsz)
 {
-	t_minishell	shell;
+	char	**nwenv;
+	int		cnt;
+	int		index;
 
-	(void)argc;
-	(void)argv;
-	shell.env = dup_env(envp, &shell.env_size);
-	shell.prompt = NULL;
-	shell.exit_stt = 0;
-	welcome();
-	while (1)
+	cnt = 0;
+	if (envp)
+		while (envp[cnt])
+			cnt++;
+	*envsz = cnt;
+	nwenv = ft_calloc(cnt + 1, sizeof(char *));
+	if (!nwenv)
+		return (NULL);
+	index = -1;
+	while (++index < cnt)
 	{
-		ms_prompt(&shell);
+		nwenv[index] = ft_strdup(envp[index]);
+		if (!nwenv[index])
+		{
+			while (--index >= 0)
+				free(nwenv[index]);
+			free(nwenv);
+			return (NULL);
+		}
 	}
-	return (0);
+	return (nwenv);
 }
-
