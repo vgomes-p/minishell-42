@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:47:37 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:19:45 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ t_token_tp	get_token_type(char *token, t_token *current, int is_first)
 
 static void	free_split_array(char **split)
 {
-	int	index1;
+	int	pos;
 
-	index1 = 0;
-	while (split[index1])
+	pos = 0;
+	while (split[pos])
 	{
-		free(split[index1]);
-		index1++;
+		free(split[pos]);
+		pos++;
 	}
 	free(split);
 }
@@ -65,14 +65,14 @@ static t_token	*create_token_list(char **split, t_token *head)
 {
 	t_token	*current;
 	t_token	*nwtoken;
-	int		index0;
+	int		pos;
 
 	current = NULL;
-	index0 = 0;
-	while (split[index0])
+	pos = 0;
+	while (split[pos])
 	{
-		nwtoken = mktoken(split[index0],
-				get_token_type(split[index0], current, index0 == 0));
+		nwtoken = mktoken(split[pos],
+				get_token_type(split[pos], current, pos == 0));
 		if (!nwtoken)
 		{
 			free_split_array(split);
@@ -84,7 +84,7 @@ static t_token	*create_token_list(char **split, t_token *head)
 		else
 			current->next = nwtoken;
 		current = nwtoken;
-		index0++;
+		pos++;
 	}
 	return (head);
 }

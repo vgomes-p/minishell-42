@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:19:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:53:55 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:21:22 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,42 +15,42 @@
 static char	*clean_token(const char *str, int len)
 {
 	char	*cleaned;
-	int		index0;
-	int		index1;
+	int		pos;
+	int		nwpos;
 
 	cleaned = malloc(len + 1);
-	index0 = 0;
-	index1 = 0;
+	pos = 0;
+	nwpos = 0;
 	if (!cleaned)
 		return (NULL);
-	while (index0 < len)
+	while (pos < len)
 	{
-		if (!is_quotes(str[index0]))
+		if (!is_quotes(str[pos]))
 		{
-			cleaned[index1++] = str[index0];
+			cleaned[nwpos++] = str[pos];
 		}
-		index0++;
+		pos++;
 	}
-	cleaned[index1] = '\0';
+	cleaned[nwpos] = '\0';
 	return (cleaned);
 }
 
-static bool	process_quotes(const char *input, int *index, bool *in_quotes,
+static bool	process_quotes(const char *input, int *pos, bool *in_quotes,
 						char *quote_ch)
 {
-	while (input[*index] && (*in_quotes || input[*index] != ' '))
+	while (input[*pos] && (*in_quotes || input[*pos] != ' '))
 	{
-		if (is_quotes(input[*index]))
+		if (is_quotes(input[*pos]))
 		{
 			if (!*in_quotes)
 			{
 				*in_quotes = true;
-				*quote_ch = input[*index];
+				*quote_ch = input[*pos];
 			}
-			else if (input[*index] == *quote_ch)
+			else if (input[*pos] == *quote_ch)
 				*in_quotes = false;
 		}
-		(*index)++;
+		(*pos)++;
 	}
 	if (*in_quotes)
 	{
@@ -60,35 +60,35 @@ static bool	process_quotes(const char *input, int *index, bool *in_quotes,
 	return (true);
 }
 
-static char	*extract_token(const char *input, int *index)
+static char	*extract_token(const char *input, int *pos)
 {
 	int		start;
 	bool	in_quotes;
 	char	quote_ch;
 
-	start = *index;
+	start = *pos;
 	in_quotes = false;
 	quote_ch = '\0';
-	if (!process_quotes(input, index, &in_quotes, &quote_ch))
+	if (!process_quotes(input, pos, &in_quotes, &quote_ch))
 		return (NULL);
-	return (clean_token(&input[start], *index - start));
+	return (clean_token(&input[start], *pos - start));
 }
 
 static char	**process_tokens(const char *input, char **tokens)
 {
 	char	*token;
-	int		index0;
+	int		pos;
 	int		token_cnt;
 
-	index0 = 0;
+	pos = 0;
 	token_cnt = 0;
-	while (input[index0])
+	while (input[pos])
 	{
-		while (input[index0] == ' ')
-			index0++;
-		if (input[index0] == '\0')
+		while (input[pos] == ' ')
+			pos++;
+		if (input[pos] == '\0')
 			break ;
-		token = extract_token(input, &index0);
+		token = extract_token(input, &pos);
 		if (token)
 			tokens[token_cnt++] = token;
 		else
