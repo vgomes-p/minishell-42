@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:54:08 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:18:59 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ bool	valid_syntax(t_token *tokens)
 
 void	cleanup_tokens(char **tokens, int token_cnt)
 {
-	int	index1;
+	int	pos;
 
-	index1 = 0;
-	while (index1 < token_cnt)
+	pos = 0;
+	while (pos < token_cnt)
 	{
-		free(tokens[index1]);
-		index1++;
+		free(tokens[pos]);
+		pos++;
 	}
 	free(tokens);
 }
