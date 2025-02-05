@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:56:13 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:17:58 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,20 @@
 static char	**prepare_args(t_token *tokens)
 {
 	char	**args;
-	int		index0;
+	int		arg_pos;
 	t_token	*current;
 
 	args = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
 	if (!args)
 		return (NULL);
 	current = tokens;
-	index0 = 0;
+	arg_pos = 0;
 	while (current)
 	{
-		args[index0++] = current->value;
+		args[arg_pos++] = current->value;
 		current = current->next;
 	}
-	args[index0] = NULL;
+	args[arg_pos] = NULL;
 	return (args);
 }
 
@@ -60,19 +60,19 @@ static char	**prepare_builtin_args(t_token *tokens)
 {
 	char	**args;
 	t_token	*current;
-	int		index0;
+	int		arg_pos;
 
 	args = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
 	if (!args)
 		return (NULL);
 	current = tokens;
-	index0 = 0;
+	arg_pos = 0;
 	while (current)
 	{
-		args[index0++] = current->value;
+		args[arg_pos++] = current->value;
 		current = current->next;
 	}
-	args[index0] = NULL;
+	args[arg_pos] = NULL;
 	return (args);
 }
 

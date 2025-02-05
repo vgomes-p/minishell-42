@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:12:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:15:21 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/05 15:15:11 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,22 @@
 
 void	ms_echo(char **args)
 {
-	int	index;
+	int	curr_arg;
 	int	nwline;
 
-	index = 1;
+	curr_arg = 1;
 	nwline = 1;
 	if (args[1] && lms_strcmp(args[1], "-n") == 0)
 	{
 		nwline = 0;
-		index++;
+		curr_arg++;
 	}
-	while (args[index])
+	while (args[curr_arg])
 	{
-		lms_putstr(args[index]);
-		if (args[index + 1])
+		lms_putstr(args[curr_arg]);
+		if (args[curr_arg + 1])
 			lms_putstr(" ");
-		index++;
+		curr_arg++;
 	}
 	if (nwline)
 		lms_putstr("\n");
