@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:52:37 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:51:20 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_minishell
 	int		term_width;
 	int		term_height;
 	char	*error_message;
+	int		error_code;
 }	t_minishell;
 
 typedef enum e_token_tp
@@ -99,6 +100,7 @@ void		ms_pwd(void);
 void		ms_cd(char **args);
 void		ms_echo(char **args);
 void		ms_exit(char **args, t_minishell *shell);
+void		ms_export(t_minishell *shell, char **argc, char ***envp);
 
 void		exec_extern(t_token *tokens, t_minishell *shell);
 int			exec_builtin(t_token *tokens, t_minishell *shell);
