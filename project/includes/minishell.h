@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/05 16:51:20 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:49:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,18 @@ int			count_tokens(t_token *tokens);
 void		cleanup_tokens(char **tokens, int token_cnt);
 bool		valid_syntax(t_token *tokens);
 
-void		ms_env(void);
+int			find_envar(const char *var, char **envp);
+void		update_envar(const char *var, int index0, char ***envp);
+int			valid_name(const char *var);
+void		export_err(const char *arg);
+
+void		ms_env(t_minishell *shell);
 void		ms_pwd(void);
 void		ms_cd(char **args);
 void		ms_echo(char **args);
 void		ms_exit(char **args, t_minishell *shell);
-void		ms_export(t_minishell *shell, char **argc, char ***envp);
+void		ms_export(t_minishell *shell, char **args, char ***envp);
+void		ms_unset(t_minishell *shell, char **args, char ***envp);
 
 void		exec_extern(t_token *tokens, t_minishell *shell);
 int			exec_builtin(t_token *tokens, t_minishell *shell);

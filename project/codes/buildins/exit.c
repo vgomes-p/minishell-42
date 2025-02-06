@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:14:24 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:40:38 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:11:06 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	ms_exit(char **args, t_minishell *shell)
 	if (args[1])
 		stat = ft_atoi(args[1]);
 	shell->exit_stt = stat;
-	ft_putstr_fd(PINK "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
+	ft_putstr_fd(RECYAN "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
 	free(shell->prompt);
 	exit(stat);
 }
