@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 15:53:08 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/06 15:53:30 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/06 17:01:40 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ void	ms_export(t_minishell *shell, char **args, char ***envp)
 			index1 = find_envar(args[index0], *envp);
 			update_envar(args[index0], index1, envp);
 			shell->error_code = 0;
-			ms_env(shell);
 		}
 		else
 		{
