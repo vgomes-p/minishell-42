@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:58:09 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/06 15:50:50 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ static void	handle_input(t_minishell *shell, char **input)
 	free(prompt);
 	if (!*input)
 	{
-		ft_putstr_fd(PINK "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
+		ft_putstr_fd(RECYAN "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
 		free(shell->prompt);
 		rl_clear_history();
 		exit(shell->exit_stt);
