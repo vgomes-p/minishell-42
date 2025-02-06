@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/05 17:01:50 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:49:58 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	else if (lms_strcmp(args[0], "echo") == 0)
 		ms_echo(args);
 	else if (lms_strcmp(args[0], "env") == 0)
-		ms_env();
+		ms_env(shell);
 	else if (lms_strcmp(args[0], "exit") == 0)
 		ms_exit(args, shell);
 	else if (lms_strcmp(args[0], "pwd") == 0)
@@ -101,6 +101,8 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 		if (shell->error_code != 0)
 			ret = shell->error_code;
 	}
+	else if (lms_strcmp(args[0], "unset") == 0)
+		ms_unset(shell, args, &shell->env);
 	else
 		ret = 0;
 	free(args);
