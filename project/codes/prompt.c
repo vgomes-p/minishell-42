@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/06 15:50:50 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:40:21 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,14 @@ static char	*pathedprompt(t_minishell *shell)
 	}
 	prompt = ft_strjoin(GREEN, cwd);
 	prompt = lms_strjoin_free(prompt, RESET);
-	prompt = lms_strjoin_free(prompt, CYAN " minishell$ " RESET);
+	prompt = lms_strjoin_free(prompt, CYAN " minishell$ > " RESET);
 	free(cwd);
 	return (prompt);
 }
 
 void	welcome(void)
 {
-	lms_putstr("                         ");
-	lms_putstr(RECYAN "{Made by vgomes-p & sthrodri}" RESET "\n\n");
-	lms_putstr("\n" CYAN "╔═════════════════════════════════════");
+	lms_putstr(CYAN "╔═════════════════════════════════════");
 	lms_putstr("═════════════════════════════════════════╗\n");
 	lms_putstr("║                            WELCOME T");
 	lms_putstr("O MINISHELL                              ║\n");
