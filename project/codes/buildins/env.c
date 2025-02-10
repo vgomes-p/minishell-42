@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:13:56 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/06 14:11:25 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:37:49 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ms_env(t_minishell *shell)
 {
-	int curr_arg;
+	int	curr_arg;
 
 	curr_arg = 0;
 	while (shell->env && shell->env[curr_arg])
