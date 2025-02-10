@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 14:28:07 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/06 18:07:23 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:37:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static void	rmvar(char *var, char ***envp)
 	tempvar = ft_strjoin (var, "=");
 	if (!tempvar)
 		return ;
-	while ((*envp)[index] && ft_strncmp((*envp)[index], tempvar, ft_strlen(tempvar)))
+	while ((*envp)[index] && ft_strncmp((*envp)[index],
+			tempvar, ft_strlen(tempvar)))
 		index++;
 	if ((*envp)[index])
 	{
@@ -91,7 +92,7 @@ void	ms_unset(t_minishell *shell, char **args, char ***envp)
 	}
 	while (*(++args))
 	{
-		if(validvar(*args, envp))
+		if (validvar(*args, envp))
 		{
 			rmvar(*args, envp);
 		}
