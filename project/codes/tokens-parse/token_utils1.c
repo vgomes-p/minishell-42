@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/05 15:18:59 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/10 19:11:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,15 @@ bool	valid_syntax(t_token *tokens)
 	current = tokens;
 	while (current)
 	{
-		if (current->type == PIPE || current->type == REDIR_OUT
-			|| current->type == REDIR_IN || current->type == REDIR_APPEND
-			|| current->type == HEREDOC)
+		if (current->type == PIPE && (!current->prev || !current->next))
 		{
-			if (!current->next || (current->next->type != ARG
-					&& current->next->type != CMD))
-			{
-				printf(RED "Syntax error: '%s' operator without args.\n" RESET,
-					current->value);
-				return (false);
-			}
+			ft_putstr_fd(RED "Syntax error near unexpected pipe\n" RESET, 2);
+			return (false);
+		}
+		else if ((current->type >= REDIR_IN && current->type <= HEREDOC) && !current->next)
+		{
+			ft_putstr_fd(RED "syntax error near unexpected 'newline'\n" RESET, 2);
+			return (false);
 		}
 		current = current->next;
 	}
@@ -47,4 +45,17 @@ void	cleanup_tokens(char **tokens, int token_cnt)
 		pos++;
 	}
 	free(tokens);
+}
+
+void	free_split_array(char **split)
+{
+	int	pos;
+
+	pos = 0;
+	while (split[pos])
+	{
+		free(split[pos]);
+		pos++;
+	}
+	free(split);
 }
