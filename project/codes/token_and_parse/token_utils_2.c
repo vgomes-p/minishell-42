@@ -1,31 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils0.c                                     :+:      :+:    :+:   */
+/*   token_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 16:18:22 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/04 16:52:16 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/11 15:06:52 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
-
-int	count_tokens(t_token *tokens)
-{
-	int		count;
-	t_token	*current;
-
-	count = 0;
-	current = tokens;
-	while (current)
-	{
-		count++;
-		current = current->next;
-	}
-	return (count);
-}
+#include "../../includes/minishell.h"
 
 void	free_tokens(t_token *tokens)
 {
@@ -43,14 +28,26 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-bool	is_quotes(char ch)
+char	*clean_token(const char *str, int len)
 {
-	return (ch == '\'' || ch == '\"');
+	char	*cleaned;
+	int		pos;
+	int		nwpos;
+
+	cleaned = malloc(len + 1);
+	pos = 0;
+	nwpos = 0;
+	if (!cleaned)
+		return (NULL);
+	while (pos < len)
+	{
+		if (!is_quotes(str[pos]))
+		{
+			cleaned[nwpos++] = str[pos];
+		}
+		pos++;
+	}
+	cleaned[nwpos] = '\0';
+	return (cleaned);
 }
 
-bool	is_operator(char *str)
-{
-	return (lms_strcmp(str, "|") == 0 || lms_strcmp(str, ">") == 0
-		|| lms_strcmp(str, "<") == 0 || lms_strcmp(str, ">>") == 0
-		|| lms_strcmp(str, "<<") == 0);
-}

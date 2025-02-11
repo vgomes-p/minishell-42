@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:14:24 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/06 14:11:06 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:07:29 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	validate_exit_args(char **args, t_minishell *shell)
 {

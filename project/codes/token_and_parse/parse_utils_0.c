@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils1.c                                     :+:      :+:    :+:   */
+/*   parse_utils_0.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/05 15:18:59 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/11 14:51:05 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/11 15:07:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 bool	valid_syntax(t_token *tokens)
 {
@@ -34,17 +34,4 @@ bool	valid_syntax(t_token *tokens)
 		current = current->next;
 	}
 	return (true);
-}
-
-void	cleanup_tokens(char **tokens, int token_cnt)
-{
-	int	pos;
-
-	pos = 0;
-	while (pos < token_cnt)
-	{
-		free(tokens[pos]);
-		pos++;
-	}
-	free(tokens);
 }

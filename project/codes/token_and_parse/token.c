@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token0.c                                           :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/05 15:19:45 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:06:29 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-static t_token	*mktoken(char *value, t_token_tp type)
+t_token	*mktoken(char *value, t_token_tp type)
 {
 	t_token	*token;
 
@@ -25,43 +25,17 @@ static t_token	*mktoken(char *value, t_token_tp type)
 	return (token);
 }
 
-t_token_tp	get_token_type(char *token, t_token *current, int is_first)
+char	**ms_split_quotes(const char *input)
 {
-	t_token_tp	type;
+	char	**tokens;
 
-	type = ARG;
-	if (is_operator(token))
-	{
-		if (lms_strcmp(token, "|") == 0)
-			type = PIPE;
-		else if (lms_strcmp(token, ">") == 0)
-			type = REDIR_OUT;
-		else if (lms_strcmp(token, ">>") == 0)
-			type = REDIR_APPEND;
-		else if (lms_strcmp(token, "<") == 0)
-			type = REDIR_IN;
-		else if (lms_strcmp(token, "<<") == 0)
-			type = HEREDOC;
-	}
-	else if (is_first || (current && current->type == PIPE))
-		type = CMD;
-	return (type);
+	tokens = ft_calloc(ft_strlen(input) + 1, sizeof(char *));
+	if (!tokens)
+		return (NULL);
+	return (process_tokens(input, tokens));
 }
 
-static void	free_split_array(char **split)
-{
-	int	pos;
-
-	pos = 0;
-	while (split[pos])
-	{
-		free(split[pos]);
-		pos++;
-	}
-	free(split);
-}
-
-static t_token	*create_token_list(char **split, t_token *head)
+t_token	*create_token_list(char **split, t_token *head)
 {
 	t_token	*current;
 	t_token	*nwtoken;
