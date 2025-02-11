@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/10 18:39:14 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/10 13:27:05 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@
 # include "libms/libms.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-
-/* DEFINE */
-
-# define SEP '\x1F'
 
 /* DEFINE COLORS */
 # define RESET		"\001\033[0m\002"
@@ -68,10 +64,8 @@ typedef enum e_token_tp
 	ARG,
 	PIPE,
 	APPEND,
-	BUILDIN,
 	HEREDOC,
 	REDIR_IN,
-	ARG_FILE,
 	REDIR_OUT,
 	REDIR_APPEND,
 	SYNTAX_ERROR,
@@ -79,36 +73,32 @@ typedef enum e_token_tp
 
 typedef struct s_token
 {
-	t_token_tp		type;
-	struct s_token	*prev;
-	struct s_token	*next;
 	char			*value;
+	t_token_tp		type;
+	struct s_token	*next;
 }	t_token;
 
 /* PROMPT */
 char		**dup_env(char **envp, size_t *envsz);
-void		welcome(void);
-void		ms_prompt(t_minishell *shell);
 
-/* TOKEN DIR */
+void		welcome(void);
+t_token		*tokening(char *input);
+void		ms_prompt(t_minishell *shell);
+char		**ms_split_quotes(const char *input);
+char		**ms_split_quotes(const char *input);
+t_token_tp	get_token_type(char *token, t_token *current, int is_first);
+
 bool		is_quotes(char ch);
 bool		is_operator(char *str);
-t_token		*tokening(char *input);
-int			is_buildin(char *token);
-void		define_type(t_token **head);
 void		free_tokens(t_token *tokens);
 int			count_tokens(t_token *tokens);
-bool		valid_syntax(t_token *tokens);
-void		free_split_array(char **split);
-char		**ms_split_quotes(const char *input);
-void		add_token(t_token **head, char *token_str);
 void		cleanup_tokens(char **tokens, int token_cnt);
+bool		valid_syntax(t_token *tokens);
 
-/* BUILDIN DIR */
-int			valid_name(const char *var);
-void		export_err(const char *arg);
 int			find_envar(const char *var, char **envp);
 void		update_envar(const char *var, int index0, char ***envp);
+int			valid_name(const char *var);
+void		export_err(const char *arg);
 
 void		ms_echo(char **args);
 void		ms_pwd(t_minishell *shell);
@@ -118,7 +108,6 @@ void		ms_exit(char **args, t_minishell *shell);
 void		ms_unset(t_minishell *shell, char **args, char ***envp);
 void		ms_export(t_minishell *shell, char **args, char ***envp);
 
-/* EXEC DIR */
 void		exec_extern(t_token *tokens, t_minishell *shell);
 int			exec_builtin(t_token *tokens, t_minishell *shell);
 
