@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/06 14:28:04 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/11 17:34:22 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,11 @@ HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 MAIN_SRCS	=	main.c main_utils.c prompt.c
 MAIN_DIR	=	codes/
 
-TOKEN_SRCS	=	token0.c token1.c token_utils0.c token_utils1.c
-TOKEN_DIR	=	codes/tokens/
+TOKEN&PARSE_SRCS	=	token.c \
+				token_utils_0.c token_utils_1.c token_utils_2.c \
+				parse.c \
+				parse_utils_0.c
+TOKEN&PARSE_DIR	=	codes/token_and_parse/
 
 BUILDIN_SRCS	=	cd.c echo.c env.c exit.c pwd.c export.c export_utils.c unset.c
 BUILDIN_DIR	=	codes/buildins/
@@ -37,10 +40,10 @@ EXEC_SRCS	=	exec_cmd.c
 EXEC_DIR	=	codes/exec/
 
 OBJ_DIR		=	build/
-OBJ_M		=	$(addprefix $(OBJ_DIR), $(MAIN_SRCS:.c=.o) $(TOKEN_SRCS:.c=.o) $(BUILDIN_SRCS:.c=.o) $(PIPE_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
+OBJ_M		=	$(addprefix $(OBJ_DIR), $(MAIN_SRCS:.c=.o) $(TOKEN&PARSE_SRCS:.c=.o) $(BUILDIN_SRCS:.c=.o) $(PIPE_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
 
 MAIN		=	$(addprefix $(MAIN_DIR), $(MAIN_SRCS))
-TOKEN		=	$(addprefix $(TOKEN_DIR), $(TOKEN_SRCS))
+TOKEN&PARSE		=	$(addprefix $(TOKEN&PARSE_DIR), $(TOKEN&PARSE_SRCS))
 BUILDIN		=	$(addprefix $(BUILDIN_DIR), $(BUILDIN_SRCS))
 PIPE		=	$(addprefix $(PIPE_DIR), $(PIPE_SRCS))
 EXEC		=	$(addprefix $(EXEC_DIR), $(EXEC_SRCS))
@@ -75,7 +78,7 @@ $(OBJ_DIR)%.o: $(MAIN_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
 			$(CC) $(FLAGS) -c $< -o $@
 
-$(OBJ_DIR)%.o: $(TOKEN_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(TOKEN&PARSE_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
 			$(CC) $(FLAGS) -c $< -o $@
 
@@ -106,7 +109,7 @@ debug: $(OBJ_M)
 			@echo -e "$(REPINK)Execution completed: $(NAME) created in debug mode!$(DEFAULT)"
 
 depend:
-			@$(CC) -MM $(FLAGS) $(MAIN) $(TOKEN) $(BUILDIN) $(PIPE) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
+			@$(CC) -MM $(FLAGS) $(MAIN) $(TOKEN&PARSE) $(BUILDIN) $(PIPE) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
 			@echo -e "$(REWHITE)Dependencies updated in dependencies.mk!$(DEFAULT)"
 
 all:		$(NAME)
