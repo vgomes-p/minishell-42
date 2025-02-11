@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:15:00 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/10 13:26:49 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:07:39 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	ms_pwd(t_minishell *shell)
 {
