@@ -1,41 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token1.c                                           :+:      :+:    :+:   */
+/*   token1_utils_0.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:19:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/05 15:21:22 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:06:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-static char	*clean_token(const char *str, int len)
-{
-	char	*cleaned;
-	int		pos;
-	int		nwpos;
-
-	cleaned = malloc(len + 1);
-	pos = 0;
-	nwpos = 0;
-	if (!cleaned)
-		return (NULL);
-	while (pos < len)
-	{
-		if (!is_quotes(str[pos]))
-		{
-			cleaned[nwpos++] = str[pos];
-		}
-		pos++;
-	}
-	cleaned[nwpos] = '\0';
-	return (cleaned);
-}
-
-static bool	process_quotes(const char *input, int *pos, bool *in_quotes,
+bool	process_quotes(const char *input, int *pos, bool *in_quotes,
 						char *quote_ch)
 {
 	while (input[*pos] && (*in_quotes || input[*pos] != ' '))
@@ -60,21 +37,7 @@ static bool	process_quotes(const char *input, int *pos, bool *in_quotes,
 	return (true);
 }
 
-static char	*extract_token(const char *input, int *pos)
-{
-	int		start;
-	bool	in_quotes;
-	char	quote_ch;
-
-	start = *pos;
-	in_quotes = false;
-	quote_ch = '\0';
-	if (!process_quotes(input, pos, &in_quotes, &quote_ch))
-		return (NULL);
-	return (clean_token(&input[start], *pos - start));
-}
-
-static char	**process_tokens(const char *input, char **tokens)
+char	**process_tokens(const char *input, char **tokens)
 {
 	char	*token;
 	int		pos;
@@ -101,12 +64,39 @@ static char	**process_tokens(const char *input, char **tokens)
 	return (tokens);
 }
 
-char	**ms_split_quotes(const char *input)
+char	*extract_token(const char *input, int *pos)
 {
-	char	**tokens;
+	int		start;
+	bool	in_quotes;
+	char	quote_ch;
 
-	tokens = ft_calloc(ft_strlen(input) + 1, sizeof(char *));
-	if (!tokens)
+	start = *pos;
+	in_quotes = false;
+	quote_ch = '\0';
+	if (!process_quotes(input, pos, &in_quotes, &quote_ch))
 		return (NULL);
-	return (process_tokens(input, tokens));
+	return (clean_token(&input[start], *pos - start));
+}
+
+t_token_tp	get_token_type(char *token, t_token *current, int is_first)
+{
+	t_token_tp	type;
+
+	type = ARG;
+	if (is_operator(token))
+	{
+		if (lms_strcmp(token, "|") == 0)
+			type = PIPE;
+		else if (lms_strcmp(token, ">") == 0)
+			type = REDIR_OUT;
+		else if (lms_strcmp(token, ">>") == 0)
+			type = REDIR_APPEND;
+		else if (lms_strcmp(token, "<") == 0)
+			type = REDIR_IN;
+		else if (lms_strcmp(token, "<<") == 0)
+			type = HEREDOC;
+	}
+	else if (is_first || (current && current->type == PIPE))
+		type = CMD;
+	return (type);
 }

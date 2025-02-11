@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:13:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/10 13:53:48 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:07:16 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static void	update_pwd(char *oldpwd, t_minishell *shell)
 {
