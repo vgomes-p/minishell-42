@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/10 13:27:05 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:32:21 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@
 # include "libms/libms.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+
+/* DEFINES */
+# ifndef SEP
+#  define SEP -1
+# endif
 
 /* DEFINE COLORS */
 # define RESET		"\001\033[0m\002"
@@ -78,22 +83,42 @@ typedef struct s_token
 	struct s_token	*next;
 }	t_token;
 
-/* PROMPT */
+/* CODES DIR */
 char		**dup_env(char **envp, size_t *envsz);
-
 void		welcome(void);
-t_token		*tokening(char *input);
 void		ms_prompt(t_minishell *shell);
+
+/* TOKEN_AND_PARSE DIR */
+//token
+t_token		*mktoken(char *value, t_token_tp type);
 char		**ms_split_quotes(const char *input);
-char		**ms_split_quotes(const char *input);
+t_token		*create_token_list(char **split, t_token *head);
+t_token		*tokening(char *input);
+
+//token_utils_0
+bool		process_quotes(const char *input, int *pos, bool *in_quotes,
+						char *quote_ch);
+char		**process_tokens(const char *input, char **tokens);
+char		*extract_token(const char *input, int *pos);
 t_token_tp	get_token_type(char *token, t_token *current, int is_first);
 
+//token_utils_1
 bool		is_quotes(char ch);
 bool		is_operator(char *str);
-void		free_tokens(t_token *tokens);
-int			count_tokens(t_token *tokens);
 void		cleanup_tokens(char **tokens, int token_cnt);
+void		free_split_array(char **split);
+int			count_tokens(t_token *tokens);
+
+//token_util_2
+void		free_tokens(t_token *tokens);
+char		*clean_token(const char *str, int len);
+
+//parse
+//parse_utils_0
 bool		valid_syntax(t_token *tokens);
+
+
+
 
 int			find_envar(const char *var, char **envp);
 void		update_envar(const char *var, int index0, char ***envp);
