@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/11 15:06:52 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/12 17:58:53 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,3 @@ char	*clean_token(const char *str, int len)
 	cleaned[nwpos] = '\0';
 	return (cleaned);
 }
-
