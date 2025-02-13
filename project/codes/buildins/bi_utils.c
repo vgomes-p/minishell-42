@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:57:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 16:58:30 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:23:33 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,43 @@ int	find_envar(const char *var, char **envp)
 	return (index);
 }
 
-void	update_envar(const char *var, int index0, char ***envp)
+static int	add_new_envar(const char *var, char ***envp, int envsz)
 {
 	char	**nwenv;
+	int		index1;
+
+	nwenv = ft_calloc(envsz + 2, sizeof(char *));
+	if (!nwenv)
+		return (0);
+	index1 = -1;
+	while (++index1 < envsz)
+	{
+		nwenv[index1] = ft_strdup((*envp)[index1]);
+		if (!nwenv[index1])
+		{
+			while (--index1 >= 0)
+				free(nwenv[index1]);
+			free(nwenv);
+			return (0);
+		}
+	}
+	nwenv[envsz] = ft_strdup(var);
+	if (!nwenv[envsz])
+	{
+		while (--envsz >= 0)
+			free(nwenv[envsz]);
+		free(nwenv);
+		return (0);
+	}
+	*envp = nwenv;
+	return (1);
+}
+
+void	update_envar(const char *var, int index0, char ***envp)
+{
 	int		envsz;
 	int		index1;
+	char	**old_env;
 
 	envsz = 0;
 	while (*envp && (*envp)[envsz])
@@ -48,20 +80,15 @@ void	update_envar(const char *var, int index0, char ***envp)
 	{
 		free((*envp)[index0]);
 		(*envp)[index0] = ft_strdup(var);
+		return ;
 	}
-	else
-	{
-		nwenv = ft_calloc(envsz + 2, sizeof(char *));
-		index1 = -1;
-		while (++index1 < envsz)
-			nwenv[index1] = ft_strdup((*envp)[index1]);
-		nwenv[envsz] = ft_strdup(var);
-		index1 = -1;
-		while (++index1 < envsz)
-			free((*envp)[index1]);
-		free(*envp);
-		*envp = nwenv;
-	}
+	old_env = *envp;
+	if (!add_new_envar(var, envp, envsz))
+		return ;
+	index1 = -1;
+	while (++index1 < envsz)
+		free(old_env[index1]);
+	free(old_env);
 }
 
 int	valid_name(const char *var)

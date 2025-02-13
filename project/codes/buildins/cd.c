@@ -6,37 +6,67 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:13:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 16:40:50 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:37:03 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	update_pwd(char *oldpwd, t_minishell *shell)
+static char	*get_new_pwd(char *oldpwd)
 {
 	char	*nwpwd;
-	int		index_oldpwd;
-	int		pwd_index;
-	char	*oldpwd_var;
-	char	*pwd_var;
 
 	nwpwd = getcwd(NULL, 0);
 	if (!nwpwd)
 	{
 		perror(RED "cd: getcwd" RESET);
 		free(oldpwd);
-		return ;
+		return (NULL);
 	}
+	return (nwpwd);
+}
+
+static int	update_oldpwd(char *oldpwd, t_minishell *shell)
+{
+	int		index_oldpwd;
+	char	*oldpwd_var;
+
 	index_oldpwd = find_envar("OLDPWD", shell->env);
 	oldpwd_var = ft_strjoin("OLDPWD=", oldpwd);
+	if (!oldpwd_var)
+		return (0);
 	update_envar(oldpwd_var, index_oldpwd, &shell->env);
-	pwd_index = find_envar("PWD", shell->env);
-	pwd_var = ft_strjoin("PWD=", nwpwd);
-	update_envar(pwd_var, pwd_index, &shell->env);
-	free(oldpwd);
-	free(nwpwd);
 	free(oldpwd_var);
+	return (1);
+}
+
+static void	update_pwd(char *oldpwd, t_minishell *shell)
+{
+	char	*nwpwd;
+
+	nwpwd = get_new_pwd(oldpwd);
+	if (!nwpwd)
+		return ;
+		
+	if (!update_oldpwd(oldpwd, shell))
+	{
+		free(nwpwd);
+		free(oldpwd);
+		return ;
+	}
+		
+	int pwd_index = find_envar("PWD", shell->env);
+	char *pwd_var = ft_strjoin("PWD=", nwpwd);
+	if (!pwd_var)
+	{
+		free(nwpwd);
+		free(oldpwd);
+		return ;
+	}
+	update_envar(pwd_var, pwd_index, &shell->env);
 	free(pwd_var);
+	free(nwpwd);
+	free(oldpwd);
 }
 
 static void	handle_home_cd(char *oldpwd, t_minishell *shell)
@@ -66,7 +96,7 @@ void	ms_cd(char **args, t_minishell *shell)
 	oldpwd = getcwd(NULL, 0);
 	if (!oldpwd)
 	{
-		perror("cd");
+		perror(RED "cd" RESET);
 		return ;
 	}
 	if (!args[1])
