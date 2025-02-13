@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:41 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:56:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	handle_input(t_minishell *shell, char **input)
 	{
 		ft_putstr_fd(RECYAN "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
 		free(shell->prompt);
+		free_env(shell->env);
 		rl_clear_history();
 		exit(shell->exit_stt);
 	}
@@ -86,12 +87,14 @@ static void	process_command(char *input, t_minishell *shell)
 	if (!tokens)
 	{
 		ft_putstr_fd(RED "Error: Tokenination has failed\n" RESET, 2);
+		free(input);
 		return ;
 	}
 	if (!valid_syntax(tokens))
 	{
 		ft_putstr_fd(RED "Syntax error\n" RESET, 2);
 		free_tokens(tokens);
+		free(input);
 		return ;
 	}
 	if (exec_builtin(tokens, shell) == 0)

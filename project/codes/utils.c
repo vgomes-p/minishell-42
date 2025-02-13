@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_utils.c                                       :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:10:30 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:36 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:55:00 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,19 @@ char	**dup_env(char **envp, size_t *envsz)
 		}
 	}
 	return (nwenv);
+}
+
+void	free_env(char **env)
+{
+	int	pos;
+
+	if(!env)
+		return ;
+	pos = 0;
+	while (env[pos])
+	{
+		free(env[pos]);
+		pos++;
+	}
+	free(env);
 }
