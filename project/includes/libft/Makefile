@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 12:57:14 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/13 01:34:51 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/13 15:12:23 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,8 +52,8 @@ clean:
 
 
 fclean: clean
-			$(RM) $(NAME)
-			@echo "$(RERED)libft was destroyed!$(DEFAULT)\n"
+				$(RM) $(NAME)
+				@echo "$(RERED)libft was destroyed!$(DEFAULT)\n"
 
 re: fclean all
 
