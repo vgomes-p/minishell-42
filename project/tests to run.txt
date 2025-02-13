@@ -6,11 +6,11 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 18:05:20 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/12 18:05:22 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/13 12:01:49 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-BATERIA DE TESTES 1:
+<<< BATERIA DE TESTES 1 >>>
 norminette .
 make
 ./minishell
@@ -23,7 +23,8 @@ cat dependencies.mk
 make clean
 make fclean
 make
-BATERIA DE TESTES 2:
+
+<<< BATERIA DE TESTES 2 >>>
 exit
 ./minishell
 exit 42
@@ -31,7 +32,8 @@ exit 42
 exit bye
 exit 300
 valgrind --leak-check=full ./minishell ***ou*** valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./minishell
-BATERIA DE TESTES 3:
+
+<<< BATERIA DE TESTES 3 >>>
 ls
 ls -l
 ls -la
@@ -41,7 +43,8 @@ cat
 cat Makefile
 sleep 5
 touch in.txt
-BATERIA DE TESTES 4:
+
+<<< BATERIA DE TESTES 4 >>>
 echo hello
 echo 'hello'
 echo "hello"
@@ -59,19 +62,20 @@ echo '$USER'
 echo "Testing a var that $DONTEXIST"
 echo -n "hello"
 echo -n -n -n Testing
-BATERIA DE TESTES 5:
+<<< BATERIA DE TESTES 5 >>>
 cd
 cd "testing dir"
 cd ..
 cd "this dir do not exit"
-cd -
-BATERIA DE TESTES 6:
+
+<<< BATERIA DE TESTES 6 >>>
 export TEST=123
 export TEST1="1 2 3"
 export -TEST2=321
 export
 env
-BATERIA DE TESTES 7:
+
+<<< BATERIA DE TESTES 7 >>>
 unset TEST
 unset "TEST1"
 un"set" TEST
@@ -79,7 +83,8 @@ unset NOTEXIST
 unset
 env
 env -i ./minishell
-BATERIA DE TESTES 8:
+
+<<< BATERIA DE TESTES 8 >>>
 echo "teste" > out.txt
 echo "append" >> out.txt
 ls > out.txt
@@ -88,12 +93,14 @@ grep NAME < Makefile
 cat < Makefile > out.txt
 cat << EOF
 cat << 'EOF
-BATERIA DE TESTES 9:
+
+<<< BATERIA DE TESTES 9 >>>
 ls | grep .c
 cat Makefile | grep a | wc -l
 echo "testing" | cat | cat -e
 ls | notacmd
-BATERIA DE TESTES 10:
+
+<<< BATERIA DE TESTES 10 >>>
 CTRL+C
 CTRL+\
 false_cmd
