@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:14:24 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:16 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:19:29 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void	ms_exit(char **args, t_minishell *shell)
 	shell->exit_stt = stat;
 	ft_putstr_fd(RECYAN "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
 	free(shell->prompt);
+	rl_clear_history();
 	exit(stat);
 }

@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/13 15:15:08 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/13 16:53:14 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ H_SRCS		=	minishell.h
 H_DIR		=	includes/
 HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 
-MAIN_SRCS	=	main.c main_utils.c prompt.c
+MAIN_SRCS	=	main.c utils.c prompt.c
 MAIN_DIR	=	codes/
 
 TOKEN_PARSE_SRCS	=	token.c \

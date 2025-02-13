@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:58:22 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:55:19 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,10 @@ typedef struct s_minishell
 }	t_minishell;
 
 /* CODES DIR */
+//main_utils
 char		**dup_env(char **envp, size_t *envsz);
+void		free_env(char **env);
+//prompt.c
 void		welcome(void);
 void		ms_prompt(t_minishell *shell);
 

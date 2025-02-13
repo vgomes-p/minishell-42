@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:13:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:07 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:40:50 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ static void	update_pwd(char *oldpwd, t_minishell *shell)
 	char	*nwpwd;
 	int		index_oldpwd;
 	int		pwd_index;
+	char	*oldpwd_var;
+	char	*pwd_var;
 
 	nwpwd = getcwd(NULL, 0);
 	if (!nwpwd)
@@ -26,11 +28,15 @@ static void	update_pwd(char *oldpwd, t_minishell *shell)
 		return ;
 	}
 	index_oldpwd = find_envar("OLDPWD", shell->env);
-	update_envar(ft_strjoin("OLDPWD=", oldpwd), index_oldpwd, &shell->env);
+	oldpwd_var = ft_strjoin("OLDPWD=", oldpwd);
+	update_envar(oldpwd_var, index_oldpwd, &shell->env);
 	pwd_index = find_envar("PWD", shell->env);
-	update_envar(ft_strjoin("PWD=", nwpwd), pwd_index, &shell->env);
+	pwd_var = ft_strjoin("PWD=", nwpwd);
+	update_envar(pwd_var, pwd_index, &shell->env);
 	free(oldpwd);
 	free(nwpwd);
+	free(oldpwd_var);
+	free(pwd_var);
 }
 
 static void	handle_home_cd(char *oldpwd, t_minishell *shell)

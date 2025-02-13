@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils.c                                     :+:      :+:    :+:   */
+/*   bi_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:57:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/06 14:15:08 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:58:30 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,9 @@ void	update_envar(const char *var, int index0, char ***envp)
 		while (++index1 < envsz)
 			nwenv[index1] = ft_strdup((*envp)[index1]);
 		nwenv[envsz] = ft_strdup(var);
+		index1 = -1;
+		while (++index1 < envsz)
+			free((*envp)[index1]);
 		free(*envp);
 		*envp = nwenv;
 	}
