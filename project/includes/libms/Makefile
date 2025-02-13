@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
+#    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/11/07 12:57:14 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/04 14:49:14 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/13 01:34:44 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,18 +38,17 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 				$(AR) $(NAME) $(OBJS)
-				@echo -e "$(REGREEN)Execution completed: $(NAME) created!$(DEFAULT)"
+				@echo "\n$(GREEN)✅ Success on creating libms! ✅$(DEFAULT)"
 
 %.o: %.c
 				$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 				$(RM) $(OBJS)
-				@echo -e "$(REYELLOW)Execution completed: libms was deleted!$(DEFAULT)"
 
 fclean: clean
 			$(RM) $(NAME)
-			@echo -e "$(RERED)Execution completed: libms was completely deleted!$(DEFAULT)"
+			@echo "$(RERED)libms was destroyed!$(DEFAULT)\n"
 
 re: fclean all
 
