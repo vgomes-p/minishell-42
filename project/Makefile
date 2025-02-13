@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/13 01:37:33 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/13 15:15:08 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,6 +96,7 @@ endef
 
 # Rules
 $(OBJ_DIR)%.o: $(MAIN_DIR)%.c $(HEADER)
+			@clear
 			@mkdir -p $(OBJ_DIR)
 			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
 			@$(call update_progress)
@@ -105,7 +106,7 @@ $(OBJ_DIR)%.o: $(TOKEN_PARSE_DIR)%.c $(HEADER)
 			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
 			@$(call update_progress)
 
-$(OBJ_DIR)%.o: $(BUILDIN_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(BUILDIN_DIR)%.c $(HE2>/dev/nullADER)
 			@mkdir -p $(OBJ_DIR)
 			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
 			@$(call update_progress)
@@ -125,9 +126,9 @@ $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
 			@echo "\n$(GREEN)✅ Execution completed! ✅$(RESET)\n"
 			@sleep 0.5
 			@echo "$(CYAN)🎉 Minishell created 🎉\nNow you need to relax, it will be open soon!\n"
-			@sleep 3
+			@sleep 2
 			@clear
-			@./minishell
+			-@./minishell
 
 $(LIBFT):
 			@make -C $(LIBFT_DIR)
@@ -159,9 +160,9 @@ fclean: clean
 			@make fclean -C $(LIBFT_DIR)
 			@make fclean -C $(LIBMS_DIR)
 			@echo "$(RERED)Execution completed: minishell was completely deleted!$(RESET)\n"
-			@sleep 2
+			@sleep 1
 			@echo "$(PINK)Cleaning terminal!$(RESET)"
-			@sleep 2
+			@sleep 1.5
 			@clear
 
 re:			fclean all
