@@ -12,12 +12,12 @@
 ==243210== 5 bytes in 1 blocks are still reachable in loss record 2 of 66
 ==243210==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
 ==243210==    by 0x403D77: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4017CD: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4018CD: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x401995: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4015B8: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4014A0: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x40125B: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
 ==243210== 
 {
    <insert_a_suppression_name_here>
@@ -34,7 +34,7 @@
 }
 ==243210== 16 bytes in 1 blocks are still reachable in loss record 9 of 66
 ==243210==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==243210==    by 0x403293: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
 ==243210==    by 0x403338: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
 ==243210==    by 0x401632: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
 ==243210==    by 0x4014A0: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
@@ -54,15 +54,15 @@
 ==243210== 24 bytes in 1 blocks are still reachable in loss record 12 of 66
 ==243210==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
 ==243210==    by 0x403D77: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x402429: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x402857: update_pwd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x40277B: handle_home_cd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x40269A: ms_cd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4033C9: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x403364: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x401632: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4014A0: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x40125B: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: update_pwd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: handle_home_cd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: ms_cd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
 ==243210== 
 {
    <insert_a_suppression_name_here>
@@ -82,12 +82,12 @@
 }
 ==243210== 32 bytes in 1 blocks are still reachable in loss record 14 of 66
 ==243210==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
-==243210==    by 0x4017A8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4018CD: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x401995: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4015B8: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x4014A0: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
-==243210==    by 0x40125B: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+OK: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
 ==243210== 
 {
    <insert_a_suppression_name_here>

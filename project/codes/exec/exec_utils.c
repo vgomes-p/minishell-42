@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:55:56 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/13 19:02:12 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ char	**prepare_args(t_token *tokens)
 	int		arg_pos;
 	t_token	*current;
 
+	if (!tokens)
+		return (NULL);
 	args = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
 	if (!args)
 		return (NULL);
