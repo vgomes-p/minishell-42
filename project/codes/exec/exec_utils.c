@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 19:02:12 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/14 13:41:05 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ char	**prepare_args(t_token *tokens)
 		current = current->next;
 	}
 	args[arg_pos] = NULL;
+	free_tokens(tokens);
 	return (args);
 }

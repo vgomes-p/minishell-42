@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:57:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 19:23:33 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:07:37 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,18 +35,14 @@ int	find_envar(const char *var, char **envp)
 	return (index);
 }
 
-static int	add_new_envar(const char *var, char ***envp, int envsz)
+static int	copy_existing_env(char **nwenv, char **envp, int envsz)
 {
-	char	**nwenv;
-	int		index1;
+	int	index1;
 
-	nwenv = ft_calloc(envsz + 2, sizeof(char *));
-	if (!nwenv)
-		return (0);
 	index1 = -1;
 	while (++index1 < envsz)
 	{
-		nwenv[index1] = ft_strdup((*envp)[index1]);
+		nwenv[index1] = ft_strdup(envp[index1]);
 		if (!nwenv[index1])
 		{
 			while (--index1 >= 0)
@@ -55,6 +51,19 @@ static int	add_new_envar(const char *var, char ***envp, int envsz)
 			return (0);
 		}
 	}
+	return (1);
+}
+
+static int	add_new_envar(const char *var, char ***envp, int envsz)
+{
+	char	**nwenv;
+	int		index1;
+
+	nwenv = ft_calloc(envsz + 2, sizeof(char *));
+	if (!nwenv)
+		return (0);
+	if (!copy_existing_env(nwenv, *envp, envsz))
+		return (0);
 	nwenv[envsz] = ft_strdup(var);
 	if (!nwenv[envsz])
 	{
@@ -63,6 +72,13 @@ static int	add_new_envar(const char *var, char ***envp, int envsz)
 		free(nwenv);
 		return (0);
 	}
+	index1 = 0;
+	while (index1 > envsz)
+	{
+		free((*envp)[index1]);
+		index1++;
+	}
+	free(*envp);
 	*envp = nwenv;
 	return (1);
 }
@@ -105,11 +121,4 @@ int	valid_name(const char *var)
 		index++;
 	}
 	return (1);
-}
-
-void	export_err(const char *arg)
-{
-	ft_putstr_fd(RED "export: " ORANGE "\"", STDERR_FILENO);
-	ft_putstr_fd((char *)arg, STDERR_FILENO);
-	ft_putstr_fd("\"" RED " not a valid indentifier\n" RESET, STDERR_FILENO);
 }
