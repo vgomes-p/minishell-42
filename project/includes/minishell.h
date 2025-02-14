@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 16:55:19 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/14 16:04:09 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ bool		valid_syntax(t_token *tokens);
 int			find_envar(const char *var, char **envp);
 void		update_envar(const char *var, int index0, char ***envp);
 int			valid_name(const char *var);
+//bi_utils1
 void		export_err(const char *arg);
 //echo
 void		ms_echo(char **args);

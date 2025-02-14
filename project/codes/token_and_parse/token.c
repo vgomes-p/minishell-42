@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 19:12:42 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/14 13:32:00 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ t_token	*mktoken(char *value, t_token_tp type)
 		return (NULL);
 	token->value = ft_strdup(value);
 	if (!token->value)
+	{
 		free(token);
+		return (NULL);
+	}
 	token->type = type;
 	token->next = NULL;
 	return (token);

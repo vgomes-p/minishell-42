@@ -1,1 +1,1 @@
-valgrind --suppressions=valgrind.supp ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=valgrind.supp --log-file=leakreport.txt ./minishell
