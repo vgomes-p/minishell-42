@@ -1,0 +1,223 @@
+==267612== Memcheck, a memory error detector
+==267612== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==267612== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==267612== Command: ./minishell
+==267612== Parent PID: 253170
+==267612== 
+==267612== Conditional jump or move depends on uninitialised value(s)
+==267612==    at 0x4036A4: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403708: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== Conditional jump or move depends on uninitialised value(s)
+==267612==    at 0x40388F: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== Conditional jump or move depends on uninitialised value(s)
+==267612==    at 0x4016D6: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== Invalid read of size 8
+==267612==    at 0x40256B: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40305C: ms_export (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403886: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==  Address 0x4ad7040 is 0 bytes inside a block of size 480 free'd
+==267612==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x4026A6: add_new_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40253B: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40305C: ms_export (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403886: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==  Block was alloc'd at
+==267612==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x404136: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40132A: dup_env (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40125A: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== Invalid free() / delete / delete[] / realloc()
+==267612==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x402581: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40305C: ms_export (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403886: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==  Address 0x4ad7040 is 0 bytes inside a block of size 480 free'd
+==267612==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x4026A6: add_new_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40253B: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40305C: ms_export (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403886: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==  Block was alloc'd at
+==267612==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x404136: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40132A: dup_env (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40125A: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== Conditional jump or move depends on uninitialised value(s)
+==267612==    at 0x4036A4: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403928: exec_extern (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016E8: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+
+
+
+
+==267917== HEAP SUMMARY:
+==267917==     in use at exit: 208,824 bytes in 336 blocks
+==267917==   total heap usage: 1,021 allocs, 686 frees, 414,295 bytes allocated
+==267917== 
+==267917== 17 bytes in 1 blocks are still reachable in loss record 10 of 75
+==267917==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267917==    by 0x404197: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40186D: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40199D: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401A5D: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401658: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917== 
+==267917== 27 bytes in 1 blocks are still reachable in loss record 14 of 75
+==267917==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267917==    by 0x404197: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x402509: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x402BC6: update_oldpwd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x402A59: update_pwd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40296F: ms_cd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403799: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917== 
+==267917== 32 bytes in 1 blocks are still reachable in loss record 16 of 75
+==267917==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267917==    by 0x401848: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40199D: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401A5D: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401658: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917== 
+==267917== 53 bytes in 1 blocks are still reachable in loss record 21 of 75
+==267917==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267917==    by 0x404197: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x402509: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x402ADB: update_pwd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40296F: ms_cd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403799: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917== 
+==267917== 488 bytes in 1 blocks are still reachable in loss record 36 of 75
+==267917==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267917==    by 0x404136: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4025B5: add_new_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40253B: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40305C: ms_export (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403886: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917== 
+==267917== 2,504 bytes in 57 blocks are still reachable in loss record 50 of 75
+==267917==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267917==    by 0x404197: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4027FC: copy_existing_env (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4025E3: add_new_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40253B: update_envar (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x40305C: ms_export (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403886: check_builtin_type (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x403734: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267917== 
+==267917== LEAK SUMMARY:
+==267917==    definitely lost: 0 bytes in 0 blocks
+==267917==    indirectly lost: 0 bytes in 0 blocks
+==267917==      possibly lost: 0 bytes in 0 blocks
+==267917==    still reachable: 3,121 bytes in 62 blocks
+==267917==         suppressed: 205,703 bytes in 274 blocks
+==267917== 
+==267917== Use --track-origins=yes to see where uninitialised values come from
+==267917== For lists of detected and suppressed errors, rerun with: -s
+==267917== ERROR SUMMARY: 88 errors from 6 contexts (suppressed: 1 from 1)
+
+
+
+
+
+==267612== HEAP SUMMARY:
+==267612==     in use at exit: 205,034 bytes in 230 blocks
+==267612==   total heap usage: 1,076 allocs, 847 frees, 423,952 bytes allocated
+==267612== 
+==267612== 8 bytes in 2 blocks are still reachable in loss record 5 of 67
+==267612==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x404197: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40186D: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40199D: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401A5D: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401658: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== 8 bytes in 2 blocks are still reachable in loss record 6 of 67
+==267612==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x404197: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40367D: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403708: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== 24 bytes in 1 blocks are still reachable in loss record 12 of 67
+==267612==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x40363B: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x403708: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4016D2: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== 64 bytes in 2 blocks are still reachable in loss record 18 of 67
+==267612==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==267612==    by 0x401848: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x40199D: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401A5D: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401658: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x401540: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612==    by 0x4012AF: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/dev-vinny/project/minishell)
+==267612== 
+==267612== LEAK SUMMARY:
+==267612==    definitely lost: 0 bytes in 0 blocks
+==267612==    indirectly lost: 0 bytes in 0 blocks
+==267612==      possibly lost: 0 bytes in 0 blocks
+==267612==    still reachable: 104 bytes in 7 blocks
+==267612==         suppressed: 204,930 bytes in 223 blocks
+==267612== 
+==267612== Use --track-origins=yes to see where uninitialised values come from
+==267612== For lists of detected and suppressed errors, rerun with: -s
+==267612== ERROR SUMMARY: 92 errors from 6 contexts (suppressed: 1 from 1)

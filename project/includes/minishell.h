@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/14 16:04:09 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:02:05 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <errno.h>
 # include <signal.h>
 # include <curses.h>
 # include <termcap.h>
@@ -106,10 +107,14 @@ typedef struct s_minishell
 	char	*error_message;
 }	t_minishell;
 
+/* GLOBAL VAR */
+extern t_minishell	*g_shell;
+
 /* CODES DIR */
 //main_utils
 char		**dup_env(char **envp, size_t *envsz);
 void		free_env(char **env);
+void		handle_signal(int sig);
 //prompt.c
 void		welcome(void);
 void		ms_prompt(t_minishell *shell);

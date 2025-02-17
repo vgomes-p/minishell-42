@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:58:53 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:26:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ void	free_tokens(t_token *tokens)
 	while (current)
 	{
 		next = current->next;
-		if (current->value)
-			free(current->value);
+		free(current->value);
 		free(current);
 		current = next;
 	}

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/14 13:32:00 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:27:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ t_token	*create_token_list(char **split, t_token *head)
 	t_token	*nwtoken;
 	int		pos;
 
+	current = NULL;
 	pos = 0;
 	while (split[pos])
 	{
