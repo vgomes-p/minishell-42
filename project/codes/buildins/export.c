@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:59:22 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:19 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:41:20 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,27 @@ void	ms_export(t_minishell *shell, char **args, char ***envp)
 		if (valid_name(args[index0]))
 		{
 			index1 = find_envar(args[index0], *envp);
-			update_envar(args[index0], index1, envp);
+			if (index1 == -1)
+			{
+				char **new_env = ft_calloc((index0 + 2), sizeof(char *));
+				if (!new_env)
+				{
+					ft_putstr_fd("Error: memory allocation failure for environment variable \n", 2);
+					return ;
+				}
+				new_env[index0] = ft_strdup(args[index0]);
+				if (!new_env[index0])
+				{
+					ft_putstr_fd("Error: failed to duplicate environment variable\n", 2);
+					free(new_env);
+					return ;
+				}
+				*envp = new_env;
+			}
+			else
+			{
+				update_envar(args[index0], index1, envp);
+			}
 			shell->error_code = 0;
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:12:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:10 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:48:22 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	ms_echo(char **args)
 
 	curr_arg = 1;
 	nwline = 1;
-	if (args[1] && lms_strcmp(args[1], "-n") == 0)
+	//mudei
+	while (args[curr_arg] && lms_strcmp(args[curr_arg], "-n") == 0)
 	{
 		nwline = 0;
 		curr_arg++;
