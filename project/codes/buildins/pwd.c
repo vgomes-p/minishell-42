@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:15:00 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 16:36:03 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:49:11 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,15 @@ void	ms_pwd(t_minishell *shell)
 	char	*pwd_env;
 
 	cwd = getcwd(NULL, 0);
-	pwd_env = ft_strjoin("PWD=", cwd);
 	if (!cwd)
 	{
 		ft_putstr_fd(RED "pwd: error" RESET, 2);
+		return ;
+	}
+	pwd_env = ft_strjoin("PWD=", cwd);
+	if (!pwd_env)
+	{
+		free(cwd);
 		return ;
 	}
 	ft_putstr_fd(cwd, STDOUT_FILENO);

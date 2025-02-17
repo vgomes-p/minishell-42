@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:10:30 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/14 13:28:37 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:57:47 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,15 @@ void	free_env(char **env)
 		pos++;
 	}
 	free(env);
+}
+
+void	handle_signal(int sig)
+{
+	(void)sig;
+	if (g_shell->env)
+	{
+		free_env(g_shell->env);
+		g_shell->env = NULL;
+	}
+	exit(0);
 }

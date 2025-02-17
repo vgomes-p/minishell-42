@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/14 13:41:05 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:43:05 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@ char	**prepare_args(t_token *tokens)
 	arg_pos = 0;
 	while (current)
 	{
-		args[arg_pos++] = current->value;
+		args[arg_pos++] = ft_strdup(current->value);
+		if (!args[arg_pos])
+			args[arg_pos] = NULL;
 		current = current->next;
 	}
 	args[arg_pos] = NULL;
-	free_tokens(tokens);
 	return (args);
 }
