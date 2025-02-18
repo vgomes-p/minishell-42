@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:22 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 16:11:51 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:17:45 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,6 @@ void	cleanup_tokens(char **tokens, int token_cnt)
 	free(tokens);
 }
 
-void	free_split(char **split)
-{
-	int	pos;
-
-	if (!split)
-		return ;
-	pos = 0;
-	while (split[pos])
-	{
-		free(split[pos]);
-		pos++;
-	}
-	free(split);
-}
-
 int	count_tokens(t_token *tokens)
 {
 	int		count;
@@ -65,4 +50,27 @@ int	count_tokens(t_token *tokens)
 		current = current->next;
 	}
 	return (count);
+}
+
+char	*clean_token(const char *str, int len)
+{
+	char	*cleaned;
+	int		pos;
+	int		nwpos;
+
+	cleaned = malloc(len + 1);
+	pos = 0;
+	nwpos = 0;
+	if (!cleaned)
+		return (NULL);
+	while (pos < len)
+	{
+		if (!is_quotes(str[pos]))
+		{
+			cleaned[nwpos++] = str[pos];
+		}
+		pos++;
+	}
+	cleaned[nwpos] = '\0';
+	return (cleaned);
 }
