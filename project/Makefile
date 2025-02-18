@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/18 14:24:04 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/18 17:20:57 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -127,8 +127,9 @@ $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
 			@sleep 0.5
 			@echo "$(CYAN)🎉 Minishell created 🎉\nNow you need to relax, it will be open soon!\n"
 			@sleep 2
-			@clear
-			-@./minishell
+			@echo "$(RECYAN)NOTE:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET),\nleakreport by calling $(YELLOW)make val$(RESET), and entry debug mode\nby calling $(YELLOW)make debug$(RESET)!\n\n"
+			@sleep 2
+			-@make val
 
 $(LIBFT):
 			@make -C $(LIBFT_DIR)
@@ -136,13 +137,17 @@ $(LIBFT):
 $(LIBMS): $(LIBFT)
 			@make -C $(LIBMS_DIR)
 
+val: $(NAME)
+			valgrind --leak-check=full --show-leak-kinds=all --suppressions=ms.supp --log-file=leakreport.txt ./minishell
+			@echo "\n$(REWHITE)Leak report updated in leakreport.txt!$(RESET)\n"
+
 debug: $(OBJ_M)
 			$(CC) $(FLAGS) $(DEBUG_FLAGS) $(OBJ_M) $(LIBFT) $(LIBMS) $(LFLAGS) $(TERMCAP) -o $(NAME)
-			@echo "\n$(REPINK)Execution completed: $(NAME) created in debug mode!$(RESET)"
+			@echo "\n$(REPINK)Execution completed: $(NAME) created in debug mode!$(RESET)\n"
 
 depend:
 			@$(CC) -MM $(FLAGS) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(PIPE) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
-			@echo "\n$(REWHITE)Dependencies updated in dependencies.mk!$(RESET)"
+			@echo "\n$(REWHITE)Dependencies updated in dependencies.mk!$(RESET)\n"
 
 all:		$(NAME)
 
@@ -156,6 +161,7 @@ fclean: clean
 			@clear
 			@$(RM) $(NAME)
 			@$(RM) dependencies.mk
+			@$(RM) leakreport.txt
 			@$(RM) build/
 			@make fclean -C $(LIBFT_DIR)
 			@make fclean -C $(LIBMS_DIR)
@@ -170,4 +176,4 @@ fclean: clean
 re:			fclean all
 
 
-.PHONY:		all clean fclean re depend
+.PHONY:		all clean fclean re depend val
