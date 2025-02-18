@@ -1,1 +1,1 @@
-valgrind --leak-check=full --show-leak-kinds=all --suppressions=readline.supp --log-file=leakreport.txt ./minishell
+valgrind --leak-check=full --show-leak-kinds=all --suppressions=ms.supp --log-file=leakreport.txt ./minishell
