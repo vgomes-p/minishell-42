@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:32 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 17:27:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,11 @@ t_token	*mktoken(char *value, t_token_tp type)
 	if (!token)
 		return (NULL);
 	token->value = ft_strdup(value);
+	if (!token->value)
+	{
+		free(token);
+		return (NULL);
+	}
 	token->type = type;
 	token->next = NULL;
 	return (token);
@@ -71,9 +76,12 @@ t_token	*tokening(char *input)
 	split = ms_split_quotes(input);
 	if (!split)
 		return (NULL);
-	head = NULL;
-	head = create_token_list(split, head);
-	if (head)
+	head = create_token_list(split, NULL);
+	if (!head)
+	{
 		free_split(split);
+		return (NULL);
+	}
+	free_split(split);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:58:22 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:18:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <errno.h>
 # include <signal.h>
 # include <curses.h>
 # include <termcap.h>
@@ -106,8 +107,19 @@ typedef struct s_minishell
 	char	*error_message;
 }	t_minishell;
 
+/* GLOBAL VAR */
+extern t_minishell	*g_shell;
+
 /* CODES DIR */
+//free_all
+void		free_env(char **env);
+void		free_tokens(t_token *tokens);
+void		free_split(char **split);
+
+//main_utils
 char		**dup_env(char **envp, size_t *envsz);
+void		handle_signal(int sig);
+//prompt.c
 void		welcome(void);
 void		ms_prompt(t_minishell *shell);
 
@@ -127,10 +139,7 @@ t_token_tp	get_token_type(char *token, t_token *current, int is_first);
 bool		is_quotes(char ch);
 bool		is_operator(char *str);
 void		cleanup_tokens(char **tokens, int token_cnt);
-void		free_split(char **split);
 int			count_tokens(t_token *tokens);
-//token_util_2
-void		free_tokens(t_token *tokens);
 char		*clean_token(const char *str, int len);
 //parse
 int			parser(t_token **head, char *str);
@@ -142,6 +151,7 @@ bool		valid_syntax(t_token *tokens);
 int			find_envar(const char *var, char **envp);
 void		update_envar(const char *var, int index0, char ***envp);
 int			valid_name(const char *var);
+//bi_utils1
 void		export_err(const char *arg);
 //echo
 void		ms_echo(char **args);

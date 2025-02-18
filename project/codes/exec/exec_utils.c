@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:55:56 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/18 13:36:49 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,27 @@ int	is_buildin(char *token)
 	return (0);
 }
 
+static void	free_args(char **args, int cnt)
+{
+	int	pos;
+
+	pos = 0;
+	while (pos < cnt)
+	{
+		free(args[pos]);
+		pos++;
+	}
+	free(args);
+}
+
 char	**prepare_args(t_token *tokens)
 {
 	char	**args;
 	int		arg_pos;
 	t_token	*current;
 
+	if (!tokens)
+		return (NULL);
 	args = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
 	if (!args)
 		return (NULL);
@@ -54,7 +69,13 @@ char	**prepare_args(t_token *tokens)
 	arg_pos = 0;
 	while (current)
 	{
-		args[arg_pos++] = current->value;
+		args[arg_pos] = ft_strdup(current->value);
+		if (!args[arg_pos])
+		{
+			free_args(args, arg_pos);
+			return (NULL);
+		}
+		arg_pos++;
 		current = current->next;
 	}
 	args[arg_pos] = NULL;

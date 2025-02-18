@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:14:24 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:16 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:12:42 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static int	validate_exit_args(char **args, t_minishell *shell)
 		ft_putstr_fd(RED "exit: the argument " ORANGE "\"", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd("\"" RED " is not a valid integer\n", 2);
-		shell->exit_stt = 2;
-		free(shell->prompt);
+		shell->exit_stt = 2;;
 		return (0);
 	}
 	return (1);
@@ -44,5 +43,7 @@ void	ms_exit(char **args, t_minishell *shell)
 	shell->exit_stt = stat;
 	ft_putstr_fd(RECYAN "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
 	free(shell->prompt);
+	free_env(shell->env);
+	rl_clear_history();
 	exit(stat);
 }
