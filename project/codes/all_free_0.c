@@ -1,17 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils_2.c                                    :+:      :+:    :+:   */
+/*   all_free_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 17:26:13 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/18 14:17:19 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../includes/minishell.h"
 
+void	free_env(char **env)
+{
+	int	pos;
+
+	if(!env)
+		return ;
+	pos = 0;
+	while (env[pos])
+	{
+		free(env[pos]);
+		pos++;
+	}
+	free(env);
+}
 void	free_tokens(t_token *tokens)
 {
 	t_token	*current;
@@ -27,25 +41,17 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-char	*clean_token(const char *str, int len)
+void	free_split(char **split)
 {
-	char	*cleaned;
-	int		pos;
-	int		nwpos;
+	int	pos;
 
-	cleaned = malloc(len + 1);
+	if (!split)
+		return ;
 	pos = 0;
-	nwpos = 0;
-	if (!cleaned)
-		return (NULL);
-	while (pos < len)
+	while (split[pos])
 	{
-		if (!is_quotes(str[pos]))
-		{
-			cleaned[nwpos++] = str[pos];
-		}
+		free(split[pos]);
 		pos++;
 	}
-	cleaned[nwpos] = '\0';
-	return (cleaned);
+	free(split);
 }

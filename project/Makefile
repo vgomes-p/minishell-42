@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/14 16:04:29 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/18 14:24:04 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,11 +22,11 @@ H_SRCS		=	minishell.h
 H_DIR		=	includes/
 HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
 
-MAIN_SRCS	=	main.c utils.c prompt.c
+MAIN_SRCS	=	main.c utils.c prompt.c all_free_0.c
 MAIN_DIR	=	codes/
 
 TOKEN_PARSE_SRCS	=	token.c \
-				token_utils_0.c token_utils_1.c token_utils_2.c \
+				token_utils_0.c token_utils_1.c \
 				parse.c \
 				parse_utils_0.c
 TOKEN_PARSE_DIR	=	codes/token_and_parse/
@@ -164,6 +164,8 @@ fclean: clean
 			@echo "$(PINK)Cleaning terminal!$(RESET)"
 			@sleep 1.5
 			@clear
+			@echo "$(GREEN)Você está na pasta:$(RESET)"
+			@pwd
 
 re:			fclean all
 

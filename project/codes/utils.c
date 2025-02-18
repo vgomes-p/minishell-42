@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:10:30 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 17:57:47 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:18:45 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,45 +15,33 @@
 char	**dup_env(char **envp, size_t *envsz)
 {
 	char	**nwenv;
-	int		cnt;
-	int		pos;
+	size_t		cnt;
+	size_t		pos;
 
+	if (!envp || !envsz)
+		return (NULL);
 	cnt = 0;
-	if (envp)
-		while (envp[cnt])
-			cnt++;
+	while (envp[cnt])
+		cnt++;
 	*envsz = cnt;
 	nwenv = ft_calloc(cnt + 1, sizeof(char *));
 	if (!nwenv)
 		return (NULL);
-	pos = -1;
-	while (++pos < cnt)
+	pos = 0;
+	while (pos < cnt)
 	{
 		nwenv[pos] = ft_strdup(envp[pos]);
 		if (!nwenv[pos])
 		{
-			while (--pos >= 0)
-				free(nwenv[pos]);
+			while (--pos > 0)
+				free(nwenv[--pos]);
 			free(nwenv);
 			return (NULL);
 		}
-	}
-	return (nwenv);
-}
-
-void	free_env(char **env)
-{
-	int	pos;
-
-	if(!env)
-		return ;
-	pos = 0;
-	while (env[pos])
-	{
-		free(env[pos]);
 		pos++;
 	}
-	free(env);
+	nwenv[cnt] = NULL;
+	return (nwenv);
 }
 
 void	handle_signal(int sig)

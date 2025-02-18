@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 18:02:05 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:18:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,13 @@ typedef struct s_minishell
 extern t_minishell	*g_shell;
 
 /* CODES DIR */
+//free_all
+void		free_env(char **env);
+void		free_tokens(t_token *tokens);
+void		free_split(char **split);
+
 //main_utils
 char		**dup_env(char **envp, size_t *envsz);
-void		free_env(char **env);
 void		handle_signal(int sig);
 //prompt.c
 void		welcome(void);
@@ -135,10 +139,7 @@ t_token_tp	get_token_type(char *token, t_token *current, int is_first);
 bool		is_quotes(char ch);
 bool		is_operator(char *str);
 void		cleanup_tokens(char **tokens, int token_cnt);
-void		free_split(char **split);
 int			count_tokens(t_token *tokens);
-//token_util_2
-void		free_tokens(t_token *tokens);
 char		*clean_token(const char *str, int len);
 //parse
 int			parser(t_token **head, char *str);
