@@ -1,154 +1,161 @@
 /*build absolute cmd path - path handling*/
-static char	*set_right_path(char *cmd, char **paths)
-{
-	int		i;
-	char	*ret;
-	char	*temp;
+// static char	*set_right_path(char *cmd, char **paths)
+// {
+// 	int		i;
+// 	char	*ret;
+// 	char	*temp;
 
-	i = -1;
-	ret = NULL;
-	while (paths && paths[++i])
-	{
-		temp = ft_strjoin(paths[i], "/");
-		ret = ft_strjoin(temp, cmd);
-		temp = free_ptr(temp);
-		if ((!access(ret, F_OK)) && !access(ret, X_OK))
-			break ;
-		ret = free_ptr(ret);
-	}
-	return (ret);
-}
-/*look cmd in system*/
-char	*find_path(char	*cmd, char **envp)
-{
-	int		i;
-	char	**paths;
-	char	*rigth_path;
+// 	i = -1;
+// 	ret = NULL;
+// 	while (paths && paths[++i])
+// 	{
+// 		temp = ft_strjoin(paths[i], "/");
+// 		ret = ft_strjoin(temp, cmd);
+// 		temp = free_ptr(temp);
+// 		if ((!access(ret, F_OK)) && !access(ret, X_OK))
+// 			break ;
+// 		ret = free_ptr(ret);
+// 	}
+// 	return (ret);
+// }
+// /*look cmd in system*/
+// char	*find_path(char	*cmd, char **envp)
+// {
+// 	int		i;
+// 	char	**paths;
+// 	char	*rigth_path;
 
-	if (cmd[0] == '/' || cmd[0] == '.')
-	{
-		if ((!access(cmd, F_OK)) && !access(cmd, X_OK) \
-		&& ft_strlen(cmd) > 2)
-			return (cmd);
-		return (NULL);
-	}
-	i = -1;
-	while (envp && envp[++i])
-	{
-		if (!ft_strncmp("PATH=", envp[i], 5))
-			break ;
-	}
-	if (envp[i] == NULL)
-		return (NULL);
-	paths = ft_split(envp[i] + 5, ':');
-	rigth_path = set_right_path(cmd, paths);
-	paths = free_mat(paths);
-	return (rigth_path);
-}
+// 	if (cmd[0] == '/' || cmd[0] == '.')
+// 	{
+// 		if ((!access(cmd, F_OK)) && !access(cmd, X_OK) \
+// 		&& ft_strlen(cmd) > 2)
+// 			return (cmd);
+// 		return (NULL);
+// 	}
+// 	i = -1;
+// 	while (envp && envp[++i])
+// 	{
+// 		if (!ft_strncmp("PATH=", envp[i], 5))
+// 			break ;
+// 	}
+// 	if (envp[i] == NULL)
+// 		return (NULL);
+// 	paths = ft_split(envp[i] + 5, ':');
+// 	rigth_path = set_right_path(cmd, paths);
+// 	paths = free_mat(paths);
+// 	return (rigth_path);
+// }
+
+/*************************/
+
 /*exec externs*/
-static void	run_scmd(char **cmd, char **envp)
-{
-	char	*path;
-	char	*error;
-	int		i;
+// static void	run_scmd(char **cmd, char **envp)
+// {
+// 	char	*path;
+// 	char	*error;
+// 	int		i;
 
-	i = 3;
-	while (!close(i))
-		i++;
-	path = find_path(cmd[0], envp);
-	if (!path)
-	{
-		error = ft_strjoin(PROMPT_MSG, cmd[0]);
-		ft_putstr_fd(error, 2);
-		ft_putstr_fd(": No such file or directory\n", 2);
-		error = free_ptr (error);
-		cmd = free_mat(cmd);
-		return ;
-	}
-	execve(path, cmd, envp);
-	path = free_ptr(path);
-	error = ft_strjoin(PROMPT_MSG": ", cmd[0]);
-	perror(error);
-	error = free_ptr(error);
-}
-/*clean child resources*/
-static void	exit_child(t_mini *ms, char **cmd, int **fd, int code)
-{
-	int	i;
+// 	i = 3;
+// 	while (!close(i))
+// 		i++;
+// 	path = find_path(cmd[0], envp);
+// 	if (!path)
+// 	{
+// 		error = ft_strjoin(PROMPT_MSG, cmd[0]);
+// 		ft_putstr_fd(error, 2);
+// 		ft_putstr_fd(": No such file or directory\n", 2);
+// 		error = free_ptr (error);
+// 		cmd = free_mat(cmd);
+// 		return ;
+// 	}
+// 	execve(path, cmd, envp);
+// 	path = free_ptr(path);
+// 	error = ft_strjoin(PROMPT_MSG": ", cmd[0]);
+// 	perror(error);
+// 	error = free_ptr(error);
+// }
+// /*clean child resources*/
+// static void	exit_child(t_mini *ms, char **cmd, int **fd, int code)
+// {
+// 	int	i;
 
-	ms->error = code;
-	ms->input = free_ptr(ms->input);
-	ms->prompt = free_ptr(ms->prompt);
-	ms->token = free_token(ms->token);
-	ms->envp = free_mat(ms->envp);
-	cmd = free_mat(cmd);
-	i = -1;
-	if (fd)
-	{
-		while (fd[++i])
-			fd[i] = (int *) free_ptr((char *) fd[i]);
-		fd = (int **) free_mat((char **) fd);
-	}
-	rl_clear_history();
-	unlink("__heredoc");
-	exit(ms->error);
-}
+// 	ms->error = code;
+// 	ms->input = free_ptr(ms->input);
+// 	ms->prompt = free_ptr(ms->prompt);
+// 	ms->token = free_token(ms->token);
+// 	ms->envp = free_mat(ms->envp);
+// 	cmd = free_mat(cmd);
+// 	i = -1;
+// 	if (fd)
+// 	{
+// 		while (fd[++i])
+// 			fd[i] = (int *) free_ptr((char *) fd[i]);
+// 		fd = (int **) free_mat((char **) fd);
+// 	}
+// 	rl_clear_history();
+// 	unlink("__heredoc");
+// 	exit(ms->error);
+// }
 
-static void	file_error_message(t_mini *ms, char *cmd)
-{
-	ft_putstr_fd(cmd, 2);
-	ms->error = 1;
-}
+// static void	file_error_message(t_mini *ms, char *cmd)
+// {
+// 	ft_putstr_fd(cmd, 2);
+// 	ms->error = 1;
+// }
 
-static void	handle_invalid_file(t_mini *ms)
-{
-	t_token	*temp;
+// static void	handle_invalid_file(t_mini *ms)
+// {
+// 	t_token	*temp;
 
-	temp = ms->token;
-	while (temp)
-	{
-		if (temp->type == HEREDOC)
-			ms->error = 0;
-		if (temp->type == ARG_FILE)
-		{
-			if (access(temp->cmd, F_OK))
-			{
-				file_error_message(ms, temp->cmd);
-				ft_putstr_fd(": No such file or directory\n", 2);
-			}
-			else if (access(temp->cmd, R_OK) || access(temp->cmd, W_OK))
-			{
-				file_error_message(ms, temp->cmd);
-				ft_putstr_fd(": Permission Denied\n", 2);
-				ms->error = 1;
-			}
-		}
-		temp = temp->next;
-	}
-}
+// 	temp = ms->token;
+// 	while (temp)
+// 	{
+// 		if (temp->type == HEREDOC)
+// 			ms->error = 0;
+// 		if (temp->type == ARG_FILE)
+// 		{
+// 			if (access(temp->cmd, F_OK))
+// 			{
+// 				file_error_message(ms, temp->cmd);
+// 				ft_putstr_fd(": No such file or directory\n", 2);
+// 			}
+// 			else if (access(temp->cmd, R_OK) || access(temp->cmd, W_OK))
+// 			{
+// 				file_error_message(ms, temp->cmd);
+// 				ft_putstr_fd(": Permission Denied\n", 2);
+// 				ms->error = 1;
+// 			}
+// 		}
+// 		temp = temp->next;
+// 	}
+// }
 
-void	child(t_mini *ms, char **cmd, int **fd, int i)
-{
-	int	out;
-	int	in;
+// void	child(t_mini *ms, char **cmd, int **fd, int i)
+// {
+// 	int	out;
+// 	int	in;
 
-	out = 0;
-	in = 0;
-	cmd = redirect(ms, cmd, &out, &in);
-	if (!cmd || *cmd == NULL)
-	{
-		handle_invalid_file(ms);
-		free_mat(cmd);
-		exit_child(ms, NULL, fd, ms->error);
-	}
-	if (i && !in)
-		dup2(fd[i - 1][0], 0);
-	if (fd[i] && !out)
-		dup2(fd[i][1], 1);
-	close_fds(fd);
-	run_scmd(cmd, ms->envp);
-	exit_child(ms, cmd, fd, ms -> error);
-}
+// 	out = 0;
+// 	in = 0;
+// 	cmd = redirect(ms, cmd, &out, &in);
+// 	if (!cmd || *cmd == NULL)
+// 	{
+// 		handle_invalid_file(ms);
+// 		free_mat(cmd);
+// 		exit_child(ms, NULL, fd, ms->error);
+// 	}
+// 	if (i && !in)
+// 		dup2(fd[i - 1][0], 0);
+// 	if (fd[i] && !out)
+// 		dup2(fd[i][1], 1);
+// 	close_fds(fd);
+// 	run_scmd(cmd, ms->envp);
+// 	exit_child(ms, cmd, fd, ms -> error);
+// }
+
+
+/**************/
+
 
 char	**token_to_mat(t_token *token)
 {

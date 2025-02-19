@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 16:52:04 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:32:47 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_minishell
 	int		error_code;
 	int		term_height;
 	char	*error_message;
+	t_token	*tokens;
 }	t_minishell;
 
 /* GLOBAL VAR */
@@ -116,6 +117,7 @@ void		free_env(char **env);
 void		free_tokens(t_token *tokens);
 void		sfree(char **split);
 char		*free_ptr(char *ptr);
+void		sfree_int(int **fd);
 
 //utils
 char		**dup_env(char **envp, size_t *envsz);
