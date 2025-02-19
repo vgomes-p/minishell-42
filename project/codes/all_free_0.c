@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 16:52:16 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/19 19:32:53 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,19 @@ char	*free_ptr(char *ptr)
 	free(ptr);
 	ptr = NULL;
 	return (NULL);
+}
+
+void	sfree_int(int **fd)
+{
+	int	pos;
+
+	if (!fd)
+		return;
+	pos = 0;
+	while (fd[pos])
+	{
+		free(fd[pos]);
+		pos++;
+	}
+	free(fd);
 }
