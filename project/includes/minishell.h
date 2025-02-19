@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/18 14:18:02 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,11 +114,14 @@ extern t_minishell	*g_shell;
 //free_all
 void		free_env(char **env);
 void		free_tokens(t_token *tokens);
-void		free_split(char **split);
+void		sfree(char **split);
+char		*free_ptr(char *ptr);
 
-//main_utils
+//utils
 char		**dup_env(char **envp, size_t *envsz);
 void		handle_signal(int sig);
+
+/* MAIN DIR */
 //prompt.c
 void		welcome(void);
 void		ms_prompt(t_minishell *shell);

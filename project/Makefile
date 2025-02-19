@@ -6,24 +6,27 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/18 17:20:57 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/19 14:52:45 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	minishell
-CC			=	cc
-FLAGS		=	-Wall -Wextra -Werror -I $(H_DIR) -I $(LIBFT_DIR)
-DEBUG_FLAGS	=	-g3 -fsanitize=address
-RM			=	rm -rf
-MAKEFLAGS	=	--silent
+NAME			=	minishell
+CC				=	cc
+FLAGS			=	-Wall -Wextra -Werror -I $(H_DIR) -I $(LIBFT_DIR)
+DEBUG_FLAGS		=	-g3 -fsanitize=address
+RM				=	rm -rf
+MAKEFLAGS		=	--silent
 
 # path and files
-H_SRCS		=	minishell.h
-H_DIR		=	includes/
-HEADER		=	$(addprefix $(H_DIR), $(H_SRCS))
+H_SRCS			=	minishell.h
+H_DIR			=	includes/
+HEADER			=	$(addprefix $(H_DIR), $(H_SRCS))
 
-MAIN_SRCS	=	main.c utils.c prompt.c all_free_0.c
-MAIN_DIR	=	codes/
+GENERAL_SRCS	=	utils.c all_free_0.c
+GENERAL_DIR		=	codes/
+
+MAIN_SRCS		=	main.c prompt.c
+MAIN_DIR		=	codes/main/
 
 TOKEN_PARSE_SRCS	=	token.c \
 				token_utils_0.c token_utils_1.c \
@@ -32,48 +35,49 @@ TOKEN_PARSE_SRCS	=	token.c \
 TOKEN_PARSE_DIR	=	codes/token_and_parse/
 
 BUILDIN_SRCS	=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
-BUILDIN_DIR	=	codes/buildins/
+BUILDIN_DIR		=	codes/buildins/
 
-PIPE_SRCS	=	
-PIPE_DIR	=	codes/pipe/
+PIPE_SRCS		=	
+PIPE_DIR		=	codes/pipe/
 
-EXEC_SRCS	=	exec_utils.c exec_buildins.c exec_externs.c
-EXEC_DIR	=	codes/exec/
+EXEC_SRCS		=	exec_utils.c exec_buildins.c exec_externs.c
+EXEC_DIR		=	codes/exec/
 
-OBJ_DIR		=	build/
-OBJ_M		=	$(addprefix $(OBJ_DIR), $(MAIN_SRCS:.c=.o) $(TOKEN_PARSE_SRCS:.c=.o) $(BUILDIN_SRCS:.c=.o) $(PIPE_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
+OBJ_DIR			=	build/
+OBJ_M			=	$(addprefix $(OBJ_DIR), $(GENERAL_SRCS:.c=.o) $(MAIN_SRCS:.c=.o) $(TOKEN_PARSE_SRCS:.c=.o) $(BUILDIN_SRCS:.c=.o) $(PIPE_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
 
-MAIN		=	$(addprefix $(MAIN_DIR), $(MAIN_SRCS))
+GENERAL			=	$(addprefix $(GENERAL_DIR), $(GENERAL_SRCS))
+MAIN			=	$(addprefix $(MAIN_DIR), $(MAIN_SRCS))
 TOKEN_PARSE		=	$(addprefix $(TOKEN_PARSE_DIR), $(TOKEN_PARSE_SRCS))
-BUILDIN		=	$(addprefix $(BUILDIN_DIR), $(BUILDIN_SRCS))
-PIPE		=	$(addprefix $(PIPE_DIR), $(PIPE_SRCS))
-EXEC		=	$(addprefix $(EXEC_DIR), $(EXEC_SRCS))
+BUILDIN			=	$(addprefix $(BUILDIN_DIR), $(BUILDIN_SRCS))
+PIPE			=	$(addprefix $(PIPE_DIR), $(PIPE_SRCS))
+EXEC			=	$(addprefix $(EXEC_DIR), $(EXEC_SRCS))
 
-LIBFT_DIR	=	includes/libft/
-LIBFT		=	$(LIBFT_DIR)libft.a
+LIBFT_DIR		=	includes/libft/
+LIBFT			=	$(LIBFT_DIR)libft.a
 
-LIBMS_DIR	=	includes/libms/
-LIBMS		=	$(LIBMS_DIR)libms.a
+LIBMS_DIR		=	includes/libms/
+LIBMS			=	$(LIBMS_DIR)libms.a
 
-LIBFT_OBJ	=	$(wildcard $(LIBFT_DIR)*.o)
-LIBMS_OBJ	=	$(wildcard $(LIBMS_DIR)*.o)
+LIBFT_OBJ		=	$(wildcard $(LIBFT_DIR)*.o)
+LIBMS_OBJ		=	$(wildcard $(LIBMS_DIR)*.o)
 
-LFLAGS		=	-lreadline
-TERMCAP		=	-ltermcap
+LFLAGS			=	-lreadline
+TERMCAP			=	-ltermcap
 
 # Colors
-RESET		=	\033[0m
-RED			=	\033[1;31m
-CYAN		=	\033[1;36m
-PINK		=	\033[1;35m
-GREEN		=	\033[1;32m
-YELLOW		=	\033[1;33m
-REWHITE		=	\033[1;7;97m
-RECYAN		=	\033[1;7;36m
-REPINK		=	\033[1;7;35m
-RERED		=	\033[1;7;31m
-REGREEN		=	\033[1;7;32m
-REYELLOW	=	\033[1;7;33m
+RESET			=	\033[0m
+RED				=	\033[1;31m
+CYAN			=	\033[1;36m
+PINK			=	\033[1;35m
+GREEN			=	\033[1;32m
+YELLOW			=	\033[1;33m
+REWHITE			=	\033[1;7;97m
+RECYAN			=	\033[1;7;36m
+REPINK			=	\033[1;7;35m
+RERED			=	\033[1;7;31m
+REGREEN			=	\033[1;7;32m
+REYELLOW		=	\033[1;7;33m
 
 #Progress bar
 TOTAL_FILES = $(words $(OBJ_M) $(LIBFT_OBJ) $(LIBMS_OBJ))
@@ -96,6 +100,12 @@ endef
 
 # Rules
 $(OBJ_DIR)%.o: $(MAIN_DIR)%.c $(HEADER)
+			@clear
+			@mkdir -p $(OBJ_DIR)
+			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
+			@$(call update_progress)
+
+$(OBJ_DIR)%.o: $(GENERAL_DIR)%.c $(HEADER)
 			@clear
 			@mkdir -p $(OBJ_DIR)
 			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
@@ -146,7 +156,7 @@ debug: $(OBJ_M)
 			@echo "\n$(REPINK)Execution completed: $(NAME) created in debug mode!$(RESET)\n"
 
 depend:
-			@$(CC) -MM $(FLAGS) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(PIPE) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
+			@$(CC) -MM $(FLAGS) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(PIPE) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
 			@echo "\n$(REWHITE)Dependencies updated in dependencies.mk!$(RESET)\n"
 
 all:		$(NAME)
