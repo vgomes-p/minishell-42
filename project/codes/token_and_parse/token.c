@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 17:27:24 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:47 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ t_token	*create_token_list(char **split, t_token *head)
 				get_token_type(split[pos], current, pos == 0));
 		if (!nwtoken)
 		{
-			free_split(split);
+			sfree(split);
 			free_tokens(head);
 			return (NULL);
 		}
@@ -79,9 +79,9 @@ t_token	*tokening(char *input)
 	head = create_token_list(split, NULL);
 	if (!head)
 	{
-		free_split(split);
+		sfree(split);
 		return (NULL);
 	}
-	free_split(split);
+	sfree(split);
 	return (head);
 }

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/18 14:17:19 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:16 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	free_tokens(t_token *tokens)
 	}
 }
 
-void	free_split(char **split)
+void	sfree(char **split)
 {
 	int	pos;
 
@@ -54,4 +54,11 @@ void	free_split(char **split)
 		pos++;
 	}
 	free(split);
+}
+
+char	*free_ptr(char *ptr)
+{
+	free(ptr);
+	ptr = NULL;
+	return (NULL);
 }

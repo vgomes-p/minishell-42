@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/18 13:36:49 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:47 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	is_buildin(char *token)
 {
@@ -33,11 +33,11 @@ int	is_buildin(char *token)
 	{
 		if (!ft_strncmp(token, ls[pos], ft_strlen(token)))
 		{
-			free_split(ls);
+			sfree(ls);
 			return (1);
 		}
 	}
-	free_split(ls);
+	sfree(ls);
 	return (0);
 }
 
