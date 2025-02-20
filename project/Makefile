@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/19 14:52:45 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/20 18:01:59 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ H_DIR			=	includes/
 HEADER			=	$(addprefix $(H_DIR), $(H_SRCS))
 
 GENERAL_SRCS	=	utils.c all_free_0.c
-GENERAL_DIR		=	codes/
+GENERAL_DIR		=	codes/utils/
 
 MAIN_SRCS		=	main.c prompt.c
 MAIN_DIR		=	codes/main/
@@ -37,7 +37,7 @@ TOKEN_PARSE_DIR	=	codes/token_and_parse/
 BUILDIN_SRCS	=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
 BUILDIN_DIR		=	codes/buildins/
 
-PIPE_SRCS		=	
+PIPE_SRCS		=	wipall.c
 PIPE_DIR		=	codes/pipe/
 
 EXEC_SRCS		=	exec_utils.c exec_buildins.c exec_externs.c
@@ -102,33 +102,33 @@ endef
 $(OBJ_DIR)%.o: $(MAIN_DIR)%.c $(HEADER)
 			@clear
 			@mkdir -p $(OBJ_DIR)
-			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
+			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
 $(OBJ_DIR)%.o: $(GENERAL_DIR)%.c $(HEADER)
 			@clear
 			@mkdir -p $(OBJ_DIR)
-			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
+			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
 $(OBJ_DIR)%.o: $(TOKEN_PARSE_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
-			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
+			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
-$(OBJ_DIR)%.o: $(BUILDIN_DIR)%.c $(HE2>/dev/nullADER)
+$(OBJ_DIR)%.o: $(BUILDIN_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
-			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
+			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
 $(OBJ_DIR)%.o: $(PIPE_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
-			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
+			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
 $(OBJ_DIR)%.o: $(EXEC_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
-			$(CC) $(FLAGS) -c $< -o $@  2>/dev/null
+			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
 $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)

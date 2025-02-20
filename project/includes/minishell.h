@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 14:18:06 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:57:17 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,25 @@ typedef struct s_minishell
 /* GLOBAL VAR */
 extern t_minishell	*g_shell;
 
+
+/*NEW FUNCTIONS*/
+char		*get_full_path(char *cmd, char **path_dir);
+char		*find_exec_path(char *cmd, char **envp);
+void		cls_fd(int **fd);
+void		exec_extern(char **cmd, char **envp);
+void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
+void		file_errmsg(t_minishell *shell, char *cmd);
+void		handle_invalid_file(t_minishell *shell);
+void		child(t_minishell *shell, char **cmd, int **fd, int pos);
+char		**tokens_matrix(t_token *token);
+t_exec		init_exec(t_minishell *shell);
+int			is_dir(t_minishell *shell, char *cmd);
+int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
+void		exec_child(t_minishell *shell, t_exec *exec, int pos);
+void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
+void		exec_cmd(t_minishell *shell);
+
+
 /* CODES DIR */
 //free_all
 void		free_env(char **env);
@@ -176,7 +195,6 @@ void		ms_export(t_minishell *shell, char **args, char ***envp);
 
 /* EXEC DIR */
 //exec_externs
-void		exec_extern(t_token *tokens, t_minishell *shell);
 //exec_buildins
 int			exec_builtin(t_token *tokens, t_minishell *shell);
 //exec_utils

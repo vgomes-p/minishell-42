@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:10:30 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/18 14:18:45 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:53:22 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	**dup_env(char **envp, size_t *envsz)
 {

@@ -1,6 +1,6 @@
 #include "../../includes/minishell.h"
 
-char *get_full_path(char *cmd, char **path_dir)
+char	*get_full_path(char *cmd, char **path_dir)
 {
 	int		pos;
 	char	*full_path;
@@ -105,7 +105,7 @@ void	clean_child_res(t_minishell *shell, char **cmd, int **fd, int code)
 		sfree_int(fd);
 		fd = NULL;
 	}
-	ls_clear_history();
+	rl_clear_history();
 	unlink("__heredoc");
 	exit(shell->error_code);
 }
@@ -214,7 +214,7 @@ t_exec	init_exec(t_minishell *shell)
 
 	while (exec.temp)
 	{
-		if (exec.temp->type = PIPE)
+		if (exec.temp->type == PIPE)
 			exec.nbr_pros++;
 		exec.temp = exec.temp->next;
 	}
@@ -247,7 +247,7 @@ int	is_dir(t_minishell *shell, char *cmd)
 	return (0);
 }
 
-int exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
+int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 {
 	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
 		return (0);
@@ -284,7 +284,7 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 }
 
 // Handle process cleanup and wait for child processes
-static void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
+void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 {
 	int	pros_pos;
 
@@ -303,7 +303,7 @@ static void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 }
 
 // Main execution function for pipe commands
-void	exec_pipe_cmd(t_minishell *shell)
+void	exec_cmd(t_minishell *shell)
 {
 	int		cmd_pos;
 	t_exec	exec;
