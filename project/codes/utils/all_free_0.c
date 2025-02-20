@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 19:32:53 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:53:30 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	free_env(char **env)
 {
