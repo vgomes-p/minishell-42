@@ -170,7 +170,158 @@ void	child(t_minishell *shell, char **cmd, int **fd, int pos)
 }
 
 /*---------------------------------------------------------------*/
+
+char	**tokens_matrix(t_token *token)
+{
+	int		cnt;
+	int		pos;
+	char	**ret;
+
+	if (!token)
+		return (NULL);
+	cnt = count_tokens(token);
+	ret = ft_calloc((cnt + 1), sizeof(char *));
+	if (!ret)
+		return (NULL);
+	pos = 0;
+	while (pos < cnt)
+	{
+		ret[pos] = ft_strdup(token->value);
+		if (!ret[pos])
+		{
+			sfree(ret);
+			return (NULL);
+		}
+		token = token->next;
+		pos++;
+	}
+	ret[pos] = NULL;
+	return (ret);
+}
+
 /*---------------------------------------------------------------*/
+
+t_exec	init_exec(t_minishell *shell)
+{
+	int		pos;
+	t_exec	exec;
+
+	exec.pid = 0;
+	exec.stts = 0;
+	exec.nbr_pros = 1;
+	exec.temp = shell->tokens;
+	exec.cmd = tokens_matrix(exec.temp);
+
+	while (exec.temp)
+	{
+		if (exec.temp->type = PIPE)
+			exec.nbr_pros++;
+		exec.temp = exec.temp->next;
+	}
+	exec.fd = ft_calloc(exec.nbr_pros, sizeof(int *));
+	pos = -1;
+	while (++pos < (exec.nbr_pros - 1))
+		exec.fd[pos] = ft_calloc(2, sizeof(int));
+	pos = -1;
+	while (++pos < exec.nbr_pros - 1)
+		pipe(exec.fd[pos]);
+	exec.temp = shell->tokens;
+	return (exec);
+}
+
+int	is_dir(t_minishell *shell, char *cmd)
+{
+	struct stat	file_info;
+
+	(void)shell;
+	if (stat(cmd, &file_info) != 0)
+		return (-1);
+	if (S_ISDIR(file_info.st_mode))
+	{
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": is a directory\n" RESET, 2);
+		shell->error_code = 126;
+		return (1);
+	}
+	return (0);
+}
+
+int exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
+{
+	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
+		return (0);
+	if (nb_pros > 1)
+		return (-1);
+	if (exec_builtin(shell->tokens, shell))
+	{
+		sfree_int(fd);
+		fd = NULL;
+		return (0);
+	}
+	return (-1);
+}
+
+void	exec_child(t_minishell *shell, t_exec *exec, int pos)
+{
+	exec->pid = malloc(sizeof(pid_t) * exec->nbr_pros);
+	if (!exec->pid)
+		return ;
+	while (++pos < exec->nbr_pros)
+	{
+		if (pos)
+			exec->cmd = tokens_matrix(exec->temp);
+		exec->pid[pos] = fork();
+		if (exec->pid[pos] == 0)
+			child(shell, exec->cmd, exec->fd, pos);
+		while (exec->temp && exec->temp->type != PIPE)
+			exec->temp = exec->temp->next;
+		if (exec->temp && exec->temp->type == PIPE)
+			exec->temp = exec->temp->next;
+		sfree(exec->cmd);
+		exec->cmd = NULL;
+	}
+}
+
+// Handle process cleanup and wait for child processes
+static void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
+{
+	int	pros_pos;
+
+	cls_fd(exec->fd);
+	pros_pos = -1;
+	while (exec->fd[++pros_pos])
+		exec->fd[pros_pos] = (int *) free_ptr((char *) exec->fd[pros_pos]);
+	sfree_int(exec->fd);
+	exec->fd = NULL;
+	pros_pos = -1;
+	while (++pros_pos < exec->nbr_pros)
+		waitpid(exec->pid[pros_pos], &exec->stts, 0);
+	if (WIFEXITED(exec->stts) && cmd_pos != exec->nbr_pros)
+		shell->error_code = WEXITSTATUS(exec->stts);
+	free(exec->pid);
+}
+
+// Main execution function for pipe commands
+void	exec_pipe_cmd(t_minishell *shell)
+{
+	int		cmd_pos;
+	t_exec	exec;
+
+	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
+		return;
+	exec = init_exec(shell);
+	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
+	if (cmd_pos > 0)
+	{
+		sfree(exec.cmd);
+		exec.cmd = NULL;
+	}
+	if (cmd_pos == 0)
+		return;
+	exec_child(shell, &exec, cmd_pos);
+	cleanup_processes(&exec, shell, cmd_pos);
+}
 /*---------------------------------------------------------------*/
 /*---------------------------------------------------------------*/
 /*---------------------------------------------------------------*/
