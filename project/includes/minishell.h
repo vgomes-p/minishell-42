@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 19:32:47 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:18:06 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <curses.h>
 # include <termcap.h>
 # include <stdbool.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include "libft/libft.h"
@@ -81,17 +82,17 @@ typedef struct s_exec
 	int		**fd;
 	int		stts;
 	pid_t	*pid;
-	int		n_pros;
+	int		nbr_pros;
 }	t_exec;
 
 typedef struct s_expand
 {
 	char	**hold_str;
-	int		ex;
+	int		exec;
 	int		start;
 	int		end;
 	int		quotes;
-	int		ex_n;
+	int		exec_n;
 	int		i;
 }	t_expand;
 
