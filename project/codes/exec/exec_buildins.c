@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 16:32:56 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/19 16:52:47 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static int	check_builtin_type(char **args, t_minishell *shell, int *ret)
 {
@@ -47,6 +47,6 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	if (!args)
 		return (-1);
 	ret = check_builtin_type(args, shell, &ret);
-	free_split(args);
+	sfree(args);
 	return (ret);
 }

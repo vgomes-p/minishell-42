@@ -6,11 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 16:31:23 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:58:28 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 static char	*pathedprompt(t_minishell *shell)
 {
@@ -81,25 +81,24 @@ static void	handle_input(t_minishell *shell, char **input)
 
 static void	process_command(char *input, t_minishell *shell)
 {
-	t_token	*tokens;
-
-	tokens = tokening(input);
-	if (!tokens)
+	shell->tokens = tokening(input);
+	if (!shell->tokens)
 	{
 		ft_putstr_fd(RED "Error: Tokenination has failed\n" RESET, 2);
 		free(input);
 		return ;
 	}
-	if (!valid_syntax(tokens))
+	if (!valid_syntax(shell->tokens))
 	{
 		ft_putstr_fd(RED "Syntax error\n" RESET, 2);
-		free_tokens(tokens);
+		free_tokens(shell->tokens);
+		shell->tokens = NULL;
 		free(input);
 		return ;
 	}
-	if (exec_builtin(tokens, shell) == 0)
-		exec_extern(tokens, shell);
-	free_tokens(tokens);
+	exec_cmd(shell);
+	free_tokens(shell->tokens);
+	shell->tokens = NULL;
 	free(input);
 }
 
