@@ -37,7 +37,7 @@ valgrind --leak-check=full ./minishell ***ou*** valgrind --leak-check=full --sho
 ls
 ls -l
 ls -la
-mkdir out.txt
+touch out.txt
 mkdir "testing dir"
 cat
 cat Makefile
