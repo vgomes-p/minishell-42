@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:28:41 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 18:33:11 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:58:22 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,5 +120,3 @@ void	child(t_minishell *shell, char **cmd, int **fd, int pos)
 	exec_extern(cmd, shell->env);
 	clean_child_res(shell, cmd, fd, shell->error_code);
 }
-
-

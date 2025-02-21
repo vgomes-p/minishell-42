@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 17:57:17 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:04:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,27 +112,8 @@ typedef struct s_minishell
 /* GLOBAL VAR */
 extern t_minishell	*g_shell;
 
-
-/*NEW FUNCTIONS*/
-char		*get_full_path(char *cmd, char **path_dir);
-char		*find_exec_path(char *cmd, char **envp);
-void		cls_fd(int **fd);
-void		exec_extern(char **cmd, char **envp);
-void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
-void		file_errmsg(t_minishell *shell, char *cmd);
-void		handle_invalid_file(t_minishell *shell);
-void		child(t_minishell *shell, char **cmd, int **fd, int pos);
-char		**tokens_matrix(t_token *token);
-t_exec		init_exec(t_minishell *shell);
-int			is_dir(t_minishell *shell, char *cmd);
-int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
-void		exec_child(t_minishell *shell, t_exec *exec, int pos);
-void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
-void		exec_cmd(t_minishell *shell);
-
-
 /* CODES DIR */
-//free_all
+//free_all_0
 void		free_env(char **env);
 void		free_tokens(t_token *tokens);
 void		sfree(char **split);
@@ -166,6 +147,8 @@ bool		is_operator(char *str);
 void		cleanup_tokens(char **tokens, int token_cnt);
 int			count_tokens(t_token *tokens);
 char		*clean_token(const char *str, int len);
+//token_utils_2
+char		**tokens_matrix(t_token *token);
 //parse
 int			parser(t_token **head, char *str);
 //parse_utils_0
@@ -194,11 +177,28 @@ void		ms_unset(t_minishell *shell, char **args, char ***envp);
 void		ms_export(t_minishell *shell, char **args, char ***envp);
 
 /* EXEC DIR */
+// cmd_path
+char		*get_full_path(char *cmd, char **path_dir);
+char		*find_exec_path(char *cmd, char **envp);
+
 //exec_externs
+t_exec		init_exec(t_minishell *shell);
+int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
+void		exec_child(t_minishell *shell, t_exec *exec, int pos);
+void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
+void		exec_cmd(t_minishell *shell);
 //exec_buildins
 int			exec_builtin(t_token *tokens, t_minishell *shell);
-//exec_utils
-char		**prepare_args(t_token *tokens);
+//exec_utils_0
 int			is_buildin(char *token);
+char		**prepare_args(t_token *tokens);
+int			is_dir(t_minishell *shell, char *cmd);
+void		cls_fd(int **fd);
+//exec_utils_1
+void		exec_extern(char **cmd, char **envp);
+void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
+void		file_errmsg(t_minishell *shell, char *cmd);
+void		handle_invalid_file(t_minishell *shell);
+void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 
 #endif

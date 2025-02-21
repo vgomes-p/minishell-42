@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:14:24 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 16:12:42 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:56:40 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	validate_exit_args(char **args, t_minishell *shell)
 		ft_putstr_fd(RED "exit: the argument " ORANGE "\"", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd("\"" RED " is not a valid integer\n", 2);
-		shell->exit_stt = 2;;
+		shell->exit_stt = 2;
 		return (0);
 	}
 	return (1);

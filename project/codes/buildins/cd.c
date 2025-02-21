@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:13:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/13 19:37:03 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:55:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,20 @@ static int	update_oldpwd(char *oldpwd, t_minishell *shell)
 static void	update_pwd(char *oldpwd, t_minishell *shell)
 {
 	char	*nwpwd;
+	int		pwd_index;
+	char	*pwd_var;
 
 	nwpwd = get_new_pwd(oldpwd);
 	if (!nwpwd)
 		return ;
-		
 	if (!update_oldpwd(oldpwd, shell))
 	{
 		free(nwpwd);
 		free(oldpwd);
 		return ;
 	}
-		
-	int pwd_index = find_envar("PWD", shell->env);
-	char *pwd_var = ft_strjoin("PWD=", nwpwd);
+	pwd_index = find_envar("PWD", shell->env);
+	pwd_var = ft_strjoin("PWD=", nwpwd);
 	if (!pwd_var)
 	{
 		free(nwpwd);

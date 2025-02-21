@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 18:28:26 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:58:54 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	**prepare_args(t_token *tokens)
 	args[arg_pos] = NULL;
 	return (args);
 }
+
 int	is_dir(t_minishell *shell, char *cmd)
 {
 	struct stat	file_info;
