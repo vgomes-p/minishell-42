@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 18:30:23 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:57:53 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ t_exec	init_exec(t_minishell *shell)
 	exec.nbr_pros = 1;
 	exec.temp = shell->tokens;
 	exec.cmd = tokens_matrix(exec.temp);
-
 	while (exec.temp)
 	{
 		if (exec.temp->type == PIPE)
@@ -100,7 +99,7 @@ void	exec_cmd(t_minishell *shell)
 	t_exec	exec;
 
 	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
-		return;
+		return ;
 	exec = init_exec(shell);
 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
 	if (cmd_pos > 0)
@@ -109,7 +108,7 @@ void	exec_cmd(t_minishell *shell)
 		exec.cmd = NULL;
 	}
 	if (cmd_pos == 0)
-		return;
+		return ;
 	exec_child(shell, &exec, cmd_pos);
 	cleanup_processes(&exec, shell, cmd_pos);
 }

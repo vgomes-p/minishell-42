@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 17:53:30 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:00:00 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_env(char **env)
 {
 	int	pos;
 
-	if(!env)
+	if (!env)
 		return ;
 	pos = 0;
 	while (env[pos])
@@ -26,6 +26,7 @@ void	free_env(char **env)
 	}
 	free(env);
 }
+
 void	free_tokens(t_token *tokens)
 {
 	t_token	*current;
@@ -68,7 +69,7 @@ void	sfree_int(int **fd)
 	int	pos;
 
 	if (!fd)
-		return;
+		return ;
 	pos = 0;
 	while (fd[pos])
 	{

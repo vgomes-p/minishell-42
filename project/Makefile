@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/20 18:35:38 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/21 12:12:48 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,9 +137,9 @@ $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
 			@sleep 0.5
 			@echo "$(CYAN)🎉 Minishell created 🎉\nNow you need to relax, it will be open soon!\n"
 			@sleep 2
-			@echo "$(RECYAN)NOTE:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET),\nleakreport by calling $(YELLOW)make val$(RESET), and entry debug mode\nby calling $(YELLOW)make debug$(RESET)!\n\n"
+			@echo "$(RECYAN)NOTE:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET),\nleakreport by calling $(YELLOW)make val$(RESET), norminette_report by calling\n$(YELLOW)make norm$(RESET) and entry debug mode by calling $(YELLOW)make debug$(RESET)!\n\n"
 			@sleep 2
-			-@make val
+			-@make normival
 
 $(LIBFT):
 			@make -C $(LIBFT_DIR)
@@ -150,6 +150,12 @@ $(LIBMS): $(LIBFT)
 val: $(NAME)
 			valgrind --leak-check=full --show-leak-kinds=all --suppressions=ms.supp --log-file=leakreport.txt ./minishell
 			@echo "\n$(REWHITE)Leak report updated in leakreport.txt!$(RESET)\n"
+
+norm:
+			-@norminette > norminette_report.txt 2>&1
+			@echo "$(REWHITE)Norminette report saved in norminette_report.txt!$(RESET)"
+
+normival: val norm
 
 debug: $(OBJ_M)
 			$(CC) $(FLAGS) $(DEBUG_FLAGS) $(OBJ_M) $(LIBFT) $(LIBMS) $(LFLAGS) $(TERMCAP) -o $(NAME)
@@ -186,4 +192,4 @@ fclean: clean
 re:			fclean all
 
 
-.PHONY:		all clean fclean re depend val
+.PHONY:		all clean fclean re depend val norm normival
