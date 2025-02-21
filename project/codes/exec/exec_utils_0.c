@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*   exec_utils_0.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/18 13:36:49 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:58:54 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int	is_buildin(char *token)
 {
@@ -33,11 +33,11 @@ int	is_buildin(char *token)
 	{
 		if (!ft_strncmp(token, ls[pos], ft_strlen(token)))
 		{
-			free_split(ls);
+			sfree(ls);
 			return (1);
 		}
 	}
-	free_split(ls);
+	sfree(ls);
 	return (0);
 }
 
@@ -80,4 +80,35 @@ char	**prepare_args(t_token *tokens)
 	}
 	args[arg_pos] = NULL;
 	return (args);
+}
+
+int	is_dir(t_minishell *shell, char *cmd)
+{
+	struct stat	file_info;
+
+	(void)shell;
+	if (stat(cmd, &file_info) != 0)
+		return (-1);
+	if (S_ISDIR(file_info.st_mode))
+	{
+		ft_putstr_fd(RED, 2);
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": is a directory\n" RESET, 2);
+		shell->error_code = 126;
+		return (1);
+	}
+	return (0);
+}
+
+void	cls_fd(int **fd)
+{
+	int	pos;
+
+	pos = 0;
+	while (fd[pos])
+	{
+		close(fd[pos][0]);
+		close(fd[pos][1]);
+		pos++;
+	}
 }
