@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 12:04:36 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:27:53 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,8 @@ int			count_tokens(t_token *tokens);
 char		*clean_token(const char *str, int len);
 //token_utils_2
 char		**tokens_matrix(t_token *token);
+t_token		*cpy_token_ls(t_token *tokens);
+void		addtoken_ls(t_token *list, t_token *new_token);
 //parse
 int			parser(t_token **head, char *str);
 //parse_utils_0
@@ -200,5 +202,7 @@ void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
 void		file_errmsg(t_minishell *shell, char *cmd);
 void		handle_invalid_file(t_minishell *shell);
 void		child(t_minishell *shell, char **cmd, int **fd, int pos);
+//exec_utils_2
+t_token		*get_next_cmd(t_token **tokens);
 
 #endif
