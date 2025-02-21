@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/21 14:28:49 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/21 15:48:13 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -136,11 +136,9 @@ $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
 			$(CC) $(FLAGS) $(OBJ_M) $(LIBMS) $(LIBFT) $(LFLAGS) $(TERMCAP) -o $(NAME)
 			@echo "\n$(GREEN)✅ Execution completed! ✅$(RESET)\n"
 			@sleep 0.5
-			@echo "$(CYAN)🎉 Minishell created 🎉\nNow you need to relax, it will be open soon!\n"
+			@echo "$(CYAN)🎉 Minishell created 🎉\n"
 			@sleep 2
-			@echo "$(RECYAN)NOTE:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET),\nleakreport by calling $(YELLOW)make val$(RESET), norminette_report by calling\n$(YELLOW)make norm$(RESET) and entry debug mode by calling $(YELLOW)make debug$(RESET)!\n\n"
-			@sleep 2
-			-@make normival
+			@echo "$(RECYAN)NOTE:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET),\nleakreport by calling $(YELLOW)make val$(RESET), norminette_report by calling\n$(YELLOW)make norm$(RESET) or both with $(YELLOW)normival$(RESET) and entry\ndebug mode by calling $(YELLOW)make debug$(RESET)!\n\n"
 
 $(LIBFT):
 			@make -C $(LIBFT_DIR)
