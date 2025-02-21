@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 11:57:53 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:32:01 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,26 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 
 void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 {
+	t_token	*cmd_tokens;
+	t_token	*current_tokens;
+
 	exec->pid = malloc(sizeof(pid_t) * exec->nbr_pros);
 	if (!exec->pid)
 		return ;
+	current_tokens = shell->tokens;
+	pos = -1;
 	while (++pos < exec->nbr_pros)
 	{
-		if (pos)
-			exec->cmd = tokens_matrix(exec->temp);
+		cmd_tokens = get_next_cmd(&current_tokens);
+		exec->cmd = tokens_matrix(cmd_tokens);
 		exec->pid[pos] = fork();
 		if (exec->pid[pos] == 0)
+		{
 			child(shell, exec->cmd, exec->fd, pos);
-		while (exec->temp && exec->temp->type != PIPE)
-			exec->temp = exec->temp->next;
-		if (exec->temp && exec->temp->type == PIPE)
-			exec->temp = exec->temp->next;
+		}
 		sfree(exec->cmd);
 		exec->cmd = NULL;
+		free_tokens(cmd_tokens);
 	}
 }
 
@@ -97,9 +101,11 @@ void	exec_cmd(t_minishell *shell)
 {
 	int		cmd_pos;
 	t_exec	exec;
+	t_token	*tokens_copy;
 
 	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
 		return ;
+	tokens_copy = cpy_token_ls(shell->tokens);
 	exec = init_exec(shell);
 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
 	if (cmd_pos > 0)
@@ -111,4 +117,5 @@ void	exec_cmd(t_minishell *shell)
 		return ;
 	exec_child(shell, &exec, cmd_pos);
 	cleanup_processes(&exec, shell, cmd_pos);
+	free_tokens(tokens_copy);
 }
