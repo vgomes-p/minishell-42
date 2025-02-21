@@ -6,32 +6,109 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:59:08 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:57:53 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../../includes/minishell.h"
 
-void	exec_extern(t_token *tokens, t_minishell *shell)
+t_exec	init_exec(t_minishell *shell)
 {
-	char	**args;
-	pid_t	pid;
+	int		pos;
+	t_exec	exec;
 
-	args = prepare_args(tokens);
-	if (!args)
-		return ;
-	pid = fork();
-	if (pid == 0)
+	exec.pid = 0;
+	exec.stts = 0;
+	exec.nbr_pros = 1;
+	exec.temp = shell->tokens;
+	exec.cmd = tokens_matrix(exec.temp);
+	while (exec.temp)
 	{
-		if (execve(args[0], args, shell->env) == -1)
-		{
-			perror(RED "execve" RESET);
-			exit(EXIT_FAILURE);
-		}
+		if (exec.temp->type == PIPE)
+			exec.nbr_pros++;
+		exec.temp = exec.temp->next;
 	}
-	else if (pid < 0)
-		perror(RED "fork" RESET);
-	else
-		waitpid(pid, NULL, 0);
-	free(args);
+	exec.fd = ft_calloc(exec.nbr_pros, sizeof(int *));
+	pos = -1;
+	while (++pos < (exec.nbr_pros - 1))
+		exec.fd[pos] = ft_calloc(2, sizeof(int));
+	pos = -1;
+	while (++pos < exec.nbr_pros - 1)
+		pipe(exec.fd[pos]);
+	exec.temp = shell->tokens;
+	return (exec);
+}
+
+int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
+{
+	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
+		return (0);
+	if (nb_pros > 1)
+		return (-1);
+	if (exec_builtin(shell->tokens, shell))
+	{
+		sfree_int(fd);
+		fd = NULL;
+		return (0);
+	}
+	return (-1);
+}
+
+void	exec_child(t_minishell *shell, t_exec *exec, int pos)
+{
+	exec->pid = malloc(sizeof(pid_t) * exec->nbr_pros);
+	if (!exec->pid)
+		return ;
+	while (++pos < exec->nbr_pros)
+	{
+		if (pos)
+			exec->cmd = tokens_matrix(exec->temp);
+		exec->pid[pos] = fork();
+		if (exec->pid[pos] == 0)
+			child(shell, exec->cmd, exec->fd, pos);
+		while (exec->temp && exec->temp->type != PIPE)
+			exec->temp = exec->temp->next;
+		if (exec->temp && exec->temp->type == PIPE)
+			exec->temp = exec->temp->next;
+		sfree(exec->cmd);
+		exec->cmd = NULL;
+	}
+}
+
+void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
+{
+	int	pros_pos;
+
+	cls_fd(exec->fd);
+	pros_pos = -1;
+	while (exec->fd[++pros_pos])
+		exec->fd[pros_pos] = (int *) free_ptr((char *) exec->fd[pros_pos]);
+	sfree_int(exec->fd);
+	exec->fd = NULL;
+	pros_pos = -1;
+	while (++pros_pos < exec->nbr_pros)
+		waitpid(exec->pid[pros_pos], &exec->stts, 0);
+	if (WIFEXITED(exec->stts) && cmd_pos != exec->nbr_pros)
+		shell->error_code = WEXITSTATUS(exec->stts);
+	free(exec->pid);
+}
+
+void	exec_cmd(t_minishell *shell)
+{
+	int		cmd_pos;
+	t_exec	exec;
+
+	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
+		return ;
+	exec = init_exec(shell);
+	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
+	if (cmd_pos > 0)
+	{
+		sfree(exec.cmd);
+		exec.cmd = NULL;
+	}
+	if (cmd_pos == 0)
+		return ;
+	exec_child(shell, &exec, cmd_pos);
+	cleanup_processes(&exec, shell, cmd_pos);
 }

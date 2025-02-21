@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:19:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:43 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/14 15:25:34 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ bool	process_quotes(const char *input, int *pos, bool *in_quotes,
 	}
 	if (*in_quotes)
 	{
-		printf(RED "Error: quotes not closed" RESET);
+		printf(RED "Error: quotes not closed\n" RESET);
 		return (false);
 	}
 	return (true);

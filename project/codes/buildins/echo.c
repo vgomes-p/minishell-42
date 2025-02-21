@@ -6,7 +6,7 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:12:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 16:48:22 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:31:09 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,12 @@ void	ms_echo(char **args)
 
 	curr_arg = 1;
 	nwline = 1;
-	//mudei
 	while (args[curr_arg] && lms_strcmp(args[curr_arg], "-n") == 0)
 	{
 		nwline = 0;
 		curr_arg++;
 	}
-	while (args[curr_arg])
-	{
-		lms_putstr(args[curr_arg]);
-		if (args[curr_arg + 1])
-			lms_putstr(" ");
-		curr_arg++;
-	}
+	print_echo_args(args, curr_arg);
 	if (nwline)
-		lms_putstr("\n");
+		ft_putstr_fd("\n", STDOUT_FILENO);
 }

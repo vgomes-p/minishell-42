@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:58:22 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:04:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <errno.h>
 # include <signal.h>
 # include <curses.h>
 # include <termcap.h>
 # include <stdbool.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/types.h>
 # include "libft/libft.h"
@@ -80,17 +82,17 @@ typedef struct s_exec
 	int		**fd;
 	int		stts;
 	pid_t	*pid;
-	int		n_pros;
+	int		nbr_pros;
 }	t_exec;
 
 typedef struct s_expand
 {
 	char	**hold_str;
-	int		ex;
+	int		exec;
 	int		start;
 	int		end;
 	int		quotes;
-	int		ex_n;
+	int		exec_n;
 	int		i;
 }	t_expand;
 
@@ -104,10 +106,26 @@ typedef struct s_minishell
 	int		error_code;
 	int		term_height;
 	char	*error_message;
+	t_token	*tokens;
 }	t_minishell;
 
+/* GLOBAL VAR */
+extern t_minishell	*g_shell;
+
 /* CODES DIR */
+//free_all_0
+void		free_env(char **env);
+void		free_tokens(t_token *tokens);
+void		sfree(char **split);
+char		*free_ptr(char *ptr);
+void		sfree_int(int **fd);
+
+//utils
 char		**dup_env(char **envp, size_t *envsz);
+void		handle_signal(int sig);
+
+/* MAIN DIR */
+//prompt.c
 void		welcome(void);
 void		ms_prompt(t_minishell *shell);
 
@@ -127,11 +145,10 @@ t_token_tp	get_token_type(char *token, t_token *current, int is_first);
 bool		is_quotes(char ch);
 bool		is_operator(char *str);
 void		cleanup_tokens(char **tokens, int token_cnt);
-void		free_split(char **split);
 int			count_tokens(t_token *tokens);
-//token_util_2
-void		free_tokens(t_token *tokens);
 char		*clean_token(const char *str, int len);
+//token_utils_2
+char		**tokens_matrix(t_token *token);
 //parse
 int			parser(t_token **head, char *str);
 //parse_utils_0
@@ -142,6 +159,7 @@ bool		valid_syntax(t_token *tokens);
 int			find_envar(const char *var, char **envp);
 void		update_envar(const char *var, int index0, char ***envp);
 int			valid_name(const char *var);
+//bi_utils1
 void		export_err(const char *arg);
 //echo
 void		ms_echo(char **args);
@@ -159,12 +177,28 @@ void		ms_unset(t_minishell *shell, char **args, char ***envp);
 void		ms_export(t_minishell *shell, char **args, char ***envp);
 
 /* EXEC DIR */
+// cmd_path
+char		*get_full_path(char *cmd, char **path_dir);
+char		*find_exec_path(char *cmd, char **envp);
+
 //exec_externs
-void		exec_extern(t_token *tokens, t_minishell *shell);
+t_exec		init_exec(t_minishell *shell);
+int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
+void		exec_child(t_minishell *shell, t_exec *exec, int pos);
+void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
+void		exec_cmd(t_minishell *shell);
 //exec_buildins
 int			exec_builtin(t_token *tokens, t_minishell *shell);
-//exec_utils
-char		**prepare_args(t_token *tokens);
+//exec_utils_0
 int			is_buildin(char *token);
+char		**prepare_args(t_token *tokens);
+int			is_dir(t_minishell *shell, char *cmd);
+void		cls_fd(int **fd);
+//exec_utils_1
+void		exec_extern(char **cmd, char **envp);
+void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
+void		file_errmsg(t_minishell *shell, char *cmd);
+void		handle_invalid_file(t_minishell *shell);
+void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 
 #endif

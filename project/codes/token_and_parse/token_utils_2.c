@@ -5,48 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 16:51:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/12 17:58:53 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/20 18:25:59 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/20 18:26:46 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	free_tokens(t_token *tokens)
+char	**tokens_matrix(t_token *token)
 {
-	t_token	*current;
-	t_token	*next;
-
-	current = tokens;
-	while (current)
-	{
-		next = current->next;
-		if (current->value)
-			free(current->value);
-		free(current);
-		current = next;
-	}
-}
-
-char	*clean_token(const char *str, int len)
-{
-	char	*cleaned;
+	int		cnt;
 	int		pos;
-	int		nwpos;
+	char	**ret;
 
-	cleaned = malloc(len + 1);
-	pos = 0;
-	nwpos = 0;
-	if (!cleaned)
+	if (!token)
 		return (NULL);
-	while (pos < len)
+	cnt = count_tokens(token);
+	ret = ft_calloc((cnt + 1), sizeof(char *));
+	if (!ret)
+		return (NULL);
+	pos = 0;
+	while (pos < cnt)
 	{
-		if (!is_quotes(str[pos]))
+		ret[pos] = ft_strdup(token->value);
+		if (!ret[pos])
 		{
-			cleaned[nwpos++] = str[pos];
+			sfree(ret);
+			return (NULL);
 		}
+		token = token->next;
 		pos++;
 	}
-	cleaned[nwpos] = '\0';
-	return (cleaned);
+	ret[pos] = NULL;
+	return (ret);
 }
