@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/21 13:18:04 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/21 13:20:02 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -179,6 +179,7 @@ fclean: clean
 			@$(RM) $(NAME)
 			@$(RM) dependencies.mk
 			@$(RM) leakreport.txt
+			@$(RM) norminette_report.txt
 			@$(RM) build/
 			@make fclean -C $(LIBFT_DIR)
 			@make fclean -C $(LIBMS_DIR)
