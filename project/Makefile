@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/21 13:20:02 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/21 14:28:49 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,7 +41,7 @@ BUILDIN_DIR		=	codes/buildins/
 PIPE_SRCS		=	redirect.c heredoc.c
 PIPE_DIR		=	codes/pipe/
 
-EXEC_SRCS		=	cmd_path.c exec_utils_0.c exec_utils_1.c exec_buildins.c exec_externs.c
+EXEC_SRCS		=	cmd_path.c exec_utils_0.c exec_utils_1.c exec_utils_2.c exec_buildins.c exec_externs.c
 EXEC_DIR		=	codes/exec/
 
 OBJ_DIR			=	build/
