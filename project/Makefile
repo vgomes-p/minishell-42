@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/21 12:12:48 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/21 13:18:04 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ MAIN_DIR		=	codes/main/
 
 TOKEN_PARSE_SRCS	=	token.c \
 				token_utils_0.c token_utils_1.c token_utils_2.c \
+				expand.c \
 				parse.c \
 				parse_utils_0.c
 TOKEN_PARSE_DIR	=	codes/token_and_parse/
@@ -37,7 +38,7 @@ TOKEN_PARSE_DIR	=	codes/token_and_parse/
 BUILDIN_SRCS	=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
 BUILDIN_DIR		=	codes/buildins/
 
-PIPE_SRCS		=	
+PIPE_SRCS		=	redirect.c heredoc.c
 PIPE_DIR		=	codes/pipe/
 
 EXEC_SRCS		=	cmd_path.c exec_utils_0.c exec_utils_1.c exec_buildins.c exec_externs.c
