@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:37 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 16:17:08 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/22 23:13:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ int	main(int argc, char **argv, char **envp)
 	signal(SIGQUIT, handle_signal);
 	welcome();
 	while (1)
-	{
 		ms_prompt(&shell);
-	}
 	free_env(shell.env);
 	return (0);
 }
