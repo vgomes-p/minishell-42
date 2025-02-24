@@ -6,7 +6,7 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/24 12:01:29 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:20:14 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ typedef struct s_minishell
 	t_token	*tokens;
 }	t_minishell;
 
-/* GLOBAL VAR */
+/*  VAR */
 extern t_minishell	*g_shell;
 
 /* CODES DIR */
@@ -207,6 +207,7 @@ void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 t_token		*get_next_cmd(t_token **tokens);
 int	heredoc(t_minishell *ms, const char *eof, char **envp);
 char *expand(t_minishell *ms, char *input, char **envp);
-
+// Dentro de minishell.h
+char	**redirect(t_minishell *shell, char **cmd, int *out, int *in);
 
 #endif
