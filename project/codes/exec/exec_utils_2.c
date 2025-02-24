@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   exec_utils_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 16:12:45 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/17 16:57:04 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/21 13:57:11 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/02/21 14:22:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	ms_echo(char **args)
+t_token	*get_next_cmd(t_token **tokens)
 {
-	int	curr_arg;
-	int	nwline;
+	t_token	*current;
+	t_token	*cmd_start;
+	t_token	*prev;
 
-	curr_arg = 1;
-	nwline = 1;
-	while (args[curr_arg] && lms_strcmp(args[curr_arg], "-n") == 0)
+	if (!tokens || !*tokens)
+		return (NULL);
+	cmd_start = *tokens;
+	current = *tokens;
+	prev = NULL;
+	while (current && current->type != PIPE)
 	{
-		nwline = 0;
-		curr_arg++;
+		prev = current;
+		current = current->next;
 	}
-	while (args[curr_arg])
+	if (current)
 	{
-		lms_putstr(args[curr_arg]);
-		if (args[curr_arg + 1])
-			lms_putstr(" ");
-		curr_arg++;
+		if (prev)
+			prev->next = NULL;
+		*tokens = current->next;
 	}
-	if (nwline)
-		lms_putstr("\n");
+	else
+		*tokens = NULL;
+	return (cmd_start);
 }
