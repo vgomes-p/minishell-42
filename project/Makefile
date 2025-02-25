@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
+#    By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/21 15:47:39 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/02/25 17:41:17 by sthrodri         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,7 @@ TOKEN_PARSE_DIR	=	codes/token_and_parse/
 BUILDIN_SRCS	=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
 BUILDIN_DIR		=	codes/buildins/
 
-PIPE_SRCS		=	redirect.c heredoc.c
+PIPE_SRCS		=	redirect.c heredoc.c redirect1.c
 PIPE_DIR		=	codes/pipe/
 
 EXEC_SRCS		=	cmd_path.c exec_utils_0.c exec_utils_1.c exec_utils_2.c exec_buildins.c exec_externs.c

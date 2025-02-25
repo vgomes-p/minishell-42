@@ -6,7 +6,7 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:14 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/25 17:16:39 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:57:51 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,42 +75,4 @@ void	set_redirect(t_minishell *ms, char **cmd, int *fd, char **ret)
 			ret[cnt++] = ft_strdup(cmd[pos++]);
 	}
 	sfree(cmd);
-}
-
-static void	init_fd(int *fd)
-{
-	fd[0] = -1;
-	fd[1] = -1;
-}
-
-char	**redirect(t_minishell *ms, char **cmd, int *out, int *in)
-{
-	int		fd[2];
-	int		cnt;
-	char	**ret;
-
-	cnt = 0;
-	init_fd(fd);
-	while (cmd[cnt])
-		cnt++;
-	ret = ft_calloc(cnt + 1, sizeof(char *));
-	set_redirect(ms, cmd, fd, ret);
-	if (fd[0] == -5 || fd[1] == -5)
-	{
-		sfree(ret);
-		return (NULL);
-	}
-	if (fd[0] != -1)
-	{
-		dup2(fd[0], 0);
-		close(fd[0]);
-		*in = 1;
-	}
-	if (fd[1] != -1)
-	{
-		dup2(fd[1], 1);
-		close(fd[1]);
-		*out = 1;
-	}
-	return (ret);
 }

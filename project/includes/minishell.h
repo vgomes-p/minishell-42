@@ -208,6 +208,7 @@ t_token		*get_next_cmd(t_token **tokens);
 int	heredoc(t_minishell *ms, const char *eof, char **envp);
 char *expand(t_minishell *ms, char *input, char **envp);
 // Dentro de minishell.h
+void	set_redirect(t_minishell *ms, char **cmd, int *fd, char **ret);
 char	**redirect(t_minishell *shell, char **cmd, int *out, int *in);
 
 #endif
