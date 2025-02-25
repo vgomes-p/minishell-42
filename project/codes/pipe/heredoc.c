@@ -6,7 +6,7 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:17:29 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/24 13:55:41 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:12:43 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*expand(t_minishell *shell, char *input, char **envp)
 int	heredoc(t_minishell *shell, const char *eof, char **envp)
 {
 	char	*input;
-	int	file;
+	int		file;
 
 	input = NULL;
 	unlink("__heredoc");

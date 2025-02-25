@@ -6,7 +6,7 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:14 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/24 13:54:20 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:16:39 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	is_redout(char **cmd, int pos)
 
 static int	is_redirect(char *cmd)
 {
-	return (!ft_strncmp(cmd, ">", 2) || !ft_strncmp(cmd, ">>", 3) 
+	return (!ft_strncmp(cmd, ">", 2) || !ft_strncmp(cmd, ">>", 3)
 		|| !ft_strncmp(cmd, "<", 2) || !ft_strncmp(cmd, "<<", 3));
 }
 
@@ -85,12 +85,12 @@ static void	init_fd(int *fd)
 
 char	**redirect(t_minishell *ms, char **cmd, int *out, int *in)
 {
-	int	fd[2];
-	int	cnt;
+	int		fd[2];
+	int		cnt;
 	char	**ret;
 
-	init_fd(fd);
 	cnt = 0;
+	init_fd(fd);
 	while (cmd[cnt])
 		cnt++;
 	ret = ft_calloc(cnt + 1, sizeof(char *));

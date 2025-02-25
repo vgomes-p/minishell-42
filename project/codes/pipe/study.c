@@ -1,4 +1,4 @@
-static char	*ft_strjoin_gnl(char *s1, char *s2)
+/*static char	*ft_strjoin_gnl(char *s1, char *s2)
 {
 	char	*str;
 	size_t	i;
@@ -69,7 +69,7 @@ char	*get_envp(t_mini *ms, char *cmd, char **envp)
 
 /*************************************/
 
-static t_expand	init_expantion(t_mini *ms, char *cmd, char **envp, t_expand exp)
+/*static t_expand	init_expantion(t_mini *ms, char *cmd, char **envp, t_expand exp)
 {
 	while (cmd[++exp.end])
 	{
@@ -159,7 +159,7 @@ char	*expand(t_mini *ms, char *cmd, char **envp)
 	return (ft_mattstr_copy(exp.hold_str));
 }
 /*expand var in tokens*/
-void	expander(t_mini *ms, t_token **head, char **envp)
+/*void	expander(t_mini *ms, t_token **head, char **envp)
 {
 	char	*temp;
 	t_token	*token;
@@ -190,12 +190,10 @@ void	expander(t_mini *ms, t_token **head, char **envp)
 
 /**********************************************/
 
-static int	heredoc(t_mini *ms, const char *eof, char **envp)
+/*static int	heredoc(t_mini *ms, const char *eof, char **envp)
 {
 	char	*input;
-	int		file;
-
-	input = NULL;
+arse/expand.c	input = NULL;
 	file = open("__heredoc", O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
 	while (1)
 	{
@@ -219,7 +217,7 @@ static int	heredoc(t_mini *ms, const char *eof, char **envp)
 
 /*****************************************************/
 
-static int	is_redin(t_mini *ms, char **cmd, int i, char **envp)
+/*static int	is_redin(t_mini *ms, char **cmd, int i, char **envp)
 {
 	static int	file = -1;
 
@@ -326,4 +324,4 @@ char	**redirect(t_mini *ms, char **cmd, int *out, int *in)
 		*out = 1;
 	}
 	return (ret);
-}
+}*/

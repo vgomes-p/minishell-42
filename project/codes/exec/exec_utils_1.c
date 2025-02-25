@@ -6,7 +6,7 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:28:41 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/24 17:11:12 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:26:46 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,25 @@ void	handle_invalid_file(t_minishell *shell)
 	}
 }
 
-void child(t_minishell *shell, char **cmd, int **fd, int pos) {
-    int in = 0;
-    int out = 0;
-    char **processed_cmd = redirect(shell, cmd, &out, &in); // Processa redirecionamentos
+void	child(t_minishell *shell, char **cmd, int **fd, int pos)
+{
+	int		in;
+	int		out;
+	char	**processed_cmd;
 
-    if (!processed_cmd) {
-        clean_child_res(shell, cmd, fd, shell->error_code);
-        exit(1);
-    }
-
-    if (pos && !in)
-        dup2(fd[pos - 1][0], STDIN_FILENO);
-    if (fd[pos] && !out)
-        dup2(fd[pos][1], STDOUT_FILENO);
-
-    cls_fd(fd);
-    exec_extern(processed_cmd, shell->env); // Usa o comando processado
-    clean_child_res(shell, processed_cmd, fd, shell->error_code);
+	in = 0;
+	out = 0;
+	processed_cmd = redirect(shell, cmd, &out, &in);
+	if (!processed_cmd)
+	{
+		clean_child_res(shell, cmd, fd, shell->error_code);
+		exit(1);
+	}
+	if (pos && !in)
+		dup2(fd[pos - 1][0], STDIN_FILENO);
+	if (fd[pos] && !out)
+		dup2(fd[pos][1], STDOUT_FILENO);
+	cls_fd(fd);
+	exec_extern(processed_cmd, shell->env);
+	clean_child_res(shell, processed_cmd, fd, shell->error_code);
 }
