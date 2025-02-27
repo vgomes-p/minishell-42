@@ -6,13 +6,13 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:14 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/25 17:57:51 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/27 12:59:49 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	is_redin(t_minishell *ms, char **cmd, int pos)
+static int	is_redin(t_minishell *shell, char **cmd, int pos)
 {
 	static int	file;
 
@@ -24,7 +24,7 @@ static int	is_redin(t_minishell *ms, char **cmd, int pos)
 			return (-5);
 	}
 	else if (!ft_strncmp(cmd[pos], "<<", 3))
-		file = heredoc(ms, cmd[pos + 1], ms->env);
+		file = heredoc(shell, cmd[pos + 1], shell->env);
 	return (file);
 }
 
@@ -54,7 +54,7 @@ static int	is_redirect(char *cmd)
 		|| !ft_strncmp(cmd, "<", 2) || !ft_strncmp(cmd, "<<", 3));
 }
 
-void	set_redirect(t_minishell *ms, char **cmd, int *fd, char **ret)
+void	set_redirect(t_minishell *shell, char **cmd, int *fd, char **ret)
 {
 	int	pos;
 	int	cnt;
@@ -65,7 +65,7 @@ void	set_redirect(t_minishell *ms, char **cmd, int *fd, char **ret)
 	{
 		if (is_redirect(cmd[pos]))
 		{
-			fd[0] = is_redin(ms, cmd, pos);
+			fd[0] = is_redin(shell, cmd, pos);
 			fd[1] = is_redout(cmd, pos);
 			pos += 2;
 			if (fd[0] == -5 || fd[1] == -5)

@@ -6,7 +6,7 @@
 /*   By: sthrodri <sthrodri@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 17:33:52 by sthrodri          #+#    #+#             */
-/*   Updated: 2025/02/25 18:20:47 by sthrodri         ###   ########.fr       */
+/*   Updated: 2025/02/27 13:00:06 by sthrodri         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	init_fd(int *fd)
 	fd[1] = -1;
 }
 
-char	**redirect(t_minishell *ms, char **cmd, int *out, int *in)
+char	**redirect(t_minishell *shell, char **cmd, int *out, int *in)
 {
 	int		fd[2];
 	int		cnt;
@@ -29,7 +29,7 @@ char	**redirect(t_minishell *ms, char **cmd, int *out, int *in)
 	while (cmd[cnt])
 		cnt++;
 	ret = ft_calloc(cnt + 1, sizeof(char *));
-	set_redirect(ms, cmd, fd, ret);
+	set_redirect(shell, cmd, fd, ret);
 	if (fd[0] == -5 || fd[1] == -5)
 		return (sfree(ret), NULL);
 	if (fd[0] != -1)
