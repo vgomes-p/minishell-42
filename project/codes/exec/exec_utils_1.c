@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:28:41 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 14:22:47 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:29:01 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,6 @@ void	clean_child_res(t_minishell *shell, char **cmd, int **fd, int code)
 	rl_clear_history();
 	unlink("__heredoc");
 	exit(shell->error_code);
-}
-
-void	file_errmsg(t_minishell *shell, char *cmd)
-{
-	char	*color_cmd;
-
-	color_cmd = ft_strjoin(RED, cmd);
-	ft_putstr_fd(color_cmd, 2);
-	free(color_cmd);
-	shell->error_code = 1;
 }
 
 void	handle_invalid_file(t_minishell *shell)

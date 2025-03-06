@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:57:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 14:22:02 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:14:27 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,27 @@ t_token	*get_next_cmd(t_token **tokens)
 	else
 		*tokens = NULL;
 	return (cmd_start);
+}
+
+void	cls_fd(int **fd)
+{
+	int	pos;
+
+	pos = 0;
+	while (fd[pos])
+	{
+		close(fd[pos][0]);
+		close(fd[pos][1]);
+		pos++;
+	}
+}
+
+void	file_errmsg(t_minishell *shell, char *cmd)
+{
+	char	*color_cmd;
+
+	color_cmd = ft_strjoin(RED, cmd);
+	ft_putstr_fd(color_cmd, 2);
+	free(color_cmd);
+	shell->error_code = 1;
 }

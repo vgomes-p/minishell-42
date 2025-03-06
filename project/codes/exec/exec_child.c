@@ -6,13 +6,13 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 14:14:21 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/06 15:11:39 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:39:40 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static void	process_redirections(t_token *current)
+void	process_redirections(t_token *current)
 {
 	while (current)
 	{
@@ -65,10 +65,10 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 {
 	t_token	*current_tokens;
 
+	(void)pos;
 	process_redirections(exec->temp);
 	if (!allocate_pid_memory(exec))
 		return ;
 	current_tokens = shell->tokens;
 	process_commands(shell, exec, &current_tokens);
-	(void)pos; /* Silence unused parameter warning */
 }
