@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/06 14:14:41 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:00:10 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,25 @@ t_exec	init_exec(t_minishell *shell)
 	return (exec);
 }
 
+static void	process_redirections(t_token *current)
+{
+	while (current)
+	{
+		if (current->type == REDIR_IN || current->type == REDIR_OUT || 
+			current->type == REDIR_APPEND)
+			handle_redirects(current);
+		else if (current->type == HEREDOC)
+			handle_heredoc(current);
+		current = current->next;
+	}
+}
+
 int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 {
+	t_token	*redir_tokens;
+
+	redir_tokens = shell->tokens;
+	process_redirections(redir_tokens);
 	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
 		return (0);
 	if (nb_pros > 1)
