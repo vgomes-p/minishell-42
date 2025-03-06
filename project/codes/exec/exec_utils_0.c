@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 11:58:54 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:06:58 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,26 @@ static void	free_args(char **args, int cnt)
 	free(args);
 }
 
+static t_token	*process_next_token(t_token *current, char **args, int *arg_pos)
+{
+	if (current->type == REDIR_IN || current->type == REDIR_OUT || 
+		current->type == REDIR_APPEND || current->type == HEREDOC)
+	{
+		current = current->next;
+		if (current)
+			current = current->next;
+	}
+	else
+	{
+		args[*arg_pos] = ft_strdup(current->value);
+		if (!args[*arg_pos])
+			return (NULL);
+		(*arg_pos)++;
+		current = current->next;
+	}
+	return (current);
+}
+
 char	**prepare_args(t_token *tokens)
 {
 	char	**args;
@@ -69,14 +89,12 @@ char	**prepare_args(t_token *tokens)
 	arg_pos = 0;
 	while (current)
 	{
-		args[arg_pos] = ft_strdup(current->value);
-		if (!args[arg_pos])
+		current = process_next_token(current, args, &arg_pos);
+		if (current == NULL && arg_pos > 0)
 		{
-			free_args(args, arg_pos);
+			free_args(args, arg_pos - 1);
 			return (NULL);
 		}
-		arg_pos++;
-		current = current->next;
 	}
 	args[arg_pos] = NULL;
 	return (args);
@@ -98,17 +116,4 @@ int	is_dir(t_minishell *shell, char *cmd)
 		return (1);
 	}
 	return (0);
-}
-
-void	cls_fd(int **fd)
-{
-	int	pos;
-
-	pos = 0;
-	while (fd[pos])
-	{
-		close(fd[pos][0]);
-		close(fd[pos][1]);
-		pos++;
-	}
 }

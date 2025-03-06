@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/06 14:19:26 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:27:43 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,6 @@ int			parser(t_token **head, char *str);
 //parse_utils_0
 bool		valid_syntax(t_token *tokens);
 //expand
-char		*expand_var(char *token, t_minishell *shell);
 
 /* BUILDINS DIR */
 //bi_utils
@@ -187,10 +186,13 @@ void		ms_export(t_minishell *shell, char **args, char ***envp);
 char		*get_full_path(char *cmd, char **path_dir);
 char		*find_exec_path(char *cmd, char **envp);
 
+//exec_child
+void		process_redirections(t_token *current);
+void		exec_child(t_minishell *shell, t_exec *exec, int pos);
+
 //exec_externs
 t_exec		init_exec(t_minishell *shell);
 int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
-void		exec_child(t_minishell *shell, t_exec *exec, int pos);
 void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
 void		exec_cmd(t_minishell *shell);
 //exec_buildins
@@ -199,15 +201,15 @@ int			exec_builtin(t_token *tokens, t_minishell *shell);
 int			is_buildin(char *token);
 char		**prepare_args(t_token *tokens);
 int			is_dir(t_minishell *shell, char *cmd);
-void		cls_fd(int **fd);
 //exec_utils_1
 void		exec_extern(char **cmd, char **envp);
 void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
-void		file_errmsg(t_minishell *shell, char *cmd);
 void		handle_invalid_file(t_minishell *shell);
 void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 //exec_utils_2
 t_token		*get_next_cmd(t_token **tokens);
+void		cls_fd(int **fd);
+void		file_errmsg(t_minishell *shell, char *cmd);
 
 /* REDIR DIR */
 //heredoc

@@ -408,6 +408,8 @@ void	ms_prompt(t_minishell *shell)
 }
 
 /* token */
+#include "../../includes/minishell.h"
+
 t_token	*mktoken(char *value, t_token_tp type)
 {
 	t_token	*token;
@@ -468,13 +470,8 @@ t_token	*tokening(char *input)
 {
 	char	**split;
 	t_token	*head;
-	char	*expanded_input;
 
-	expanded_input = expand_var(input, g_shell);
-	if (!expanded_input)
-		return (NULL);
-	split = ms_split_quotes(expanded_input);
-	free(expanded_input);
+	split = ms_split_quotes(input);
 	if (!split)
 		return (NULL);
 	head = create_token_list(split, NULL);
@@ -753,85 +750,6 @@ bool	valid_syntax(t_token *tokens)
 }
 
 /* expand */
-static char	*expand_exit_status(t_minishell *shell, int *pos)
-{
-	char	*var_value;
-
-	var_value = ft_itoa(shell->exit_stt);
-	*pos += 2;
-	return (var_value);
-}
-
-static char	*extract_var_name(char *token, int pos)
-{
-	char	*var_name;
-	char	*space_ptr;
-
-	space_ptr = ft_strchr(token + pos, ' ');
-	if (!space_ptr)
-		var_name = ft_strdup(token + pos + 1);
-	else
-		var_name = ft_substr(token, pos + 1, space_ptr - (token + pos + 1));
-	return (var_name);
-}
-
-static char	*expand_regular_var(char *token, int *pos, t_minishell *shell)
-{
-	char	*var_name;
-	char	*var_value;
-	int		index;
-
-	var_name = extract_var_name(token, *pos);
-	if (!var_name)
-		return (NULL);
-	index = find_envar(var_name, shell->env);
-	if (index != -1)
-		var_value = ft_strdup(ft_strchr(shell->env[index], '=') + 1);
-	else
-		var_value = ft_strdup("");
-	*pos += ft_strlen(var_name) + 1;
-	free(var_name);
-	return (var_value);
-}
-
-static char	*handle_dollar_var(char *token, int *pos, t_minishell *shell)
-{
-	char	*var_value;
-
-	if (token[*pos + 1] == '?')
-		var_value = expand_exit_status(shell, pos);
-	else
-		var_value = expand_regular_var(token, pos, shell);
-	return (var_value);
-}
-
-char	*expand_var(char *token, t_minishell *shell)
-{
-	char	*result;
-	char	*var_value;
-	int		pos;
-
-	result = ft_strdup("");
-	if (!result)
-		return (NULL);
-	pos = 0;
-	while (token[pos])
-	{
-		if (token[pos] == '$' && (ft_isalnum(token[pos + 1]) || 
-			token[pos + 1] == '?'))
-		{
-			var_value = handle_dollar_var(token, &pos, shell);
-			result = lms_strjoin_free(result, var_value);
-			free(var_value);
-		}
-		else
-		{
-			result = lms_strjoin_char(result, token[pos]);
-			pos++;
-		}
-	}
-	return (result);
-}
 
 /* bi_utils */
 int	find_envar(const char *var, char **envp)
@@ -1366,7 +1284,7 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 }
 
 /* exec_child.c */
-static void	process_redirections(t_token *current)
+void	process_redirections(t_token *current)
 {
 	while (current)
 	{
@@ -1419,12 +1337,12 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 {
 	t_token	*current_tokens;
 
+	(void)pos;
 	process_redirections(exec->temp);
 	if (!allocate_pid_memory(exec))
 		return ;
 	current_tokens = shell->tokens;
 	process_commands(shell, exec, &current_tokens);
-	(void)pos; /* Silence unused parameter warning */
 }
 
 /* exec_externs */
@@ -1453,19 +1371,6 @@ t_exec	init_exec(t_minishell *shell)
 		pipe(exec.fd[pos]);
 	exec.temp = shell->tokens;
 	return (exec);
-}
-
-static void	process_redirections(t_token *current)
-{
-	while (current)
-	{
-		if (current->type == REDIR_IN || current->type == REDIR_OUT || 
-			current->type == REDIR_APPEND)
-			handle_redirects(current);
-		else if (current->type == HEREDOC)
-			handle_heredoc(current);
-		current = current->next;
-	}
 }
 
 int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
@@ -1571,6 +1476,26 @@ static void	free_args(char **args, int cnt)
 	free(args);
 }
 
+static t_token	*process_next_token(t_token *current, char **args, int *arg_pos)
+{
+	if (current->type == REDIR_IN || current->type == REDIR_OUT || 
+		current->type == REDIR_APPEND || current->type == HEREDOC)
+	{
+		current = current->next;
+		if (current)
+			current = current->next;
+	}
+	else
+	{
+		args[*arg_pos] = ft_strdup(current->value);
+		if (!args[*arg_pos])
+			return (NULL);
+		(*arg_pos)++;
+		current = current->next;
+	}
+	return (current);
+}
+
 char	**prepare_args(t_token *tokens)
 {
 	char	**args;
@@ -1586,14 +1511,12 @@ char	**prepare_args(t_token *tokens)
 	arg_pos = 0;
 	while (current)
 	{
-		args[arg_pos] = ft_strdup(current->value);
-		if (!args[arg_pos])
+		current = process_next_token(current, args, &arg_pos);
+		if (current == NULL && arg_pos > 0)
 		{
-			free_args(args, arg_pos);
+			free_args(args, arg_pos - 1);
 			return (NULL);
 		}
-		arg_pos++;
-		current = current->next;
 	}
 	args[arg_pos] = NULL;
 	return (args);
@@ -1617,18 +1540,6 @@ int	is_dir(t_minishell *shell, char *cmd)
 	return (0);
 }
 
-void	cls_fd(int **fd)
-{
-	int	pos;
-
-	pos = 0;
-	while (fd[pos])
-	{
-		close(fd[pos][0]);
-		close(fd[pos][1]);
-		pos++;
-	}
-}
 
 /* exec_utils_1 */
 void	exec_extern(char **cmd, char **envp)
@@ -1679,16 +1590,6 @@ void	clean_child_res(t_minishell *shell, char **cmd, int **fd, int code)
 	rl_clear_history();
 	unlink("__heredoc");
 	exit(shell->error_code);
-}
-
-void	file_errmsg(t_minishell *shell, char *cmd)
-{
-	char	*color_cmd;
-
-	color_cmd = ft_strjoin(RED, cmd);
-	ft_putstr_fd(color_cmd, 2);
-	free(color_cmd);
-	shell->error_code = 1;
 }
 
 void	handle_invalid_file(t_minishell *shell)
@@ -1765,6 +1666,29 @@ t_token	*get_next_cmd(t_token **tokens)
 	else
 		*tokens = NULL;
 	return (cmd_start);
+}
+
+void	cls_fd(int **fd)
+{
+	int	pos;
+
+	pos = 0;
+	while (fd[pos])
+	{
+		close(fd[pos][0]);
+		close(fd[pos][1]);
+		pos++;
+	}
+}
+
+void	file_errmsg(t_minishell *shell, char *cmd)
+{
+	char	*color_cmd;
+
+	color_cmd = ft_strjoin(RED, cmd);
+	ft_putstr_fd(color_cmd, 2);
+	free(color_cmd);
+	shell->error_code = 1;
 }
 
 /* heredoc */
