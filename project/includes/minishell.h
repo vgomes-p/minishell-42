@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 14:27:53 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:19:26 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 # define MINISHELL_H
 
 /* INCLUDES */
+# include <fcntl.h>
+# include <errno.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
-# include <errno.h>
 # include <signal.h>
 # include <curses.h>
 # include <termcap.h>
@@ -98,6 +99,7 @@ typedef struct s_expand
 
 typedef struct s_minishell
 {
+	int		pid;
 	char	**env;
 	char	*prompt;
 	size_t	env_size;
@@ -155,6 +157,8 @@ void		addtoken_ls(t_token *list, t_token *new_token);
 int			parser(t_token **head, char *str);
 //parse_utils_0
 bool		valid_syntax(t_token *tokens);
+//expand
+char		*expand_var(char *token, t_minishell *shell);
 
 /* BUILDINS DIR */
 //bi_utils
@@ -204,5 +208,11 @@ void		handle_invalid_file(t_minishell *shell);
 void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 //exec_utils_2
 t_token		*get_next_cmd(t_token **tokens);
+
+/* REDIR DIR */
+//heredoc
+void		handle_heredoc(t_token *token);
+//redirect
+void		handle_redirects(t_token *token);
 
 #endif

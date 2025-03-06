@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 14:32:01 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:14:41 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,31 +52,6 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 		return (0);
 	}
 	return (-1);
-}
-
-void	exec_child(t_minishell *shell, t_exec *exec, int pos)
-{
-	t_token	*cmd_tokens;
-	t_token	*current_tokens;
-
-	exec->pid = malloc(sizeof(pid_t) * exec->nbr_pros);
-	if (!exec->pid)
-		return ;
-	current_tokens = shell->tokens;
-	pos = -1;
-	while (++pos < exec->nbr_pros)
-	{
-		cmd_tokens = get_next_cmd(&current_tokens);
-		exec->cmd = tokens_matrix(cmd_tokens);
-		exec->pid[pos] = fork();
-		if (exec->pid[pos] == 0)
-		{
-			child(shell, exec->cmd, exec->fd, pos);
-		}
-		sfree(exec->cmd);
-		exec->cmd = NULL;
-		free_tokens(cmd_tokens);
-	}
 }
 
 void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
