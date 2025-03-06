@@ -1,36 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/22 16:23:37 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/06 13:16:05 by vgomes-p         ###   ########.fr       */
+/*   Created: 2025/02/21 13:17:29 by vgomes-p          #+#    #+#             */
+/*   Updated: 2025/03/06 14:11:22 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-t_minishell	*g_shell = NULL;
-
-int	main(int argc, char **argv, char **envp)
+void	handle_heredoc(t_token *token)
 {
-	t_minishell	shell;
+	int		fd;
+	char	*line;
+	char	*delim;
 
-	(void)argc;
-	(void)argv;
-	shell.env = dup_env(envp, &shell.env_size);
-	shell.prompt = NULL;
-	shell.exit_stt = 0;
-	g_shell = &shell;
-	signal(SIGINT, handle_signal);
-	signal(SIGQUIT, handle_signal);
-	welcome();
+	delim = token->next->value;
+	fd = open("__heredoc", O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd == -1)
+	{
+		perror("minishell");
+		exit(1);
+	}
 	while (1)
 	{
-		ms_prompt(&shell);
+		line = readline("> ");
+		if (!line || lms_strcmp(line, delim) == 0)
+			break ;
+		write(fd, line, ft_strlen(line));
+		write(fd, "\n", 1);
+		free(line);
 	}
-	free_env(shell.env);
-	return (0);
+	close(fd);
+	fd = open("__heredoc", O_RDONLY);
+	dup2(fd, STDIN_FILENO);
+	close(fd);
 }
