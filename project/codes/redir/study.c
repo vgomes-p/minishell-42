@@ -190,140 +190,138 @@ void	expander(t_mini *ms, t_token **head, char **envp)
 
 /**********************************************/
 
-static int	heredoc(t_mini *ms, const char *eof, char **envp)
-{
-	char	*input;
-	int		file;
+// static int	heredoc(t_mini *ms, const char *eof, char **envp)
+// {
+// 	char	*input;
+// 	int		file;
 
-	input = NULL;
-	file = open("__heredoc", O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
-	while (1)
-	{
-		input = readline("> ");
-		if (!ft_strncmp(eof, input, ft_strlen(input)))
-		{
-			input = free_ptr(input);
-			break ;
-		}
-		if (*eof != '\'' && *eof != '\"' && ft_strchr(input, '$'))
-			input = expand(ms, input, envp);
-		write(file, input, ft_strlen(input));
-		write(file, "\n", 1);
-		input = free_ptr(input);
-		input = NULL;
-	}
-	close(file);
-	file = open("__heredoc", O_RDONLY);
-	return (file);
-}
+// 	input = NULL;
+// 	file = open("__heredoc", O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
+// 	while (1)
+// 	{
+// 		input = readline("> ");
+// 		if (!ft_strncmp(eof, input, ft_strlen(input)))
+// 		{
+// 			input = free_ptr(input);
+// 			break ;
+// 		}
+// 		if (*eof != '\'' && *eof != '\"' && ft_strchr(input, '$'))
+// 			input = expand(ms, input, envp);
+// 		write(file, input, ft_strlen(input));
+// 		write(file, "\n", 1);
+// 		input = free_ptr(input);
+// 		input = NULL;
+// 	}
+// 	close(file);
+// 	file = open("__heredoc", O_RDONLY);
+// 	return (file);
+// }
 
-/*****************************************************/
+// static int	is_redin(t_mini *ms, char **cmd, int i, char **envp)
+// {
+// 	static int	file = -1;
 
-static int	is_redin(t_mini *ms, char **cmd, int i, char **envp)
-{
-	static int	file = -1;
+// 	if (!ft_strncmp(cmd[i], "<", 2))
+// 	{
+// 		file = open(cmd[i + 1], O_RDONLY);
+// 		if (file == -1)
+// 			return (-5);
+// 	}
+// 	else if (!ft_strncmp(cmd[i], "<<", 3))
+// 		file = heredoc(ms, cmd[i + 1], envp);
+// 	return (file);
+// }
 
-	if (!ft_strncmp(cmd[i], "<", 2))
-	{
-		file = open(cmd[i + 1], O_RDONLY);
-		if (file == -1)
-			return (-5);
-	}
-	else if (!ft_strncmp(cmd[i], "<<", 3))
-		file = heredoc(ms, cmd[i + 1], envp);
-	return (file);
-}
+// static int	is_redout(char **cmd, int i)
+// {
+// 	static int	file = -1;
 
-static int	is_redout(char **cmd, int i)
-{
-	static int	file = -1;
+// 	if (!ft_strncmp(cmd[i], ">", 2))
+// 	{
+// 		file = open(cmd[i + 1], O_WRONLY | O_CREAT, 0777);
+// 		if (file == -1)
+// 			return (-5);
+// 	}
+// 	else if (!ft_strncmp(cmd[i], ">>", 3))
+// 	{
+// 		file = open(cmd[i + 1], O_APPEND | O_WRONLY | O_CREAT, 0777);
+// 		if (file == -1)
+// 			return (-5);
+// 	}
+// 	return (file);
+// }
 
-	if (!ft_strncmp(cmd[i], ">", 2))
-	{
-		file = open(cmd[i + 1], O_WRONLY | O_CREAT, 0777);
-		if (file == -1)
-			return (-5);
-	}
-	else if (!ft_strncmp(cmd[i], ">>", 3))
-	{
-		file = open(cmd[i + 1], O_APPEND | O_WRONLY | O_CREAT, 0777);
-		if (file == -1)
-			return (-5);
-	}
-	return (file);
-}
+// static int	is_redirect(char *cmd)
+// {
+// 	if (!ft_strncmp(cmd, ">", 2))
+// 		return (1);
+// 	if (!ft_strncmp(cmd, ">>", 3))
+// 		return (1);
+// 	if (!ft_strncmp(cmd, "<", 2))
+// 		return (1);
+// 	if (!ft_strncmp(cmd, "<<", 3))
+// 		return (1);
+// 	return (0);
+// }
 
-static int	is_redirect(char *cmd)
-{
-	if (!ft_strncmp(cmd, ">", 2))
-		return (1);
-	if (!ft_strncmp(cmd, ">>", 3))
-		return (1);
-	if (!ft_strncmp(cmd, "<", 2))
-		return (1);
-	if (!ft_strncmp(cmd, "<<", 3))
-		return (1);
-	return (0);
-}
+// void	set_redirect(t_mini *ms, char **cmd, int *fd, char **ret)
+// {
+// 	int	i;
+// 	int	j;
 
-void	set_redirect(t_mini *ms, char **cmd, int *fd, char **ret)
-{
-	int	i;
-	int	j;
+// 	i = 0;
+// 	j = 0;
+// 	while (cmd[i])
+// 	{
+// 		if (is_redirect(cmd[i]))
+// 		{
+// 			fd[0] = is_redin(ms, cmd, i, ms->envp);
+// 			fd[1] = is_redout(cmd, i);
+// 			i = i + 2;
+// 			if (fd[0] == -5 || fd[1] == -5)
+// 				break ;
+// 		}
+// 		else
+// 			ret[j++] = ft_strdup(cmd[i++]);
+// 	}
+// 	if (cmd)
+// 	{
+// 		free_mat(cmd);
+// 		cmd = NULL;
+// 	}
+// }
 
-	i = 0;
-	j = 0;
-	while (cmd[i])
-	{
-		if (is_redirect(cmd[i]))
-		{
-			fd[0] = is_redin(ms, cmd, i, ms->envp);
-			fd[1] = is_redout(cmd, i);
-			i = i + 2;
-			if (fd[0] == -5 || fd[1] == -5)
-				break ;
-		}
-		else
-			ret[j++] = ft_strdup(cmd[i++]);
-	}
-	if (cmd)
-	{
-		free_mat(cmd);
-		cmd = NULL;
-	}
-}
+// static void	init_fd(int *fd)
+// {
+// 	fd[0] = -1;
+// 	fd[1] = -1;
+// }
 
-static void	init_fd(int *fd)
-{
-	fd[0] = -1;
-	fd[1] = -1;
-}
+// char	**redirect(t_mini *ms, char **cmd, int *out, int *in)
+// {
+// 	int		fd[2];
+// 	char	**ret;
+// 	int		i;
 
-char	**redirect(t_mini *ms, char **cmd, int *out, int *in)
-{
-	int		fd[2];
-	char	**ret;
-	int		i;
-
-	init_fd(fd);
-	i = 0;
-	while (cmd[i])
-		i++;
-	ret = ft_calloc(i + 1, sizeof(char *));
-	set_redirect(ms, cmd, fd, ret);
-	if (fd[0] == -5 || fd[1] == -5)
-		return (free_mat(ret));
-	if (fd[0] != -1)
-	{
-		dup2(fd[0], 0);
-		close(fd[0]);
-		*in = 1;
-	}
-	if (fd[1] != -1)
-	{
-		dup2(fd[1], 1);
-		close(fd[1]);
-		*out = 1;
-	}
-	return (ret);
-}
+// 	init_fd(fd);
+// 	i = 0;
+// 	while (cmd[i])
+// 		i++;
+// 	ret = ft_calloc(i + 1, sizeof(char *));
+// 	set_redirect(ms, cmd, fd, ret);
+// 	if (fd[0] == -5 || fd[1] == -5)
+// 		return (free_mat(ret));
+// 	if (fd[0] != -1)
+// 	{
+// 		dup2(fd[0], 0);
+// 		close(fd[0]);
+// 		*in = 1;
+// 	}
+// 	if (fd[1] != -1)
+// 	{
+// 		dup2(fd[1], 1);
+// 		close(fd[1]);
+// 		*out = 1;
+// 	}
+// 	return (ret);
+// }

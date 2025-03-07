@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/06 17:27:43 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:43:37 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char		**tokens_matrix(t_token *token);
 t_token		*cpy_token_ls(t_token *tokens);
 void		addtoken_ls(t_token *list, t_token *new_token);
 //parse
-int			parser(t_token **head, char *str);
+int			parser(t_token **head, char *str, t_minishell *shell);
 //parse_utils_0
 bool		valid_syntax(t_token *tokens);
 //expand
@@ -211,10 +211,10 @@ t_token		*get_next_cmd(t_token **tokens);
 void		cls_fd(int **fd);
 void		file_errmsg(t_minishell *shell, char *cmd);
 
-/* REDIR DIR */
-//heredoc
-void		handle_heredoc(t_token *token);
-//redirect
-void		handle_redirects(t_token *token);
+//WIP
+int			heredoc(t_minishell *shell, const char *file_end, char **envp);
+void		process_redirect(t_minishell *shell, char **cmd, int *fd, char **ret);
+char		**redirect(t_minishell *shell, char **cmd, int *out, int *in);
+void	expander(t_minishell *shell, t_token **head, char **envp);
 
 #endif

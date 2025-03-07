@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 14:32:01 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:31:50 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,23 +99,52 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 
 void	exec_cmd(t_minishell *shell)
 {
-	int		cmd_pos;
-	t_exec	exec;
-	t_token	*tokens_copy;
+	int		in;
+	int		out;
+	char	**cmd;
 
-	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
-		return ;
-	tokens_copy = cpy_token_ls(shell->tokens);
-	exec = init_exec(shell);
-	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
-	if (cmd_pos > 0)
+	in = 0;
+	out = 0;
+	cmd = redirect(shell, tokens_matrix(shell->tokens), &out, &in);
+	if (!cmd)
 	{
-		sfree(exec.cmd);
-		exec.cmd = NULL;
-	}
-	if (cmd_pos == 0)
+		shell->error_code = 1;
 		return ;
-	exec_child(shell, &exec, cmd_pos);
-	cleanup_processes(&exec, shell, cmd_pos);
-	free_tokens(tokens_copy);
+	}
+	if (exec_builtin(shell->tokens, shell))
+	{
+		sfree(cmd);
+		return ;
+	}
+	exec_extern(cmd, shell->env);
+	sfree(cmd);
 }
+
+// void	exec_cmd(t_minishell *shell)
+// {
+// 	int		cmd_pos;
+// 	t_exec	exec;
+// 	t_token	*tokens_copy;
+// 	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
+// 		return ;
+// 	tokens_copy = cpy_token_ls(shell->tokens);
+// 	exec = init_exec(shell);
+// 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
+// 	if (cmd_pos > 0)
+// 	{
+// 		sfree(exec.cmd);
+// 		exec.cmd = NULL;
+// 	}
+// 	if (cmd_pos == 0)
+// 		return ;
+// 	if (exec_builtin(shell->tokens, shell))
+// 	{
+// 		sfree_int(exec.fd);
+// 		fd = NULL;
+// 		return ;
+// 	}
+// 	exec_child(shell, &exec, cmd_pos);
+// 	cleanup_processes(&exec, shell, cmd_pos);
+// 	free_tokens(tokens_copy);
+// }
+
