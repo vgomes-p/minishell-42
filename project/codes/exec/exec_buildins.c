@@ -6,15 +6,21 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 16:52:47 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/07 15:50:51 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	check_builtin_type(char **args, t_minishell *shell, int *ret)
+int	exec_builtin(t_token *tokens, t_minishell *shell)
 {
-	*ret = 1;
+	char	**args;
+	int		ret;
+
+	args = prepare_args(tokens);
+	if (!args)
+		return (-1);
+	ret = 1;
 	if (lms_strcmp(args[0], "cd") == 0)
 		ms_cd(args, shell);
 	else if (lms_strcmp(args[0], "echo") == 0)
@@ -29,24 +35,12 @@ static int	check_builtin_type(char **args, t_minishell *shell, int *ret)
 	{
 		ms_export(shell, args, &shell->env);
 		if (shell->error_code != 0)
-			*ret = shell->error_code;
+			ret = shell->error_code;
 	}
 	else if (lms_strcmp(args[0], "unset") == 0)
 		ms_unset(shell, args, &shell->env);
 	else
-		*ret = 0;
-	return (*ret);
-}
-
-int	exec_builtin(t_token *tokens, t_minishell *shell)
-{
-	char	**args;
-	int		ret;
-
-	args = prepare_args(tokens);
-	if (!args)
-		return (-1);
-	ret = check_builtin_type(args, shell, &ret);
+		ret = 0;
 	sfree(args);
 	return (ret);
 }
