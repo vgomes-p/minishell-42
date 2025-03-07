@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:10:30 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/06 16:31:56 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:03:54 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,11 @@ char	**dup_env(char **envp, size_t *envsz)
 
 void	handle_signal(int sig)
 {
-	if (sig == SIGINT)
+	(void)sig;
+	if (g_shell->env)
 	{
-		write(1, "\n", 1);
-		rl_replace_line("", 0);
-		rl_on_new_line();
-		rl_redisplay();
-		g_shell->exit_stt = 130;
+		free_env(g_shell->env);
+		g_shell->env = NULL;
 	}
-	else if (sig == SIGQUIT)
-	{
-	}
+	exit(0);
 }
