@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:28:41 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/06 17:29:01 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/02/21 19:27:49 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	exec_extern(char **cmd, char **envp)
 	{
 		ft_putstr_fd(RED "Command " ORANGE, 2);
 		ft_putstr_fd(cmd[0], 2);
-		ft_putstr_fd(RED " was not found\n", 2);
+		ft_putstr_fd(RED " was not found\n" RESET, 2);
 		sfree(cmd);
 		cmd = NULL;
 		exit(127);
@@ -60,6 +60,16 @@ void	clean_child_res(t_minishell *shell, char **cmd, int **fd, int code)
 	rl_clear_history();
 	unlink("__heredoc");
 	exit(shell->error_code);
+}
+
+void	file_errmsg(t_minishell *shell, char *cmd)
+{
+	char	*color_cmd;
+
+	color_cmd = ft_strjoin(RED, cmd);
+	ft_putstr_fd(color_cmd, 2);
+	free(color_cmd);
+	shell->error_code = 1;
 }
 
 void	handle_invalid_file(t_minishell *shell)
