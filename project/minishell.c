@@ -69,6 +69,7 @@ typedef struct s_exec
 	int		stts;
 	pid_t	*pid;
 	int		nbr_pros;
+	t_token	*tokens_head;
 }	t_exec;
 
 typedef struct s_expand
@@ -103,6 +104,7 @@ void		free_tokens(t_token *tokens);
 void		sfree(char **split);
 char		*free_ptr(char *ptr);
 void		sfree_int(int **fd);
+void		free_matrix(char **matrix)
 char		**dup_env(char **envp, size_t *envsz);
 void		handle_signal(int sig);
 void		welcome(void);
@@ -139,9 +141,8 @@ void		ms_unset(t_minishell *shell, char **args, char ***envp);
 void		ms_export(t_minishell *shell, char **args, char ***envp);
 char		*get_full_path(char *cmd, char **path_dir);
 char		*find_exec_path(char *cmd, char **envp);
-void		process_redirections(t_token *current);
 void		exec_child(t_minishell *shell, t_exec *exec, int pos);
-t_exec		init_exec(t_minishell *shell);
+t_exec		init_exec(t_minishell *shell, t_token *tokens);
 int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
 void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
 void		exec_cmd(t_minishell *shell);
@@ -373,6 +374,21 @@ void	sfree_int(int **fd)
 		pos++;
 	}
 	free(fd);
+}
+
+void	free_matrix(char **matrix)
+{
+	int	pos;
+
+	if (!matrix)
+		return ;
+	pos = 0;
+	while (matrix[pos])
+	{
+		free(matrix[pos]);
+		pos++;
+	}
+	free(matrix);
 }
 
 static int	dup_env_str(char **nwenv, char **envp, size_t cnt)
@@ -1409,6 +1425,7 @@ t_token	*get_next_cmd(t_token **tokens)
 	t_token	*current;
 	t_token	*cmd_start;
 	t_token	*prev;
+	t_token *pipe_node;
 
 	if (!tokens || !*tokens)
 		return (NULL);
@@ -1422,9 +1439,14 @@ t_token	*get_next_cmd(t_token **tokens)
 	}
 	if (current)
 	{
+		pipe_node = current;
 		if (prev)
 			prev->next = NULL;
+		else
+			cmd_start = NULL;
 		*tokens = current->next;
+		free(pipe_node->value);
+		free(pipe_node);
 	}
 	else
 		*tokens = NULL;
@@ -1517,15 +1539,17 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	return (ret);
 }
 
-t_exec	init_exec(t_minishell *shell)
+t_exec	init_exec(t_minishell *shell, t_token *tokens)
 {
-	int		pos;
 	t_exec	exec;
+	int		pos;
 
-	exec.pid = 0;
+	(void)shell;
+	exec.tokens_head = tokens;
+	exec.temp = tokens;
+	exec.pid = NULL;
 	exec.stts = 0;
 	exec.nbr_pros = 1;
-	exec.temp = shell->tokens;
 	exec.cmd = tokens_matrix(exec.temp);
 	while (exec.temp)
 	{
@@ -1535,7 +1559,10 @@ t_exec	init_exec(t_minishell *shell)
 	}
 	exec.fd = ft_calloc(exec.nbr_pros, sizeof(int *));
 	if (!exec.fd)
+	{
+		sfree(exec.cmd);
 		return (exec);
+	}
 	pos = -1;
 	while (++pos < (exec.nbr_pros - 1))
 	{
@@ -1545,13 +1572,14 @@ t_exec	init_exec(t_minishell *shell)
 			while (--pos >= 0)
 				free(exec.fd[pos]);
 			free(exec.fd);
+			sfree(exec.cmd);
 			return (exec);
 		}
 	}
 	pos = -1;
 	while (++pos < exec.nbr_pros - 1)
 		pipe(exec.fd[pos]);
-	exec.temp = shell->tokens;
+	exec.temp = exec.tokens_head;
 	return (exec);
 }
 
@@ -1576,10 +1604,10 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 	t_token *cmd_tokens;
 	t_token *current_tokens;
 
-	exec->pid = malloc(sizeof(pid_t) * exec->nbr_pros);
+	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
 	if (!exec->pid)
 		return ;
-	current_tokens = shell->tokens;
+	current_tokens = exec->tokens_head;
 	pos = -1;
 	while (++pos < exec->nbr_pros)
 	{
@@ -1628,7 +1656,13 @@ void	exec_cmd(t_minishell *shell)
 	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
 		return ;
 	tokens_copy = cpy_token_ls(shell->tokens);
-	exec = init_exec(shell);
+	exec = init_exec(shell, tokens_copy);
+	if (!exec.fd)
+	{
+		sfree(exec.cmd);
+		free_tokens(tokens_copy);
+		return ;
+	}
 	if (is_buildin(exec.cmd[0]))
 	{
 		exec_builtin(shell->tokens, shell);
@@ -1641,12 +1675,17 @@ void	exec_cmd(t_minishell *shell)
 	if (cmd_pos > 0)
 	{
 		sfree(exec.cmd);
-		exec.cmd = NULL;
 	}
 	if (cmd_pos == 0)
-		return ;
+	{
+		sfree(exec.cmd);
+		sfree_int(exec.fd);
+		free_tokens(tokens_copy);
+		return;
+	}
 	exec_child(shell, &exec, cmd_pos);
 	cleanup_processes(&exec, shell, cmd_pos);
+	sfree(exec.cmd);
 	free_tokens(tokens_copy);
 }
 

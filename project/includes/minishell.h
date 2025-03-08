@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/07 22:04:17 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 02:20:53 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_exec
 	int		stts;
 	pid_t	*pid;
 	int		nbr_pros;
+	t_token	*tokens_head;
 }	t_exec;
 
 typedef struct s_expand
@@ -121,6 +122,7 @@ void		free_tokens(t_token *tokens);
 void		sfree(char **split);
 char		*free_ptr(char *ptr);
 void		sfree_int(int **fd);
+void		free_matrix(char **matrix);
 
 //utils
 char		**dup_env(char **envp, size_t *envsz);
@@ -186,11 +188,10 @@ char		*get_full_path(char *cmd, char **path_dir);
 char		*find_exec_path(char *cmd, char **envp);
 
 //exec_child
-void		process_redirections(t_token *current);
 void		exec_child(t_minishell *shell, t_exec *exec, int pos);
 
 //exec_externs
-t_exec		init_exec(t_minishell *shell);
+t_exec		init_exec(t_minishell *shell, t_token *tokens);
 int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
 void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
 void		exec_cmd(t_minishell *shell);
