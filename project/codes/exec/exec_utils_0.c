@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils_0.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 11:58:54 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:32:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,19 +41,6 @@ int	is_buildin(char *token)
 	return (0);
 }
 
-static void	free_args(char **args, int cnt)
-{
-	int	pos;
-
-	pos = 0;
-	while (pos < cnt)
-	{
-		free(args[pos]);
-		pos++;
-	}
-	free(args);
-}
-
 char	**prepare_args(t_token *tokens)
 {
 	char	**args;
@@ -72,7 +59,7 @@ char	**prepare_args(t_token *tokens)
 		args[arg_pos] = ft_strdup(current->value);
 		if (!args[arg_pos])
 		{
-			free_args(args, arg_pos);
+			sfree(args);
 			return (NULL);
 		}
 		arg_pos++;
