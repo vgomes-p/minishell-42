@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_externs.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 14:32:01 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:17:05 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,9 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 		return (0);
 	if (nb_pros > 1)
 		return (-1);
-	if (exec_builtin(shell->tokens, shell))
+	if (is_buildin(cmd[0]))
 	{
+		exec_builtin(shell->tokens, shell);
 		sfree_int(fd);
 		fd = NULL;
 		return (0);
@@ -56,18 +57,25 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 
 void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 {
-	t_token	*cmd_tokens;
-	t_token	*current_tokens;
+	t_token *cmd_tokens;
+	t_token *current_tokens;
 
 	exec->pid = malloc(sizeof(pid_t) * exec->nbr_pros);
 	if (!exec->pid)
-		return ;
+		return;
 	current_tokens = shell->tokens;
 	pos = -1;
 	while (++pos < exec->nbr_pros)
 	{
 		cmd_tokens = get_next_cmd(&current_tokens);
 		exec->cmd = tokens_matrix(cmd_tokens);
+		if (is_buildin(exec->cmd[0]))
+		{
+			exec_builtin(cmd_tokens, shell);
+			sfree(exec->cmd);
+			free_tokens(cmd_tokens);
+			continue;
+		}
 		exec->pid[pos] = fork();
 		if (exec->pid[pos] == 0)
 		{
@@ -107,6 +115,14 @@ void	exec_cmd(t_minishell *shell)
 		return ;
 	tokens_copy = cpy_token_ls(shell->tokens);
 	exec = init_exec(shell);
+	if (is_buildin(exec.cmd[0]))
+	{
+		exec_builtin(shell->tokens, shell);
+		sfree(exec.cmd);
+		sfree_int(exec.fd);
+		free_tokens(tokens_copy);
+		return;
+	}
 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
 	if (cmd_pos > 0)
 	{
@@ -119,3 +135,4 @@ void	exec_cmd(t_minishell *shell)
 	cleanup_processes(&exec, shell, cmd_pos);
 	free_tokens(tokens_copy);
 }
+
