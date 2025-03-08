@@ -1,330 +1,312 @@
-#include "../../includes/minishell.h"
+/* minishell.h */
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-static char	*ft_strjoin_gnl(char *s1, char *s2)
+# include <fcntl.h>
+# include <errno.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <signal.h>
+# include <curses.h>
+# include <termcap.h>
+# include <stdbool.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <sys/types.h>
+# include "libft/libft.h"
+# include "libms/libms.h"
+# include <readline/history.h>
+# include <readline/readline.h>
+
+
+# ifndef SEP
+#  define SEP -1
+# endif
+
+# define RESET		"\001\033[0m\002"
+# define RED		"\001\033[1;31m\002"
+# define GREEN		"\001\033[1;32m\002"
+# define YELLOW		"\001\033[1;33m\002"
+# define PINK		"\001\033[1;35m\002"
+# define CYAN		"\001\033[1;36m\002"
+# define ORANGE		"\001\033[1;38;5;214m\002"
+# define RERED		"\001\033[1;7;31m\002"
+# define REYELLOW	"\001\033[1;7;33m\002"
+# define REGREEN	"\001\033[1;7;32m\002"
+# define REPINK		"\001\033[1;7;35m\002"
+# define RECYAN		"\001\033[1;7;36m\002"
+# define REORANGE	"\001\033[1;7;38;5;214m\002"
+# define REWHITE	"\001\033[1;7;97m\002"
+
+typedef enum e_token_tp
+{
+	CMD,
+	ARG,
+	PIPE,
+	APPEND,
+	HEREDOC,
+	REDIR_IN,
+	REDIR_OUT,
+	REDIR_APPEND,
+	SYNTAX_ERROR,
+}	t_token_tp;
+
+typedef struct s_token
+{
+	char			*value;
+	t_token_tp		type;
+	struct s_token	*next;
+	struct s_token	*prev;
+}	t_token;
+
+typedef struct s_exec
+{
+	t_token	*temp;
+	char	**cmd;
+	int		**fd;
+	int		stts;
+	pid_t	*pid;
+	int		nbr_pros;
+}	t_exec;
+
+typedef struct s_expand
+{
+	char	**hold_str;
+	int		exec;
+	int		start;
+	int		end;
+	int		quotes;
+	int		exec_n;
+	int		i;
+}	t_expand;
+
+typedef struct s_minishell
+{
+	int		pid;
+	char	**env;
+	char	*prompt;
+	size_t	env_size;
+	int		exit_stt;
+	int		term_width;
+	int		error_code;
+	int		term_height;
+	char	*error_message;
+	t_token	*tokens;
+}	t_minishell;
+
+extern t_minishell	*g_shell;
+
+void		free_env(char **env);
+void		free_tokens(t_token *tokens);
+void		sfree(char **split);
+char		*free_ptr(char *ptr);
+void		sfree_int(int **fd);
+char		**dup_env(char **envp, size_t *envsz);
+void		handle_signal(int sig);
+void		welcome(void);
+void		ms_prompt(t_minishell *shell);
+t_token		*mktoken(char *value, t_token_tp type);
+char		**ms_split_quotes(const char *input);
+t_token		*create_token_list(char **split, t_token *head);
+t_token		*tokening(char *input);
+bool		process_quotes(const char *input, int *pos, bool *in_quotes,
+				char *quote_ch);
+char		**process_tokens(const char *input, char **tokens);
+char		*extract_token(const char *input, int *pos);
+t_token_tp	get_token_type(char *token, t_token *current, int is_first);
+bool		is_quotes(char ch);
+bool		is_operator(char *str);
+void		cleanup_tokens(char **tokens, int token_cnt);
+int			count_tokens(t_token *tokens);
+char		*clean_token(const char *str, int len);
+char		**tokens_matrix(t_token *token);
+t_token		*cpy_token_ls(t_token *tokens);
+void		addtoken_ls(t_token *list, t_token *new_token);
+bool		valid_syntax(t_token *tokens);
+int			parser(t_token **head, char *str);
+int			find_envar(const char *var, char **envp);
+void		update_envar(const char *var, int index0, char ***envp);
+int			valid_name(const char *var);
+void		export_err(const char *arg);
+void		ms_echo(char **args);
+void		ms_pwd(t_minishell *shell);
+void		ms_env(t_minishell *shell);
+void		ms_cd(char **args, t_minishell *shell);
+void		ms_exit(char **args, t_minishell *shell);
+void		ms_unset(t_minishell *shell, char **args, char ***envp);
+void		ms_export(t_minishell *shell, char **args, char ***envp);
+char		*get_full_path(char *cmd, char **path_dir);
+char		*find_exec_path(char *cmd, char **envp);
+void		process_redirections(t_token *current);
+void		exec_child(t_minishell *shell, t_exec *exec, int pos);
+t_exec		init_exec(t_minishell *shell);
+int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
+void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
+void		exec_cmd(t_minishell *shell);
+int			exec_builtin(t_token *tokens, t_minishell *shell);
+int			is_buildin(char *token);
+char		**prepare_args(t_token *tokens);
+int			is_dir(t_minishell *shell, char *cmd);
+void		exec_extern(char **cmd, char **envp);
+void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
+void		handle_invalid_file(t_minishell *shell);
+void		child(t_minishell *shell, char **cmd, int **fd, int pos);
+t_token		*get_next_cmd(t_token **tokens);
+void		cls_fd(int **fd);
+void		file_errmsg(t_minishell *shell, char *cmd);
+
+#endif
+
+/* libms.c */
+int	lms_isnum(const char *str)
+{
+	if (!str || !*str)
+		return (0);
+	if (*str == '-' || *str == '+')
+		str++;
+	while (*str)
+	{
+		if (!ft_isdigit(*str))
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
+char	*lms_strjoin_free(char *str1, char *str2)
 {
 	char	*joined;
 
-	joined = lms_strjoin_free(s1, s2); // Usa sua função lms_strjoin_free
-	s2 = free_ptr(s2); // Libera s2, se necessário
+	joined = ft_strjoin(str1, str2);
+	free(str1);
 	return (joined);
 }
 
-static char	*exit_status(t_minishell *shell, char *f, char *cmd)
+void	lms_putchar(char ch)
 {
-	char	*ret;
-
-	ret = NULL;
-	if (!*cmd)
-	{
-		f = free_ptr(f);
-		return (ft_strdup("$"));
-	}
-	if (cmd && cmd[0])
-		ret = ft_strdup(++cmd);
-	f = free_ptr(f);
-	return (lms_strjoin_free(ft_itoa(shell->error), ret)); // Usa lms_strjoin_free
+	write(1, &ch, 1);
 }
 
-char	*get_envp(t_minishell *shell, char *cmd, char **envp)
+void	lms_putstr(char *str)
 {
-	char	*ret;
-	int		len;
-	int		var_len;
-
-	ret = cmd;
-	cmd++;
-	if (*cmd == '{')
-		len = ft_strlen(++cmd);
-	else
-		len = ft_strlen(cmd);
-	if (*cmd == '?' || len == 0)
-		return (exit_status(shell, ret, cmd));
-	while (*envp)
+	if (str)
 	{
-		var_len = ft_findchr(*envp, '=');
-		if (!ft_strncmp(cmd, *envp, var_len))
+		while (*str)
 		{
-			ret = free_ptr(ret); // Usa free_ptr
-			return (ft_strdup(*envp + len + 1));
-		}
-		envp++;
-	}
-	ret = free_ptr(ret); // Usa free_ptr
-	return (ft_strdup(""));
-}
-
-static t_expand	init_expantion(t_minishell *shell, char *cmd, char **envp, t_expand exp)
-{
-	while (cmd[++exp.end])
-	{
-		exp.quotes = check_quotes(cmd[exp.end], exp.quotes);
-		if (cmd[exp.end] == '$' && exp.quotes != 2)
-		{
-			exp.hold_str[exp.ex++] = ft_substr(cmd, exp.start, exp.end - \
-			exp.start);
-			exp.start = exp.end;
-		}
-		else if (cmd[exp.start] == '$' && cmd[exp.end] != '{' && \
-		!ft_isalnum(cmd[exp.end]) && cmd[exp.end] != '?' \
-		&& cmd[exp.end] != '_')
-		{
-			exp.hold_str[exp.ex++] = get_envp(ms, ft_substr(cmd, exp.start, \
-			exp.end - exp.start), envp);
-			if (cmd[exp.end] == '}' && cmd[exp.start + 1] == '{' \
-			&& cmd[exp.end + 1])
-				exp.end++;
-			exp.start = exp.end;
+			write(1, str, 1);
+			str++;
 		}
 	}
-	return (exp);
 }
 
-static char	*expand_quotes(char *cmd)
+void	*lms_realloc(void *ptr, size_t oldsz, size_t nwsize)
 {
-	int		i;
-	int		quotes;
-	char	**ret;
+	void	*nwptr;
 
-	i = -1;
-	quotes = 0;
-	while (cmd[++i])
+	if (!ptr)
+		return (malloc(nwsize));
+	if (nwsize == 0)
 	{
-		quotes = check_quotes(cmd[i], quotes);
-		if ((cmd[i] == '\'' || cmd[i] == '\"') && !quotes)
-			cmd[i] = SEP;
-		else if ((cmd[i] == '\'' && quotes == 2) || \
-		(cmd[i] == '\"' && quotes == 1))
-			cmd[i] = SEP;
-	}
-	ret = ft_split(cmd, SEP);
-	if (!*ret)
-	{
-		sfree(ret); // Usa sfree
-		return (ft_strdup(""));
-	}
-	return (ft_mattstr_copy(ret));
-}
-
-int	is_env_directory(t_minishell *shell, char *cmd, char **envp)
-{
-	char			*ret;
-	struct stat		file_info;
-	char			*temp;
-
-	temp = ft_strdup(cmd);
-	ret = get_envp(shell, temp, envp);
-	stat(ret, &file_info);
-	if (S_ISDIR(file_info.st_mode) == 1)
-	{
-		ret = free_ptr(ret); // Usa free_ptr
-		return (1);
-	}
-	ret = free_ptr(ret); // Usa free_ptr
-	return (0);
-}
-
-char	*expand(t_minishell *shell, char *cmd, char **envp)
-{
-	t_expand	exp;
-
-	ft_bzero(&exp, sizeof(t_expand));
-	while (cmd[exp.i])
-		exp.ex_n += 1 * (cmd[exp.i++] == '$');
-	exp.ex = (exp.ex_n * 2) + 2;
-	exp.hold_str = ft_calloc(exp.ex, sizeof(char *));
-	if (!exp.hold_str)
+		free(ptr);
 		return (NULL);
-	exp.ex = 0;
-	exp.end = -1;
-	exp = init_expantion(ms, cmd, envp, exp);
-	if (cmd[exp.start] == '$')
-		exp.hold_str[exp.ex++] = get_envp(ms, ft_substr(cmd, exp.start, \
-		exp.end - exp.start), envp);
+	}
+	nwptr = malloc(nwsize);
+	if (!nwptr)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	if (oldsz < nwsize)
+		ft_memcpy(nwptr, ptr, oldsz);
 	else
-		exp.hold_str[exp.ex++] = ft_substr(cmd, exp.start, exp.end - exp.start);
-	return (ft_mattstr_copy(exp.hold_str));
+		ft_memcpy(nwptr, ptr, nwsize);
+	free(ptr);
+	return (nwptr);
 }
 
-void	expander(t_minishell *shell, t_token **head, char **envp)
+int	lms_strcmp(const char *s1, const char *s2)
 {
-	char	*temp;
-	t_token	*token;
-
-	token = *head;
-	if (is_env_directory(shell, token->cmd, envp) == 1)
-		return ;
-	while (token)
-	{
-		if (ft_strchr(token->cmd, '$'))
-		{
-			temp = token->cmd;
-			token->cmd = expand(shell, token->cmd, envp);
-			if (token->cmd == NULL)
-				token->cmd = temp;
-			else
-				temp = free_ptr(temp); // Usa free_ptr
-		}
-		if (!token->prev || (token->prev && token->prev->type != HEREDOC))
-		{
-			temp = token->cmd;
-			token->cmd = expand_quotes(token->cmd);
-			temp = free_ptr(temp); // Usa free_ptr
-		}
-		token = token->next;
-	}
+	return (ft_strncmp(s1, s2, 1000000));
 }
 
-
-/*---------------------------------------------------------------*/
-int	heredoc(t_minishell *shell, const char *file_end, char **envp)
+char	*lms_strjoin_char(char const *str0, char ch)
 {
-	char	*input;
-	int		heredoc_file;
+	char	*result;
+	size_t	len;
+	size_t	pos;
 
-	input = NULL;
-	heredoc_file = open("__heredoc", O_WRONLY | O_CREAT | O_EXCL | O_TRUNC, 0600);
-	if (heredoc_file == -1)
-		return (-1);
-	while (1)
-	{
-		input = readline("> ");
-		if (!input || !ft_strncmp(file_end, input, ft_strlen(file_end) + 1))
-		{
-			input = free_ptr(input);
-			break ;
-		}
-		if (*file_end != '\'' && *file_end != '\"' && ft_strchr(input, '$'))
-			input = expand(shell, input, envp);
-		write(heredoc_file, input, ft_strlen(input));
-		write(heredoc_file, "\n", 1);
-		input = free_ptr(input);
-	}
-	close(heredoc_file);
-	heredoc_file = open("__heredoc", O_RDONLY);
-	return (heredoc_file);
-}
-/*---------------------------------------------------------------*/
-
-static int	is_redir_in(t_minishell *shell, char **cmd, int pos, char **envp)
-{
-	static int	in_file = -1;
-
-	if (!ft_strncmp(cmd[pos], "<", 2))
-	{
-		in_file = open(cmd[pos + 1], O_RDONLY);
-		if (in_file == -1)
-		{
-			perror("minishell"); // Usa perror para mostrar o erro
-			return (-5);
-		}
-	}
-	else if (!ft_strncmp(cmd[pos], "<<", 3))
-		in_file = heredoc(shell, cmd[pos + 1], envp);
-	return (in_file);
-}
-
-static int	is_redir_out(char **cmd, int pos)
-{
-	static int	out_file = -1;
-
-	if (!ft_strncmp(cmd[pos], ">", 2))
-	{
-		out_file = open(cmd[pos + 1], O_WRONLY | O_CREAT | O_TRUNC, 0644);
-		if (out_file == -1)
-		{
-			perror("minishell");
-			return (-5);
-		}
-	}
-	else if (!ft_strncmp(cmd[pos], ">>", 3))
-	{
-		out_file = open(cmd[pos + 1], O_WRONLY | O_CREAT | O_APPEND, 0644);
-		if (out_file == -1)
-		{
-			perror("minishell");
-			return (-5);
-		}
-	}
-	return (out_file);
-}
-
-static int	is_redir(char *cmd)
-{
-	if (!ft_strncmp(cmd, ">", 2) || !ft_strncmp(cmd, ">>", 3) ||
-		!ft_strncmp(cmd, "<", 2) || !ft_strncmp(cmd, "<<", 3))
-		return (1);
-	return (0);
-}
-
-void	process_redirect(t_minishell *shell, char **cmd, int *fd, char **ret)
-{
-	int	pos;
-	int	cnt;
-
+	if (!str0)
+		return (NULL);
+	len = ft_strlen(str0);
+	result = (char *)malloc(len + 2);
+	if (!result)
+		return (NULL);
 	pos = 0;
+	while (str0[pos])
+	{
+		result[pos] = str0[pos];
+	}
+	result[pos] = ch;
+	result[pos + 1] = '\0';
+	return (result);
+}
+
+char	*lms_strncpy(char *dest, const char *src, size_t n)
+{
+	size_t	cnt;
+
 	cnt = 0;
-	while (cmd[pos])
+	while (cnt < n && src[cnt] != '\0')
 	{
-		if (is_redir(cmd[pos]))
-		{
-			fd[0] = is_redir_in(shell, cmd, pos, shell->env);
-			fd[1] = is_redir_out(cmd, pos);
-			pos += 2;
-			if (fd[0] == -5 || fd[1] == -5)
-				break ;
-		}
-		else
-			ret[cnt++] = ft_strdup(cmd[pos++]);
+		dest[cnt] = src[cnt];
+		cnt++;
 	}
-	if (cmd)
+	while (cnt < n)
 	{
-		sfree(cmd);
-		cmd = NULL;
+		dest[cnt] = '\0';
+		cnt++;
 	}
+	return (dest);
 }
 
-static void	ms_open_fd(int *fd)
+char	*lms_strndup(const char *str, size_t n)
 {
-	fd[0] = -1;
-	fd[1] = -1;
+	char	*dup;
+
+	dup = (char *)malloc(n + 1);
+	if (!dup)
+		return (NULL);
+	lms_strncpy(dup, str, n);
+	dup[n] = '\0';
+	return (dup);
 }
 
-char	**redirect(t_minishell *shell, char **cmd, int *out, int *in)
+char	*lms_strstr(const char *haystack, const char *needle)
 {
-	int		fd[2];
-	char	**ret;
-	int		pos;
+	size_t	h_index;
+	size_t	n_index;
 
-	ms_open_fd(fd);
-	pos = 0;
-	while (cmd[pos])
-		pos++;
-	ret = ft_calloc(pos + 1, sizeof(char *));
-	if (!ret)
-		return (NULL);
-	process_redirect(shell, cmd, fd, ret);
-	if (fd[0] == -5 || fd[1] == -5)
+	if (*needle == '\0')
+		return ((char *)haystack);
+	h_index = 0;
+	while (haystack[h_index] != '\0')
 	{
-		sfree(ret);
-		return (NULL);
+		n_index = 0;
+		while (haystack[h_index + n_index] == needle[n_index]
+			&& needle[n_index] != '\0')
+			n_index++;
+		if (needle[n_index] == '\0')
+			return ((char *)(haystack + h_index));
+		h_index++;
 	}
-	if (fd[0] != -1)
-	{
-		dup2(fd[0], 0);
-		close(fd[0]);
-		*in = 1;
-	}
-	if (fd[1] != -1)
-	{
-		dup2(fd[1], 1);
-		close(fd[1]);
-		*out = 1;
-	}
-	return (ret);
+	return (NULL);
 }
 
-/*---------------------------------------------------------------*/
-/*---------------------------------------------------------------*/
+/* minishell.c*/
+
+#include "../../includes/minishell.h"
 
 void	free_env(char **env)
 {
@@ -444,135 +426,93 @@ void	handle_signal(int sig)
 	exit(0);
 }
 
-bool	valid_syntax(t_token *tokens)
-{
-	t_token	*current;
-
-	current = tokens;
-	while (current)
-	{
-		if (current->type == PIPE || current->type == REDIR_OUT
-			|| current->type == REDIR_IN || current->type == REDIR_APPEND
-			|| current->type == HEREDOC)
-		{
-			if (!current->next || (current->next->type != ARG
-					&& current->next->type != CMD))
-			{
-				printf(RED "Syntax error: '%s' operator without args.\n" RESET,
-					current->value);
-				return (false);
-			}
-		}
-		current = current->next;
-	}
-	return (true);
-}
-
-int	parser(t_token **head, char *str, t_minishell shell)
-{
-	*head = tokening(str);
-	if (!*head)
-	{
-		ft_putstr_fd(RED "error: unclosed quotes\n" RESET, 2);
-		return (1);
-	}
-	expander(shell, head, shell->env)
-	if (!valid_syntax(*head))
-	{
-		free_tokens(*head);
-		*head = NULL;
-		return (1);
-	}
-	return (0);
-}
-
 bool	process_quotes(const char *input, int *pos, bool *in_quotes,
-						char *quote_ch)
+	char *quote_ch)
 {
-	while (input[*pos] && (*in_quotes || input[*pos] != ' '))
-	{
-		if (is_quotes(input[*pos]))
-		{
-			if (!*in_quotes)
-			{
-				*in_quotes = true;
-				*quote_ch = input[*pos];
-			}
-			else if (input[*pos] == *quote_ch)
-				*in_quotes = false;
-		}
-		(*pos)++;
-	}
-	if (*in_quotes)
-	{
-		printf(RED "Error: quotes not closed\n" RESET);
-		return (false);
-	}
-	return (true);
+while (input[*pos] && (*in_quotes || input[*pos] != ' '))
+{
+if (is_quotes(input[*pos]))
+{
+if (!*in_quotes)
+{
+*in_quotes = true;
+*quote_ch = input[*pos];
+}
+else if (input[*pos] == *quote_ch)
+*in_quotes = false;
+}
+(*pos)++;
+}
+if (*in_quotes)
+{
+printf(RED "Error: quotes not closed\n" RESET);
+return (false);
+}
+return (true);
 }
 
 char	**process_tokens(const char *input, char **tokens)
 {
-	char	*token;
-	int		pos;
-	int		token_cnt;
+char	*token;
+int		pos;
+int		token_cnt;
 
-	pos = 0;
-	token_cnt = 0;
-	while (input[pos])
-	{
-		while (input[pos] == ' ')
-			pos++;
-		if (input[pos] == '\0')
-			break ;
-		token = extract_token(input, &pos);
-		if (token)
-			tokens[token_cnt++] = token;
-		else
-		{
-			cleanup_tokens(tokens, token_cnt);
-			return (NULL);
-		}
-	}
-	tokens[token_cnt] = NULL;
-	return (tokens);
+pos = 0;
+token_cnt = 0;
+while (input[pos])
+{
+while (input[pos] == ' ')
+pos++;
+if (input[pos] == '\0')
+break ;
+token = extract_token(input, &pos);
+if (token)
+tokens[token_cnt++] = token;
+else
+{
+cleanup_tokens(tokens, token_cnt);
+return (NULL);
+}
+}
+tokens[token_cnt] = NULL;
+return (tokens);
 }
 
 char	*extract_token(const char *input, int *pos)
 {
-	int		start;
-	bool	in_quotes;
-	char	quote_ch;
+int		start;
+bool	in_quotes;
+char	quote_ch;
 
-	start = *pos;
-	in_quotes = false;
-	quote_ch = '\0';
-	if (!process_quotes(input, pos, &in_quotes, &quote_ch))
-		return (NULL);
-	return (clean_token(&input[start], *pos - start));
+start = *pos;
+in_quotes = false;
+quote_ch = '\0';
+if (!process_quotes(input, pos, &in_quotes, &quote_ch))
+return (NULL);
+return (clean_token(&input[start], *pos - start));
 }
 
 t_token_tp	get_token_type(char *token, t_token *current, int is_first)
 {
-	t_token_tp	type;
+t_token_tp	type;
 
-	type = ARG;
-	if (is_operator(token))
-	{
-		if (lms_strcmp(token, "|") == 0)
-			type = PIPE;
-		else if (lms_strcmp(token, ">") == 0)
-			type = REDIR_OUT;
-		else if (lms_strcmp(token, ">>") == 0)
-			type = REDIR_APPEND;
-		else if (lms_strcmp(token, "<") == 0)
-			type = REDIR_IN;
-		else if (lms_strcmp(token, "<<") == 0)
-			type = HEREDOC;
-	}
-	else if (is_first || (current && current->type == PIPE))
-		type = CMD;
-	return (type);
+type = ARG;
+if (is_operator(token))
+{
+if (lms_strcmp(token, "|") == 0)
+type = PIPE;
+else if (lms_strcmp(token, ">") == 0)
+type = REDIR_OUT;
+else if (lms_strcmp(token, ">>") == 0)
+type = REDIR_APPEND;
+else if (lms_strcmp(token, "<") == 0)
+type = REDIR_IN;
+else if (lms_strcmp(token, "<<") == 0)
+type = HEREDOC;
+}
+else if (is_first || (current && current->type == PIPE))
+type = CMD;
+return (type);
 }
 
 bool	is_quotes(char ch)
@@ -777,6 +717,47 @@ t_token	*tokening(char *input)
 	}
 	sfree(split);
 	return (head);
+}
+
+bool	valid_syntax(t_token *tokens)
+{
+	t_token	*current;
+
+	current = tokens;
+	while (current)
+	{
+		if (current->type == PIPE || current->type == REDIR_OUT
+			|| current->type == REDIR_IN || current->type == REDIR_APPEND
+			|| current->type == HEREDOC)
+		{
+			if (!current->next || (current->next->type != ARG
+					&& current->next->type != CMD))
+			{
+				printf(RED "Syntax error: '%s' operator without args.\n" RESET,
+					current->value);
+				return (false);
+			}
+		}
+		current = current->next;
+	}
+	return (true);
+}
+
+int	parser(t_token **head, char *str)
+{
+	*head = tokening(str);
+	if (!*head)
+	{
+		ft_putstr_fd(RED "error: unclosed quotes\n" RESET, 2);
+		return (1);
+	}
+	if (!valid_syntax(*head))
+	{
+		free_tokens(*head);
+		*head = NULL;
+		return (1);
+	}
+	return (0);
 }
 
 int	find_envar(const char *var, char **envp)
@@ -1214,53 +1195,6 @@ void	ms_unset(t_minishell *shell, char **args, char ***envp)
 	shell->error_code = 0;
 }
 
-char	*get_full_path(char *cmd, char **path_dir)
-{
-	int		pos;
-	char	*full_path;
-	char	*temp;
-
-	pos = -1;
-	full_path = NULL;
-	while (path_dir && path_dir[++pos])
-	{
-		temp = ft_strjoin(path_dir[pos], "/");
-		full_path = ft_strjoin(temp, cmd);
-		temp = free_ptr(temp);
-		if ((!access(full_path, F_OK)) && !access(full_path, X_OK))
-			break ;
-		full_path = free_ptr(full_path);
-	}
-	return (full_path);
-}
-
-char	*find_exec_path(char *cmd, char **envp)
-{
-	int		pos;
-	char	**path_dir;
-	char	*full_path;
-
-	if (cmd[0] == '/' || cmd[0] == '.')
-	{
-		if ((!access(cmd, F_OK)) && !access(cmd, X_OK) && ft_strlen(cmd) > 2)
-			return (cmd);
-		return (NULL);
-	}
-	pos = -1;
-	while (envp && envp[++pos])
-	{
-		if (!ft_strncmp("PATH=", envp[pos], 5))
-			break ;
-	}
-	if (envp[pos] == NULL)
-		return (NULL);
-	path_dir = ft_split(envp[pos] + 5, ':');
-	full_path = get_full_path(cmd, path_dir);
-	sfree(path_dir);
-	path_dir = NULL;
-	return (full_path);
-}
-
 int	is_buildin(char *token)
 {
 	char	**ls;
@@ -1497,15 +1431,56 @@ t_token	*get_next_cmd(t_token **tokens)
 	return (cmd_start);
 }
 
-int	exec_builtin(t_token *tokens, t_minishell *shell)
+char	*get_full_path(char *cmd, char **path_dir)
 {
-	char	**args;
-	int		ret;
+	int		pos;
+	char	*full_path;
+	char	*temp;
 
-	args = prepare_args(tokens);
-	if (!args)
-		return (-1);
-	ret = 1;
+	pos = -1;
+	full_path = NULL;
+	while (path_dir && path_dir[++pos])
+	{
+		temp = ft_strjoin(path_dir[pos], "/");
+		full_path = ft_strjoin(temp, cmd);
+		temp = free_ptr(temp);
+		if ((!access(full_path, F_OK)) && !access(full_path, X_OK))
+			break ;
+		full_path = free_ptr(full_path);
+	}
+	return (full_path);
+}
+
+char	*find_exec_path(char *cmd, char **envp)
+{
+	int		pos;
+	char	**path_dir;
+	char	*full_path;
+
+	if (cmd[0] == '/' || cmd[0] == '.')
+	{
+		if ((!access(cmd, F_OK)) && !access(cmd, X_OK) && ft_strlen(cmd) > 2)
+			return (cmd);
+		return (NULL);
+	}
+	pos = -1;
+	while (envp && envp[++pos])
+	{
+		if (!ft_strncmp("PATH=", envp[pos], 5))
+			break ;
+	}
+	if (envp[pos] == NULL)
+		return (NULL);
+	path_dir = ft_split(envp[pos] + 5, ':');
+	full_path = get_full_path(cmd, path_dir);
+	sfree(path_dir);
+	path_dir = NULL;
+	return (full_path);
+}
+
+static int	check_builtin_type(char **args, t_minishell *shell, int *ret)
+{
+	*ret = 1;
 	if (lms_strcmp(args[0], "cd") == 0)
 		ms_cd(args, shell);
 	else if (lms_strcmp(args[0], "echo") == 0)
@@ -1520,12 +1495,24 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	{
 		ms_export(shell, args, &shell->env);
 		if (shell->error_code != 0)
-			ret = shell->error_code;
+			*ret = shell->error_code;
 	}
 	else if (lms_strcmp(args[0], "unset") == 0)
 		ms_unset(shell, args, &shell->env);
 	else
-		ret = 0;
+		*ret = 0;
+	return (*ret);
+}
+
+int	exec_builtin(t_token *tokens, t_minishell *shell)
+{
+	char	**args;
+	int		ret;
+
+	args = prepare_args(tokens);
+	if (!args)
+		return (-1);
+	ret = check_builtin_type(args, shell, &ret);
 	sfree(args);
 	return (ret);
 }
@@ -1617,25 +1604,25 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 
 void	exec_cmd(t_minishell *shell)
 {
-	int		in;
-	int		out;
-	char	**cmd;
+	int		cmd_pos;
+	t_exec	exec;
+	t_token	*tokens_copy;
 
-	in = 0;
-	out = 0;
-	cmd = redirect(shell, tokens_matrix(shell->tokens), &out, &in);
-	if (!cmd)
-	{
-		shell->error_code = 1;
+	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
 		return ;
-	}
-	if (exec_builtin(shell->tokens, shell))
+	tokens_copy = cpy_token_ls(shell->tokens);
+	exec = init_exec(shell);
+	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
+	if (cmd_pos > 0)
 	{
-		sfree(cmd);
-		return ;
+		sfree(exec.cmd);
+		exec.cmd = NULL;
 	}
-	exec_extern(cmd, shell->env);
-	sfree(cmd);
+	if (cmd_pos == 0)
+		return ;
+	exec_child(shell, &exec, cmd_pos);
+	cleanup_processes(&exec, shell, cmd_pos);
+	free_tokens(tokens_copy);
 }
 
 static char	*pathedprompt(t_minishell *shell)

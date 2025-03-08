@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:05:21 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/07 16:42:08 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/07 22:03:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	valid_syntax(t_token *tokens)
 	return (true);
 }
 
-int	parser(t_token **head, char *str, t_minishell *shell)
+int	parser(t_token **head, char *str)
 {
 	*head = tokening(str);
 	if (!*head)
@@ -44,7 +44,6 @@ int	parser(t_token **head, char *str, t_minishell *shell)
 		ft_putstr_fd(RED "error: unclosed quotes\n" RESET, 2);
 		return (1);
 	}
-	expander(shell, head, shell->env);
 	if (!valid_syntax(*head))
 	{
 		free_tokens(*head);
