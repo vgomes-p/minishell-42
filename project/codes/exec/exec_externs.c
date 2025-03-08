@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 02:16:24 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:56:28 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_exec	init_exec(t_minishell *shell, t_token *tokens)
 	exec.fd = ft_calloc(exec.nbr_pros, sizeof(int *));
 	if (!exec.fd)
 	{
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		return (exec);
 	}
 	pos = -1;
@@ -45,7 +45,7 @@ t_exec	init_exec(t_minishell *shell, t_token *tokens)
 			while (--pos >= 0)
 				free(exec.fd[pos]);
 			free(exec.fd);
-			sfree(exec.cmd);
+			free_matrix(&exec.cmd);
 			return (exec);
 		}
 	}
@@ -89,15 +89,14 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 		if (is_buildin(exec->cmd[0]))
 		{
 			exec_builtin(cmd_tokens, shell);
-			sfree(exec->cmd);
+			free_matrix(&exec->cmd);
 			free_tokens(cmd_tokens);
 			continue ;
 		}
 		exec->pid[pos] = fork();
 		if (exec->pid[pos] == 0)
 			child(shell, exec->cmd, exec->fd, pos);
-		sfree(exec->cmd);
-		exec->cmd = NULL;
+		free_matrix(&exec->cmd);
 		free_tokens(cmd_tokens);
 	}
 }
@@ -132,33 +131,31 @@ void	exec_cmd(t_minishell *shell)
 	exec = init_exec(shell, tokens_copy);
 	if (!exec.fd)
 	{
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		free_tokens(tokens_copy);
 		return ;
 	}
 	if (is_buildin(exec.cmd[0]))
 	{
 		exec_builtin(shell->tokens, shell);
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		sfree_int(exec.fd);
 		free_tokens(tokens_copy);
 		return;
 	}
 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
 	if (cmd_pos > 0)
-	{
-		sfree(exec.cmd);
-	}
+		free_matrix(&exec.cmd);
 	if (cmd_pos == 0)
 	{
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		sfree_int(exec.fd);
 		free_tokens(tokens_copy);
 		return;
 	}
 	exec_child(shell, &exec, cmd_pos);
 	cleanup_processes(&exec, shell, cmd_pos);
-	sfree(exec.cmd);
+	free_matrix(&exec.cmd);
 	free_tokens(tokens_copy);
 }
 

@@ -1235,11 +1235,11 @@ int	is_buildin(char *token)
 	{
 		if (!ft_strncmp(token, ls[pos], ft_strlen(token)))
 		{
-			sfree(ls);
+			free_matrix(&ls);
 			return (1);
 		}
 	}
-	sfree(ls);
+	free_matrix(&ls);
 	return (0);
 }
 
@@ -1261,7 +1261,7 @@ char	**prepare_args(t_token *tokens)
 		args[arg_pos] = ft_strdup(current->value);
 		if (!args[arg_pos])
 		{
-			sfree(args);
+			free_matrix(&args);
 			return (NULL);
 		}
 		arg_pos++;
@@ -1314,8 +1314,7 @@ void	exec_extern(char **cmd, char **envp)
 		ft_putstr_fd(RED "Command " ORANGE, 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(RED " was not found\n" RESET, 2);
-		sfree(cmd);
-		cmd = NULL;
+		free_matrix(&cmd);;
 		exit(127);
 	}
 	execve(path, cmd, envp);
@@ -1334,7 +1333,7 @@ void	clean_child_res(t_minishell *shell, char **cmd, int **fd, int code)
 	int	pos;
 
 	shell->error_code = code;
-	sfree(cmd);
+	free_matrix(&cmd);
 	cmd = NULL;
 	pos = 0;
 	if (fd)
@@ -1485,7 +1484,7 @@ char	*find_exec_path(char *cmd, char **envp)
 		return (NULL);
 	path_dir = ft_split(envp[pos] + 5, ':');
 	full_path = get_full_path(cmd, path_dir);
-	sfree(path_dir);
+	free_matrix(&path_dir);
 	path_dir = NULL;
 	return (full_path);
 }
@@ -1525,7 +1524,7 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	if (!args)
 		return (-1);
 	ret = check_builtin_type(args, shell, &ret);
-	sfree(args);
+	free_matrix(&args);
 	return (ret);
 }
 
@@ -1550,7 +1549,7 @@ t_exec	init_exec(t_minishell *shell, t_token *tokens)
 	exec.fd = ft_calloc(exec.nbr_pros, sizeof(int *));
 	if (!exec.fd)
 	{
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		return (exec);
 	}
 	pos = -1;
@@ -1562,7 +1561,7 @@ t_exec	init_exec(t_minishell *shell, t_token *tokens)
 			while (--pos >= 0)
 				free(exec.fd[pos]);
 			free(exec.fd);
-			sfree(exec.cmd);
+			free_matrix(&exec.cmd);
 			return (exec);
 		}
 	}
@@ -1606,15 +1605,14 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 		if (is_buildin(exec->cmd[0]))
 		{
 			exec_builtin(cmd_tokens, shell);
-			sfree(exec->cmd);
+			free_matrix(&exec->cmd);
 			free_tokens(cmd_tokens);
 			continue ;
 		}
 		exec->pid[pos] = fork();
 		if (exec->pid[pos] == 0)
 			child(shell, exec->cmd, exec->fd, pos);
-		sfree(exec->cmd);
-		exec->cmd = NULL;
+		free_matrix(&exec->cmd);
 		free_tokens(cmd_tokens);
 	}
 }
@@ -1649,33 +1647,31 @@ void	exec_cmd(t_minishell *shell)
 	exec = init_exec(shell, tokens_copy);
 	if (!exec.fd)
 	{
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		free_tokens(tokens_copy);
 		return ;
 	}
 	if (is_buildin(exec.cmd[0]))
 	{
 		exec_builtin(shell->tokens, shell);
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		sfree_int(exec.fd);
 		free_tokens(tokens_copy);
 		return;
 	}
 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
 	if (cmd_pos > 0)
-	{
-		sfree(exec.cmd);
-	}
+		free_matrix(&exec.cmd);
 	if (cmd_pos == 0)
 	{
-		sfree(exec.cmd);
+		free_matrix(&exec.cmd);
 		sfree_int(exec.fd);
 		free_tokens(tokens_copy);
 		return;
 	}
 	exec_child(shell, &exec, cmd_pos);
 	cleanup_processes(&exec, shell, cmd_pos);
-	sfree(exec.cmd);
+	free_matrix(&exec.cmd);
 	free_tokens(tokens_copy);
 }
 

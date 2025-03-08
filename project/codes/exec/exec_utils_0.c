@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 03:32:04 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:51:35 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,11 @@ int	is_buildin(char *token)
 	{
 		if (!ft_strncmp(token, ls[pos], ft_strlen(token)))
 		{
-			sfree(ls);
+			free_matrix(&ls);
 			return (1);
 		}
 	}
-	sfree(ls);
+	free_matrix(&ls);
 	return (0);
 }
 
@@ -59,7 +59,7 @@ char	**prepare_args(t_token *tokens)
 		args[arg_pos] = ft_strdup(current->value);
 		if (!args[arg_pos])
 		{
-			sfree(args);
+			free_matrix(&args);
 			return (NULL);
 		}
 		arg_pos++;

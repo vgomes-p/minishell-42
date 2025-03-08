@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:28:41 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/07 23:49:34 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:50:17 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	exec_extern(char **cmd, char **envp)
 		ft_putstr_fd(RED "Command " ORANGE, 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(RED " was not found\n" RESET, 2);
-		sfree(cmd);
-		cmd = NULL;
+		free_matrix(&cmd);;
 		exit(127);
 	}
 	execve(path, cmd, envp);
@@ -44,7 +43,7 @@ void	clean_child_res(t_minishell *shell, char **cmd, int **fd, int code)
 	int	pos;
 
 	shell->error_code = code;
-	sfree(cmd);
+	free_matrix(&cmd);
 	cmd = NULL;
 	pos = 0;
 	if (fd)

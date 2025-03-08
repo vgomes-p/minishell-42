@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 13:36:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 03:35:06 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:57:08 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*lms_strjoin_char(char const *str0, char ch)
 	while (str0[pos])
 	{
 		result[pos] = str0[pos];
-		pos++
+		pos++;
 	}
 	result[pos] = ch;
 	result[pos + 1] = '\0';
