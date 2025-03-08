@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_buildins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 16:52:47 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:47:20 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,6 @@ int	exec_builtin(t_token *tokens, t_minishell *shell)
 	if (!args)
 		return (-1);
 	ret = check_builtin_type(args, shell, &ret);
-	sfree(args);
+	free_matrix(&args);
 	return (ret);
 }
