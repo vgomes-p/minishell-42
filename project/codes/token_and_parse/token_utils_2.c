@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils_2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:25:59 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 14:25:48 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 02:19:11 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,9 @@ char	**tokens_matrix(t_token *token)
 		ret[pos] = ft_strdup(token->value);
 		if (!ret[pos])
 		{
-			sfree(ret);
+			while (--pos >= 0)
+				free(ret[pos]);
+			free(ret);
 			return (NULL);
 		}
 		token = token->next;

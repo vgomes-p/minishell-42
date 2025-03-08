@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   all_free_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 12:00:00 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 02:20:28 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,19 @@ void	sfree_int(int **fd)
 		pos++;
 	}
 	free(fd);
+}
+
+void	free_matrix(char **matrix)
+{
+	int	pos;
+
+	if (!matrix)
+		return ;
+	pos = 0;
+	while (matrix[pos])
+	{
+		free(matrix[pos]);
+		pos++;
+	}
+	free(matrix);
 }
