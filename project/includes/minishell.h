@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 02:20:53 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:15:52 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void		free_tokens(t_token *tokens);
 void		sfree(char **split);
 char		*free_ptr(char *ptr);
 void		sfree_int(int **fd);
-void		free_matrix(char **matrix);
+void		free_matrix(char ***matrix);
 
 //utils
 char		**dup_env(char **envp, size_t *envsz);

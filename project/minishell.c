@@ -104,7 +104,7 @@ void		free_tokens(t_token *tokens);
 void		sfree(char **split);
 char		*free_ptr(char *ptr);
 void		sfree_int(int **fd);
-void		free_matrix(char **matrix)
+void		free_matrix(char ***matrix);
 char		**dup_env(char **envp, size_t *envsz);
 void		handle_signal(int sig);
 void		welcome(void);
@@ -376,19 +376,21 @@ void	sfree_int(int **fd)
 	free(fd);
 }
 
-void	free_matrix(char **matrix)
+void	free_matrix(char ***matrix)
 {
 	int	pos;
 
-	if (!matrix)
+	if (!matrix || !*matrix)
 		return ;
 	pos = 0;
-	while (matrix[pos])
+	while ((*matrix)[pos])
 	{
-		free(matrix[pos]);
+		free((*matrix)[pos]);
+		(*matrix)[pos] = NULL;
 		pos++;
 	}
-	free(matrix);
+	free(*matrix);
+	*matrix = NULL;
 }
 
 static int	dup_env_str(char **nwenv, char **envp, size_t cnt)

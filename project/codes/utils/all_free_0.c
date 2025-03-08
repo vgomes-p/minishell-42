@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 02:20:28 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:15:40 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,19 @@ void	sfree_int(int **fd)
 	free(fd);
 }
 
-void	free_matrix(char **matrix)
+void	free_matrix(char ***matrix)
 {
 	int	pos;
 
-	if (!matrix)
+	if (!matrix || !*matrix)
 		return ;
 	pos = 0;
-	while (matrix[pos])
+	while ((*matrix)[pos])
 	{
-		free(matrix[pos]);
+		free((*matrix)[pos]);
+		(*matrix)[pos] = NULL;
 		pos++;
 	}
-	free(matrix);
+	free(*matrix);
+	*matrix = NULL;
 }
