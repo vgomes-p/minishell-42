@@ -1534,9 +1534,20 @@ t_exec	init_exec(t_minishell *shell)
 		exec.temp = exec.temp->next;
 	}
 	exec.fd = ft_calloc(exec.nbr_pros, sizeof(int *));
+	if (!exec.fd)
+		return (exec);
 	pos = -1;
 	while (++pos < (exec.nbr_pros - 1))
+	{
 		exec.fd[pos] = ft_calloc(2, sizeof(int));
+		if (!exec.fd[pos])
+		{
+			while (--pos >= 0)
+				free(exec.fd[pos]);
+			free(exec.fd);
+			return (exec);
+		}
+	}
 	pos = -1;
 	while (++pos < exec.nbr_pros - 1)
 		pipe(exec.fd[pos]);
@@ -1567,7 +1578,7 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 
 	exec->pid = malloc(sizeof(pid_t) * exec->nbr_pros);
 	if (!exec->pid)
-		return;
+		return ;
 	current_tokens = shell->tokens;
 	pos = -1;
 	while (++pos < exec->nbr_pros)
@@ -1579,13 +1590,11 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 			exec_builtin(cmd_tokens, shell);
 			sfree(exec->cmd);
 			free_tokens(cmd_tokens);
-			continue;
+			continue ;
 		}
 		exec->pid[pos] = fork();
 		if (exec->pid[pos] == 0)
-		{
 			child(shell, exec->cmd, exec->fd, pos);
-		}
 		sfree(exec->cmd);
 		exec->cmd = NULL;
 		free_tokens(cmd_tokens);
