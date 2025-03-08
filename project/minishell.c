@@ -248,6 +248,7 @@ char	*lms_strjoin_char(char const *str0, char ch)
 	while (str0[pos])
 	{
 		result[pos] = str0[pos];
+		pos++
 	}
 	result[pos] = ch;
 	result[pos + 1] = '\0';
@@ -1242,19 +1243,6 @@ int	is_buildin(char *token)
 	return (0);
 }
 
-static void	free_args(char **args, int cnt)
-{
-	int	pos;
-
-	pos = 0;
-	while (pos < cnt)
-	{
-		free(args[pos]);
-		pos++;
-	}
-	free(args);
-}
-
 char	**prepare_args(t_token *tokens)
 {
 	char	**args;
@@ -1273,7 +1261,7 @@ char	**prepare_args(t_token *tokens)
 		args[arg_pos] = ft_strdup(current->value);
 		if (!args[arg_pos])
 		{
-			free_args(args, arg_pos);
+			sfree(args);
 			return (NULL);
 		}
 		arg_pos++;
