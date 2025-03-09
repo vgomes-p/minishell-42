@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
+#    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/02/21 15:48:13 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/08 20:49:01 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,29 +29,28 @@ MAIN_SRCS		=	main.c prompt.c
 MAIN_DIR		=	codes/main/
 
 TOKEN_PARSE_SRCS	=	token.c \
-				token_utils_0.c token_utils_1.c token_utils_2.c \
-				expand.c \
-				parse.c \
-				parse_utils_0.c
+						token_utils_0.c token_utils_1.c token_utils_2.c \
+						expand.c \
+						parse.c
 TOKEN_PARSE_DIR	=	codes/token_and_parse/
 
 BUILDIN_SRCS	=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
 BUILDIN_DIR		=	codes/buildins/
 
-PIPE_SRCS		=	redirect.c heredoc.c
-PIPE_DIR		=	codes/pipe/
+REDIR_SRCS		=	heredoc.c redirect.c
+REDIR_DIR		=	codes/redir/
 
 EXEC_SRCS		=	cmd_path.c exec_utils_0.c exec_utils_1.c exec_utils_2.c exec_buildins.c exec_externs.c
 EXEC_DIR		=	codes/exec/
 
 OBJ_DIR			=	build/
-OBJ_M			=	$(addprefix $(OBJ_DIR), $(GENERAL_SRCS:.c=.o) $(MAIN_SRCS:.c=.o) $(TOKEN_PARSE_SRCS:.c=.o) $(BUILDIN_SRCS:.c=.o) $(PIPE_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
+OBJ_M			=	$(addprefix $(OBJ_DIR), $(GENERAL_SRCS:.c=.o) $(MAIN_SRCS:.c=.o) $(TOKEN_PARSE_SRCS:.c=.o) $(BUILDIN_SRCS:.c=.o) $(REDIR_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
 
 GENERAL			=	$(addprefix $(GENERAL_DIR), $(GENERAL_SRCS))
 MAIN			=	$(addprefix $(MAIN_DIR), $(MAIN_SRCS))
 TOKEN_PARSE		=	$(addprefix $(TOKEN_PARSE_DIR), $(TOKEN_PARSE_SRCS))
 BUILDIN			=	$(addprefix $(BUILDIN_DIR), $(BUILDIN_SRCS))
-PIPE			=	$(addprefix $(PIPE_DIR), $(PIPE_SRCS))
+REDIR			=	$(addprefix $(REDIR_DIR), $(REDIR_SRCS))
 EXEC			=	$(addprefix $(EXEC_DIR), $(EXEC_SRCS))
 
 LIBFT_DIR		=	includes/libft/
@@ -122,7 +121,7 @@ $(OBJ_DIR)%.o: $(BUILDIN_DIR)%.c $(HEADER)
 			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
-$(OBJ_DIR)%.o: $(PIPE_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(REDIR_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
 			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
@@ -161,7 +160,7 @@ debug: $(OBJ_M)
 			@echo "\n$(REPINK)Execution completed: $(NAME) created in debug mode!$(RESET)\n"
 
 depend:
-			@$(CC) -MM $(FLAGS) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(PIPE) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
+			@$(CC) -MM $(FLAGS) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
 			@echo "\n$(REWHITE)Dependencies updated in dependencies.mk!$(RESET)\n"
 
 all:		$(NAME)

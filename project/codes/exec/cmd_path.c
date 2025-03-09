@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:33:07 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 18:33:22 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 03:50:46 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*find_exec_path(char *cmd, char **envp)
 		return (NULL);
 	path_dir = ft_split(envp[pos] + 5, ':');
 	full_path = get_full_path(cmd, path_dir);
-	sfree(path_dir);
+	free_matrix(&path_dir);
 	path_dir = NULL;
 	return (full_path);
 }

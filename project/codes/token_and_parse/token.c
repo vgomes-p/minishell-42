@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/19 16:52:47 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 19:33:21 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_token	*mktoken(char *value, t_token_tp type)
 	token->value = ft_strdup(value);
 	if (!token->value)
 	{
+		free(token->value);
 		free(token);
 		return (NULL);
 	}
@@ -65,6 +66,7 @@ t_token	*create_token_list(char **split, t_token *head)
 		current = nwtoken;
 		pos++;
 	}
+	sfree(split);
 	return (head);
 }
 
