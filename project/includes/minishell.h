@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/09 16:32:35 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/09 20:46:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,34 +141,37 @@ void		ms_export(t_minishell *shell, char **args, char ***envp);
 // cmd_path
 char		*get_full_path(char *cmd, char **path_dir);
 char		*find_exec_path(char *cmd, char **envp);
-
-//exec_child
+//exec_family
+int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
 void		exec_child(t_minishell *shell, t_exec *exec, int pos);
-
+void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 //exec_externs
 t_exec		init_exec(t_minishell *shell, t_token *tokens);
-int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
 void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
 void		exec_cmd(t_minishell *shell);
 //exec_buildins
-int		exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos);
-//exec_utils_0
+int			exec_builtin(t_token *tokens, t_minishell *shell,
+				int **fd, int pos);
+//is_utils
 int			is_buildin(char *token);
-char		**prepare_args(t_token *tokens);
+int			is_redir(t_token *token);
 int			is_dir(t_minishell *shell, char *cmd);
+
+//exec_utils_0
+char		**prepare_args(t_token *tokens);
+void		cls_fd(int **fd);
 //exec_utils_1
 void		exec_extern(char **cmd, char **envp);
 void		clean_child_res(t_minishell *shell, char **cmd, int **fd, int code);
 void		handle_invalid_file(t_minishell *shell);
-void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 //exec_utils_2
 t_token		*get_next_cmd(t_token **tokens);
-void		cls_fd(int **fd);
 void		file_errmsg(t_minishell *shell, char *cmd);
 
 /* MAIN DIR */
-//prompt.c
+//prompt_utils.c
 void		welcome(void);
+//prompt.c
 void		ms_prompt(t_minishell *shell);
 
 /* REDIR DIR */
@@ -185,37 +188,38 @@ t_token		*create_token_list(char **split, t_token *head);
 t_token		*tokening(char *input);
 //token_utils_0
 bool		process_quotes(const char *input, int *pos, bool *in_quotes,
-	char *quote_ch);
-	char		**process_tokens(const char *input, char **tokens);
-	char		*extract_token(const char *input, int *pos);
-	t_token_tp	get_token_type(char *token, t_token *current, int is_first);
-	//token_utils_1
-	bool		is_quotes(char ch);
-	bool		is_operator(char *str);
-	void		cleanup_tokens(char **tokens, int token_cnt);
-	int			count_tokens(t_token *tokens);
-	char		*clean_token(const char *str, int len);
-	//token_utils_2
-	char		**tokens_matrix(t_token *token);
-	t_token		*cpy_token_ls(t_token *tokens);
-	void		addtoken_ls(t_token *list, t_token *new_token);
-	//parse
-	bool		valid_syntax(t_token *tokens);
-	int			parser(t_token **head, char *str);
-	//expand
-	char		*expand_var(t_minishell *shell, char *str);
-	
-	/* UTILS DIR */
-	//free_all_0
-	void		free_env(char **env);
-	void		free_tokens(t_token *tokens);
-	void		sfree(char **split);
-	char		*free_ptr(char *ptr);
-	void		sfree_int(int **fd);
-	void		free_matrix(char ***matrix);
-	
-	//utils
-	char		**dup_env(char **envp, size_t *envsz);
-	void		handle_signal(int sig);
-	
+				char *quote_ch);
+char		**process_tokens(const char *input, char **tokens);
+char		*extract_token(const char *input, int *pos);
+t_token_tp	get_token_type(char *token, t_token *current, int is_first);
+//token_utils_1
+bool		is_quotes(char ch);
+bool		is_operator(char *str);
+void		cleanup_tokens(char **tokens, int token_cnt);
+int			count_tokens(t_token *tokens);
+char		*clean_token(const char *str, int len);
+//token_utils_2
+char		**tokens_matrix(t_token *token);
+t_token		*cpy_token_ls(t_token *tokens);
+void		addtoken_ls(t_token *list, t_token *new_token);
+//parse
+bool		valid_syntax(t_token *tokens);
+int			parser(t_token **head, char *str);
+//expand
+char		*expand_var(t_minishell *shell, char *str);
+
+/* UTILS DIR */
+//all_free_0
+void		free_tokens(t_token *tokens);
+void		sfree(char **split);
+char		*free_ptr(char *ptr);
+void		sfree_int(int **fd);
+void		free_matrix(char ***matrix);
+//all_free_1
+void		free_env(char **env);
+
+//utils
+char		**dup_env(char **envp, size_t *envsz);
+void		handle_signal(int sig);
+
 #endif
