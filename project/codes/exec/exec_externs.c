@@ -6,16 +6,40 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 21:29:48 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:13:58 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
+static int	allocate_pipes(t_exec *exec)
+{
+	int	pos;
+
+	exec->fd = ft_calloc(exec->nbr_pros, sizeof(int *));
+	if (!exec->fd)
+		return (0);
+	pos = -1;
+	while (++pos < (exec->nbr_pros - 1))
+	{
+		exec->fd[pos] = ft_calloc(2, sizeof(int));
+		if (!exec->fd[pos])
+		{
+			while (--pos >= 0)
+				free(exec->fd[pos]);
+			free(exec->fd);
+			return (0);
+		}
+	}
+	pos = -1;
+	while (++pos < exec->nbr_pros - 1)
+		pipe(exec->fd[pos]);
+	return (1);
+}
+
 t_exec	init_exec(t_minishell *shell, t_token *tokens)
 {
 	t_exec	exec;
-	int		pos;
 
 	(void)shell;
 	exec.tokens_head = tokens;
@@ -36,75 +60,10 @@ t_exec	init_exec(t_minishell *shell, t_token *tokens)
 		exec.fd = NULL;
 		return (exec);
 	}
-	exec.fd = ft_calloc(exec.nbr_pros, sizeof(int *));
-	if (!exec.fd)
-	{
+	if (!allocate_pipes(&exec))
 		free_matrix(&exec.cmd);
-		return (exec);
-	}
-	pos = -1;
-	while (++pos < (exec.nbr_pros - 1))
-	{
-		exec.fd[pos] = ft_calloc(2, sizeof(int));
-		if (!exec.fd[pos])
-		{
-			while (--pos >= 0)
-				free(exec.fd[pos]);
-			free(exec.fd);
-			free_matrix(&exec.cmd);
-			return (exec);
-		}
-	}
-	pos = -1;
-	while (++pos < exec.nbr_pros - 1)
-		pipe(exec.fd[pos]);
 	exec.temp = exec.tokens_head;
 	return (exec);
-}
-
-int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
-{
-	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
-		return (0);
-	if (nb_pros > 1)
-		return (-1);
-	if (is_buildin(cmd[0]))
-	{
-		exec_builtin(shell->tokens, shell, fd, 0);
-		sfree_int(fd);
-		fd = NULL;
-		return (0);
-	}
-	return (-1);
-}
-
-void	exec_child(t_minishell *shell, t_exec *exec, int pos)
-{
-	t_token *cmd_tokens;
-	t_token *current_tokens;
-
-	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
-	if (!exec->pid)
-		return ;
-	current_tokens = exec->tokens_head;
-	pos = -1;
-	while (++pos < exec->nbr_pros)
-	{
-		cmd_tokens = get_next_cmd(&current_tokens);
-		exec->cmd = tokens_matrix(cmd_tokens);
-		if (is_buildin(exec->cmd[0]))
-		{
-			exec_builtin(cmd_tokens, shell, exec->fd, 0);
-			free_matrix(&exec->cmd);
-			free_tokens(cmd_tokens);
-			continue ;
-		}
-		exec->pid[pos] = fork();
-		if (exec->pid[pos] == 0)
-			child(shell, exec->cmd, exec->fd, pos);
-		free_matrix(&exec->cmd);
-		free_tokens(cmd_tokens);
-	}
 }
 
 void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
@@ -122,10 +81,36 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 	while (++pros_pos < exec->nbr_pros)
 		waitpid(exec->pid[pros_pos], &exec->stts, 0);
 	if (WIFEXITED(exec->stts))
-		shell->exit_stt = WEXITSTATUS(exec->stts); // Atualizar exit_stt
+		shell->exit_stt = WEXITSTATUS(exec->stts);
 	else if (WIFSIGNALED(exec->stts))
-		shell->exit_stt = 128 + WTERMSIG(exec->stts); // Para sinais como SIGINT
+		shell->exit_stt = 128 + WTERMSIG(exec->stts);
 	free(exec->pid);
+}
+
+static int	handle_exec_type(t_minishell *shell, t_exec *exec,
+									t_token *tokens_copy)
+{
+	int	cmd_pos;
+
+	if (is_buildin(exec->cmd[0]))
+	{
+		exec_builtin(shell->tokens, shell, exec->fd, 0);
+		free_matrix(&exec->cmd);
+		sfree_int(exec->fd);
+		free_tokens(tokens_copy);
+		return (0);
+	}
+	cmd_pos = exec_parent(shell, exec->nbr_pros, exec->cmd, exec->fd);
+	if (cmd_pos > 0)
+		free_matrix(&exec->cmd);
+	if (cmd_pos == 0)
+	{
+		free_matrix(&exec->cmd);
+		sfree_int(exec->fd);
+		free_tokens(tokens_copy);
+		return (0);
+	}
+	return (cmd_pos);
 }
 
 void	exec_cmd(t_minishell *shell)
@@ -144,24 +129,9 @@ void	exec_cmd(t_minishell *shell)
 		free_tokens(tokens_copy);
 		return ;
 	}
-	if (is_buildin(exec.cmd[0]))
-	{
-		exec_builtin(shell->tokens, shell, exec.fd, 0);
-		free_matrix(&exec.cmd);
-		sfree_int(exec.fd);
-		free_tokens(tokens_copy);
-		return;
-	}
-	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
-	if (cmd_pos > 0)
-		free_matrix(&exec.cmd);
+	cmd_pos = handle_exec_type(shell, &exec, tokens_copy);
 	if (cmd_pos == 0)
-	{
-		free_matrix(&exec.cmd);
-		sfree_int(exec.fd);
-		free_tokens(tokens_copy);
-		return;
-	}
+		return ;
 	exec_child(shell, &exec, cmd_pos);
 	cleanup_processes(&exec, shell, cmd_pos);
 	free_matrix(&exec.cmd);
@@ -169,4 +139,3 @@ void	exec_cmd(t_minishell *shell)
 	free(exec.pid);
 	free_tokens(tokens_copy);
 }
-
