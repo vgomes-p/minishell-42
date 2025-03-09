@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 21:17:40 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:32:35 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,51 +115,6 @@ typedef struct s_minishell
 /* GLOBAL VAR */
 extern t_minishell	*g_shell;
 
-/* CODES DIR */
-//free_all_0
-void		free_env(char **env);
-void		free_tokens(t_token *tokens);
-void		sfree(char **split);
-char		*free_ptr(char *ptr);
-void		sfree_int(int **fd);
-void		free_matrix(char ***matrix);
-
-//utils
-char		**dup_env(char **envp, size_t *envsz);
-void		handle_signal(int sig);
-
-/* MAIN DIR */
-//prompt.c
-void		welcome(void);
-void		ms_prompt(t_minishell *shell);
-
-/* TOKEN_AND_PARSE DIR */
-//token
-t_token		*mktoken(char *value, t_token_tp type);
-char		**ms_split_quotes(const char *input);
-t_token		*create_token_list(char **split, t_token *head);
-t_token		*tokening(char *input);
-//token_utils_0
-bool		process_quotes(const char *input, int *pos, bool *in_quotes,
-				char *quote_ch);
-char		**process_tokens(const char *input, char **tokens);
-char		*extract_token(const char *input, int *pos);
-t_token_tp	get_token_type(char *token, t_token *current, int is_first);
-//token_utils_1
-bool		is_quotes(char ch);
-bool		is_operator(char *str);
-void		cleanup_tokens(char **tokens, int token_cnt);
-int			count_tokens(t_token *tokens);
-char		*clean_token(const char *str, int len);
-//token_utils_2
-char		**tokens_matrix(t_token *token);
-t_token		*cpy_token_ls(t_token *tokens);
-void		addtoken_ls(t_token *list, t_token *new_token);
-//parse
-bool		valid_syntax(t_token *tokens);
-int			parser(t_token **head, char *str);
-//expand
-
 /* BUILDINS DIR */
 //bi_utils
 int			find_envar(const char *var, char **envp);
@@ -211,8 +166,56 @@ t_token		*get_next_cmd(t_token **tokens);
 void		cls_fd(int **fd);
 void		file_errmsg(t_minishell *shell, char *cmd);
 
-void		ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos);
-void		process_heredoc(t_minishell *shell, t_token *token);
-char		*expand_var(t_minishell *shell, char *str);
+/* MAIN DIR */
+//prompt.c
+void		welcome(void);
+void		ms_prompt(t_minishell *shell);
 
+/* REDIR DIR */
+//redirects
+void		ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos);
+//heredoc
+void		process_heredoc(t_minishell *shell, t_token *token);
+
+/* TOKEN_AND_PARSE DIR */
+//token
+t_token		*mktoken(char *value, t_token_tp type);
+char		**ms_split_quotes(const char *input);
+t_token		*create_token_list(char **split, t_token *head);
+t_token		*tokening(char *input);
+//token_utils_0
+bool		process_quotes(const char *input, int *pos, bool *in_quotes,
+	char *quote_ch);
+	char		**process_tokens(const char *input, char **tokens);
+	char		*extract_token(const char *input, int *pos);
+	t_token_tp	get_token_type(char *token, t_token *current, int is_first);
+	//token_utils_1
+	bool		is_quotes(char ch);
+	bool		is_operator(char *str);
+	void		cleanup_tokens(char **tokens, int token_cnt);
+	int			count_tokens(t_token *tokens);
+	char		*clean_token(const char *str, int len);
+	//token_utils_2
+	char		**tokens_matrix(t_token *token);
+	t_token		*cpy_token_ls(t_token *tokens);
+	void		addtoken_ls(t_token *list, t_token *new_token);
+	//parse
+	bool		valid_syntax(t_token *tokens);
+	int			parser(t_token **head, char *str);
+	//expand
+	char		*expand_var(t_minishell *shell, char *str);
+	
+	/* UTILS DIR */
+	//free_all_0
+	void		free_env(char **env);
+	void		free_tokens(t_token *tokens);
+	void		sfree(char **split);
+	char		*free_ptr(char *ptr);
+	void		sfree_int(int **fd);
+	void		free_matrix(char ***matrix);
+	
+	//utils
+	char		**dup_env(char **envp, size_t *envsz);
+	void		handle_signal(int sig);
+	
 #endif
