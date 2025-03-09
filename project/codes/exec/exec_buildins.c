@@ -6,25 +6,24 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 21:27:03 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:07:36 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
+static void	restore_std_fds(int stdin_backup, int stdout_backup)
 {
-	char	**args;
-	int		ret;
-	int		stdin_backup;
-	int		stdout_backup;
+	dup2(stdin_backup, STDIN_FILENO);
+	dup2(stdout_backup, STDOUT_FILENO);
+	close(stdin_backup);
+	close(stdout_backup);
+}
 
-	stdin_backup = dup(STDIN_FILENO);
-	stdout_backup = dup(STDOUT_FILENO);
-	args = prepare_args(tokens);
-	if (!args)
-		return (-1);
-	ms_redirs(shell, tokens, fd, pos);
+static int	handle_builtin_command(char **args, t_minishell *shell)
+{
+	int	ret;
+
 	ret = 1;
 	if (lms_strcmp(args[0], "cd") == 0)
 	{
@@ -43,7 +42,15 @@ int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
 	}
 	else if (lms_strcmp(args[0], "exit") == 0)
 		ms_exit(args, shell);
-	else if (lms_strcmp(args[0], "pwd") == 0)
+	return (ret);
+}
+
+static int	handle_more_builtins(char **args, t_minishell *shell)
+{
+	int	ret;
+
+	ret = 1;
+	if (lms_strcmp(args[0], "pwd") == 0)
 	{
 		ms_pwd(shell);
 		shell->exit_stt = shell->error_code;
@@ -61,10 +68,28 @@ int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
 	}
 	else
 		ret = 0;
-	dup2(stdin_backup, STDIN_FILENO);
-	dup2(stdout_backup, STDOUT_FILENO);
-	close(stdin_backup);
-	close(stdout_backup);
+	return (ret);
+}
+
+int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
+{
+	char	**args;
+	int		ret;
+	int		stdin_backup;
+	int		stdout_backup;
+
+	stdin_backup = dup(STDIN_FILENO);
+	stdout_backup = dup(STDOUT_FILENO);
+	args = prepare_args(tokens);
+	if (!args)
+		return (-1);
+	ms_redirs(shell, tokens, fd, pos);
+	if (lms_strcmp(args[0], "cd") == 0 || lms_strcmp(args[0], "echo") == 0
+		|| lms_strcmp(args[0], "env") == 0 || lms_strcmp(args[0], "exit") == 0)
+		ret = handle_builtin_command(args, shell);
+	else
+		ret = handle_more_builtins(args, shell);
+	restore_std_fds(stdin_backup, stdout_backup);
 	free_matrix(&args);
 	return (ret);
 }

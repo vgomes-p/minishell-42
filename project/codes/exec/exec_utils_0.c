@@ -6,68 +6,49 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 21:38:18 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:23:41 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-int	is_buildin(char *token)
+static int	count_args(t_token *tokens)
 {
-	char	**ls;
-	int		pos;
-
-	ls = ft_calloc(8, sizeof(char *));
-	if (!ls)
-		return (-1);
-	ls[0] = ft_strdup("echo");
-	ls[1] = ft_strdup("cd");
-	ls[2] = ft_strdup("pwd");
-	ls[3] = ft_strdup("export");
-	ls[4] = ft_strdup("unset");
-	ls[5] = ft_strdup("env");
-	ls[6] = ft_strdup("exit");
-	ls[7] = NULL;
-	pos = -1;
-	while (ls[++pos])
-	{
-		if (!ft_strncmp(token, ls[pos], ft_strlen(token)))
-		{
-			free_matrix(&ls);
-			return (1);
-		}
-	}
-	free_matrix(&ls);
-	return (0);
-}
-
-char	**prepare_args(t_token *tokens)
-{
-	char	**args;
+	t_token	*current;
 	int		arg_count;
-	int		arg_pos;
-	t_token *current;
 
 	arg_count = 0;
-	arg_pos = 0;
 	if (!tokens)
-		return (NULL);
-
+		return (0);
 	current = tokens;
 	while (current)
 	{
 		if (current->type == CMD || current->type == ARG)
 			arg_count++;
-		// Pular o próximo token se for um redirecionamento
-		if (current->type == REDIR_IN || current->type == REDIR_OUT ||
-			current->type == REDIR_APPEND || current->type == HEREDOC)
-			current = current->next; // Pular o valor do redirecionamento
+		if (is_redir(current))
+			current = current->next;
 		if (current)
 			current = current->next;
 	}
-	args = malloc(sizeof(char *) * (arg_count + 1));
-	if (!args)
+	return (arg_count);
+}
+
+static char	**allocate_args_array(int arg_count)
+{
+	char	**args;
+
+	if (arg_count <= 0)
 		return (NULL);
+	args = malloc(sizeof(char *) * (arg_count + 1));
+	return (args);
+}
+
+static int	fill_args_array(char **args, t_token *tokens, int arg_count)
+{
+	t_token	*current;
+	int		arg_pos;
+
+	arg_pos = 0;
 	current = tokens;
 	while (current && arg_pos < arg_count)
 	{
@@ -75,38 +56,35 @@ char	**prepare_args(t_token *tokens)
 		{
 			args[arg_pos] = ft_strdup(current->value);
 			if (!args[arg_pos])
-			{
-				free_matrix(&args);
-				return (NULL);
-			}
+				return (0);
 			arg_pos++;
 		}
-		if (current->type == REDIR_IN || current->type == REDIR_OUT ||
-			current->type == REDIR_APPEND || current->type == HEREDOC)
+		if (is_redir(current))
 			current = current->next;
 		if (current)
 			current = current->next;
 	}
 	args[arg_pos] = NULL;
-	return (args);
+	return (1);
 }
 
-int	is_dir(t_minishell *shell, char *cmd)
+char	**prepare_args(t_token *tokens)
 {
-	struct stat	file_info;
+	char	**args;
+	int		arg_count;
 
-	(void)shell;
-	if (stat(cmd, &file_info) != 0)
-		return (-1);
-	if (S_ISDIR(file_info.st_mode))
+	if (!tokens)
+		return (NULL);
+	arg_count = count_args(tokens);
+	args = allocate_args_array(arg_count);
+	if (!args)
+		return (NULL);
+	if (!fill_args_array(args, tokens, arg_count))
 	{
-		ft_putstr_fd(RED, 2);
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": is a directory\n" RESET, 2);
-		shell->error_code = 126;
-		return (1);
+		free_matrix(&args);
+		return (NULL);
 	}
-	return (0);
+	return (args);
 }
 
 void	cls_fd(int **fd)
