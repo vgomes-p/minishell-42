@@ -6,24 +6,16 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:25:59 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 18:51:01 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:40:20 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-char	**tokens_matrix(t_token *token)
+static int	alloc_token_str(char **ret, t_token *token, int cnt)
 {
-	int		cnt;
-	int		pos;
-	char	**ret;
+	int	pos;
 
-	if (!token)
-		return (NULL);
-	cnt = count_tokens(token);
-	ret = ft_calloc((cnt + 1), sizeof(char *));
-	if (!ret)
-		return (NULL);
 	pos = 0;
 	while (pos < cnt)
 	{
@@ -33,12 +25,28 @@ char	**tokens_matrix(t_token *token)
 			while (--pos >= 0)
 				free(ret[pos]);
 			free(ret);
-			return (NULL);
+			return (0);
 		}
 		token = token->next;
 		pos++;
 	}
 	ret[pos] = NULL;
+	return (1);
+}
+
+char	**tokens_matrix(t_token *token)
+{
+	int		cnt;
+	char	**ret;
+
+	if (!token)
+		return (NULL);
+	cnt = count_tokens(token);
+	ret = ft_calloc((cnt + 1), sizeof(char *));
+	if (!ret)
+		return (NULL);
+	if (!alloc_token_str(ret, token, cnt))
+		return (NULL);
 	return (ret);
 }
 

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 20:45:14 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:01:24 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ static char	*pathedprompt(t_minishell *shell)
 	return (prompt);
 }
 
-void	welcome(void)
-{
-	lms_putstr(CYAN "╔═════════════════════════════════════");
-	lms_putstr("═════════════════════════════════════════╗\n");
-	lms_putstr("║                            WELCOME T");
-	lms_putstr("O MINISHELL                              ║\n");
-	lms_putstr("╚══════════════════════════════════════");
-	lms_putstr("════════════════════════════════════════╝" RESET "\n");
-}
-
 static void	handle_input(t_minishell *shell, char **input)
 {
 	char	*prompt;
@@ -79,16 +69,14 @@ static void	handle_input(t_minishell *shell, char **input)
 	add_history(*input);
 }
 
-static void	process_command(char *input, t_minishell *shell)
+static int	pre_process_tks(char *input, t_minishell *shell)
 {
-	t_token	*current;
-	
 	shell->tokens = tokening(input);
 	if (!shell->tokens)
 	{
 		ft_putstr_fd(RED "Error: Tokenination has failed\n" RESET, 2);
 		free(input);
-		return ;
+		return (0);
 	}
 	if (!valid_syntax(shell->tokens))
 	{
@@ -96,8 +84,17 @@ static void	process_command(char *input, t_minishell *shell)
 		free_tokens(shell->tokens);
 		shell->tokens = NULL;
 		free(input);
-		return ;
+		return (0);
 	}
+	return (1);
+}
+
+static void	process_command(char *input, t_minishell *shell)
+{
+	t_token	*current;
+
+	if (!pre_process_tks(input, shell))
+		return ;
 	current = shell->tokens;
 	while (current)
 	{
