@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 03:15:52 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:17:40 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
 void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
 void		exec_cmd(t_minishell *shell);
 //exec_buildins
-int			exec_builtin(t_token *tokens, t_minishell *shell);
+int		exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos);
 //exec_utils_0
 int			is_buildin(char *token);
 char		**prepare_args(t_token *tokens);
@@ -210,5 +210,9 @@ void		child(t_minishell *shell, char **cmd, int **fd, int pos);
 t_token		*get_next_cmd(t_token **tokens);
 void		cls_fd(int **fd);
 void		file_errmsg(t_minishell *shell, char *cmd);
+
+void		ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos);
+void		process_heredoc(t_minishell *shell, t_token *token);
+char		*expand_var(t_minishell *shell, char *str);
 
 #endif

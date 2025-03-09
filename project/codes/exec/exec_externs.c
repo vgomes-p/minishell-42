@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 19:38:07 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:29:48 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 		return (-1);
 	if (is_buildin(cmd[0]))
 	{
-		exec_builtin(shell->tokens, shell);
+		exec_builtin(shell->tokens, shell, fd, 0);
 		sfree_int(fd);
 		fd = NULL;
 		return (0);
@@ -94,7 +94,7 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 		exec->cmd = tokens_matrix(cmd_tokens);
 		if (is_buildin(exec->cmd[0]))
 		{
-			exec_builtin(cmd_tokens, shell);
+			exec_builtin(cmd_tokens, shell, exec->fd, 0);
 			free_matrix(&exec->cmd);
 			free_tokens(cmd_tokens);
 			continue ;
@@ -111,6 +111,7 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 {
 	int	pros_pos;
 
+	(void)cmd_pos;
 	cls_fd(exec->fd);
 	pros_pos = -1;
 	while (exec->fd[++pros_pos])
@@ -120,8 +121,10 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 	pros_pos = -1;
 	while (++pros_pos < exec->nbr_pros)
 		waitpid(exec->pid[pros_pos], &exec->stts, 0);
-	if (WIFEXITED(exec->stts) && cmd_pos != exec->nbr_pros)
-		shell->error_code = WEXITSTATUS(exec->stts);
+	if (WIFEXITED(exec->stts))
+		shell->exit_stt = WEXITSTATUS(exec->stts); // Atualizar exit_stt
+	else if (WIFSIGNALED(exec->stts))
+		shell->exit_stt = 128 + WTERMSIG(exec->stts); // Para sinais como SIGINT
 	free(exec->pid);
 }
 
@@ -143,7 +146,7 @@ void	exec_cmd(t_minishell *shell)
 	}
 	if (is_buildin(exec.cmd[0]))
 	{
-		exec_builtin(shell->tokens, shell);
+		exec_builtin(shell->tokens, shell, exec.fd, 0);
 		free_matrix(&exec.cmd);
 		sfree_int(exec.fd);
 		free_tokens(tokens_copy);
