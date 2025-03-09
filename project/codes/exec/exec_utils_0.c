@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:41:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/08 19:35:22 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:38:18 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,48 @@ int	is_buildin(char *token)
 char	**prepare_args(t_token *tokens)
 {
 	char	**args;
+	int		arg_count;
 	int		arg_pos;
-	t_token	*current;
+	t_token *current;
 
+	arg_count = 0;
+	arg_pos = 0;
 	if (!tokens)
 		return (NULL);
-	args = malloc(sizeof(char *) * (count_tokens(tokens) + 1));
+
+	current = tokens;
+	while (current)
+	{
+		if (current->type == CMD || current->type == ARG)
+			arg_count++;
+		// Pular o próximo token se for um redirecionamento
+		if (current->type == REDIR_IN || current->type == REDIR_OUT ||
+			current->type == REDIR_APPEND || current->type == HEREDOC)
+			current = current->next; // Pular o valor do redirecionamento
+		if (current)
+			current = current->next;
+	}
+	args = malloc(sizeof(char *) * (arg_count + 1));
 	if (!args)
 		return (NULL);
 	current = tokens;
-	arg_pos = 0;
-	while (current)
+	while (current && arg_pos < arg_count)
 	{
-		args[arg_pos] = ft_strdup(current->value);
-		if (!args[arg_pos])
+		if (current->type == CMD || current->type == ARG)
 		{
-			free_matrix(&args);
-			return (NULL);
+			args[arg_pos] = ft_strdup(current->value);
+			if (!args[arg_pos])
+			{
+				free_matrix(&args);
+				return (NULL);
+			}
+			arg_pos++;
 		}
-		arg_pos++;
-		current = current->next;
+		if (current->type == REDIR_IN || current->type == REDIR_OUT ||
+			current->type == REDIR_APPEND || current->type == HEREDOC)
+			current = current->next;
+		if (current)
+			current = current->next;
 	}
 	args[arg_pos] = NULL;
 	return (args);
