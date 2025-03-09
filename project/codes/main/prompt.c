@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/20 17:58:28 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:45:14 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ static void	handle_input(t_minishell *shell, char **input)
 
 static void	process_command(char *input, t_minishell *shell)
 {
+	t_token	*current;
+	
 	shell->tokens = tokening(input);
 	if (!shell->tokens)
 	{
@@ -95,6 +97,13 @@ static void	process_command(char *input, t_minishell *shell)
 		shell->tokens = NULL;
 		free(input);
 		return ;
+	}
+	current = shell->tokens;
+	while (current)
+	{
+		if (current->type == CMD || current->type == ARG)
+			current->value = expand_var(shell, current->value);
+		current = current->next;
 	}
 	exec_cmd(shell);
 	free_tokens(shell->tokens);

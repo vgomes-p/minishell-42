@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:28:41 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 19:27:49 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/08 20:52:00 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	exec_extern(char **cmd, char **envp)
 		ft_putstr_fd(RED "Command " ORANGE, 2);
 		ft_putstr_fd(cmd[0], 2);
 		ft_putstr_fd(RED " was not found\n" RESET, 2);
-		sfree(cmd);
-		cmd = NULL;
+		free_matrix(&cmd);;
 		exit(127);
 	}
 	execve(path, cmd, envp);
@@ -44,7 +43,7 @@ void	clean_child_res(t_minishell *shell, char **cmd, int **fd, int code)
 	int	pos;
 
 	shell->error_code = code;
-	sfree(cmd);
+	free_matrix(&cmd);
 	cmd = NULL;
 	pos = 0;
 	if (fd)
@@ -101,20 +100,12 @@ void	handle_invalid_file(t_minishell *shell)
 
 void	child(t_minishell *shell, char **cmd, int **fd, int pos)
 {
-	int	in;
-	int	out;
-
-	in = 0;
-	out = 0;
 	if (!cmd || *cmd == NULL)
 	{
 		handle_invalid_file(shell);
 		clean_child_res(shell, NULL, fd, shell->error_code);
 	}
-	if (pos && !in)
-		dup2(fd[pos -1][0], 0);
-	if (fd[pos] && !out)
-		dup2(fd[pos][1], 1);
+	ms_redirs(shell, shell->tokens, fd, pos);
 	cls_fd(fd);
 	exec_extern(cmd, shell->env);
 	clean_child_res(shell, cmd, fd, shell->error_code);
