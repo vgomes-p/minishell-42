@@ -350,7 +350,7 @@ cd
 echo $OLDPWD
 ```
 ```bash
-echo $PWD
+pwd
 ```
 
 ## <<< TEST SUITE 12 || pwd >>>

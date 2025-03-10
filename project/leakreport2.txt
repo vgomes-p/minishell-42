@@ -1,0 +1,669 @@
+==1703== Memcheck, a memory error detector
+==1703== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==1703== Using Valgrind-3.18.1 and LibVEX; rerun with -h for copyright info
+==1703== Command: ./minishell
+==1703== Parent PID: 1702
+==1703== 
+==1703== Invalid read of size 8
+==1703==    at 0x109701: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FF1: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b566c0 is 0 bytes inside a block of size 104 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109714: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109F82: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109E61: ms_split_quotes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FA4: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid read of size 8
+==1703==    at 0x1096DE: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FF1: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b566c0 is 0 bytes inside a block of size 104 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109714: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109F82: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109E61: ms_split_quotes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FA4: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid free() / delete / delete[] / realloc()
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x1096E8: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FF1: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b56770 is 0 bytes inside a block of size 3 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x1096E8: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109F82: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10A536: clean_token (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A295: extract_token (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A185: process_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109E86: ms_split_quotes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FA4: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid free() / delete / delete[] / realloc()
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109714: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FF1: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b566c0 is 0 bytes inside a block of size 104 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109714: sfree (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109F82: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109E61: ms_split_quotes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FA4: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid free() / delete / delete[] / realloc()
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10D355: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b58020 is 0 bytes inside a block of size 8 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10D0E4: cleanup_processes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D32D: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10C772: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid read of size 8
+==1703==    at 0x109674: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D361: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b57870 is 16 bytes inside a block of size 32 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109696: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10C88A: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid read of size 8
+==1703==    at 0x109680: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D361: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b57860 is 0 bytes inside a block of size 32 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109696: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10C88A: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid free() / delete / delete[] / realloc()
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10968A: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D361: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b578c0 is 0 bytes inside a block of size 3 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10968A: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10C88A: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109DE3: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== Invalid free() / delete / delete[] / realloc()
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109696: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D361: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x4b57860 is 0 bytes inside a block of size 32 free'd
+==1703==    at 0x484B27F: free (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109696: free_tokens (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10C88A: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Block was alloc'd at
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1710== 
+==1710== HEAP SUMMARY:
+==1710==     in use at exit: 214,717 bytes in 309 blocks
+==1710==   total heap usage: 976 allocs, 708 frees, 323,371 bytes allocated
+==1710== 
+==1710== 2 bytes in 1 blocks are still reachable in loss record 2 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109DE3: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109F03: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 8 bytes in 1 blocks are still reachable in loss record 4 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109DE3: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 8 bytes in 1 blocks are still reachable in loss record 5 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CD76: allocate_pipes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CF26: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 8 bytes in 1 blocks are still reachable in loss record 6 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10C772: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 13 bytes in 3 blocks are still reachable in loss record 12 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A608: alloc_token_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A711: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 16 bytes in 1 blocks are still reachable in loss record 15 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CD27: allocate_pipes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CF26: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 32 bytes in 1 blocks are still reachable in loss record 22 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 32 bytes in 1 blocks are still reachable in loss record 23 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A6E9: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 43 bytes in 12 blocks are indirectly lost in loss record 24 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A608: alloc_token_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A711: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 96 bytes in 3 blocks are still reachable in loss record 35 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109F03: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 155 (112 direct, 43 indirect) bytes in 2 blocks are definitely lost in loss record 39 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10A6E9: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 312 bytes in 1 blocks are still reachable in loss record 44 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x1095D0: dup_env (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109907: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 2,057 bytes in 2 blocks are still reachable in loss record 60 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10ABB2: expand_var (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109C8B: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== 3,043 bytes in 38 blocks are still reachable in loss record 62 of 87
+==1710==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1710==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x1094C0: dup_env_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x1095F9: dup_env (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710==    by 0x109907: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1710== 
+==1710== LEAK SUMMARY:
+==1710==    definitely lost: 112 bytes in 2 blocks
+==1710==    indirectly lost: 43 bytes in 12 blocks
+==1710==      possibly lost: 0 bytes in 0 blocks
+==1710==    still reachable: 5,627 bytes in 54 blocks
+==1710==         suppressed: 208,935 bytes in 241 blocks
+==1710== 
+==1710== For lists of detected and suppressed errors, rerun with: -s
+==1710== ERROR SUMMARY: 109 errors from 10 contexts (suppressed: 0 from 0)
+==1721== 
+==1721== HEAP SUMMARY:
+==1721==     in use at exit: 213,792 bytes in 318 blocks
+==1721==   total heap usage: 1,134 allocs, 871 frees, 339,051 bytes allocated
+==1721== 
+==1721== 4 bytes in 1 blocks are still reachable in loss record 2 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10C772: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 8 bytes in 1 blocks are still reachable in loss record 4 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10CD27: allocate_pipes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10CF26: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 10 bytes in 1 blocks are still reachable in loss record 7 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109DE3: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 10 bytes in 1 blocks are still reachable in loss record 8 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A608: alloc_token_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A711: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 16 bytes in 1 blocks are still reachable in loss record 14 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A6E9: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 32 bytes in 1 blocks are still reachable in loss record 21 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109F03: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 32 bytes in 1 blocks are still reachable in loss record 22 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 71 bytes in 20 blocks are indirectly lost in loss record 27 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A608: alloc_token_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A711: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 263 (192 direct, 71 indirect) bytes in 4 blocks are definitely lost in loss record 41 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10A6E9: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 312 bytes in 1 blocks are still reachable in loss record 42 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x1095D0: dup_env (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109907: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 1,033 bytes in 1 blocks are still reachable in loss record 55 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10ABB2: expand_var (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109C8B: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== 3,043 bytes in 38 blocks are still reachable in loss record 60 of 85
+==1721==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1721==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x1094C0: dup_env_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x1095F9: dup_env (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721==    by 0x109907: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1721== 
+==1721== LEAK SUMMARY:
+==1721==    definitely lost: 192 bytes in 4 blocks
+==1721==    indirectly lost: 71 bytes in 20 blocks
+==1721==      possibly lost: 0 bytes in 0 blocks
+==1721==    still reachable: 4,500 bytes in 47 blocks
+==1721==         suppressed: 209,029 bytes in 247 blocks
+==1721== 
+==1721== For lists of detected and suppressed errors, rerun with: -s
+==1721== ERROR SUMMARY: 141 errors from 10 contexts (suppressed: 0 from 0)
+==1703== Invalid read of size 8
+==1703==    at 0x10C7D0: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  Address 0x0 is not stack'd, malloc'd or (recently) free'd
+==1703== 
+==1703== 
+==1703== Process terminating with default action of signal 11 (SIGSEGV)
+==1703==  Access not within mapped region at address 0x0
+==1703==    at 0x10C7D0: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==  If you believe this happened as a result of a stack
+==1703==  overflow in your program's main thread (unlikely but
+==1703==  possible), you can try to increase the size of the
+==1703==  main thread stack using the --main-stacksize= flag.
+==1703==  The main thread stack size used in this run was 8388608.
+==1703== 
+==1703== HEAP SUMMARY:
+==1703==     in use at exit: 221,281 bytes in 371 blocks
+==1703==   total heap usage: 1,275 allocs, 981 frees, 368,728 bytes allocated
+==1703== 
+==1703== 2 bytes in 1 blocks are still reachable in loss record 1 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109DE3: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109F03: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 3 bytes in 1 blocks are still reachable in loss record 3 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109DE3: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 5 bytes in 2 blocks are still reachable in loss record 5 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A608: alloc_token_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A711: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 8 bytes in 1 blocks are still reachable in loss record 9 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CD76: allocate_pipes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CF26: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 8 bytes in 1 blocks are still reachable in loss record 10 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10C772: exec_child (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D317: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 16 bytes in 1 blocks are still reachable in loss record 20 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CD27: allocate_pipes (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CF26: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 24 bytes in 1 blocks are still reachable in loss record 26 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A6E9: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 32 bytes in 1 blocks are still reachable in loss record 31 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A76D: cpy_token_ls (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D255: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 64 bytes in 2 blocks are still reachable in loss record 39 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x109DC5: mktoken (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109F03: create_token_list (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109FC7: tokening (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109B84: pre_process_tks (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C48: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 107 bytes in 25 blocks are indirectly lost in loss record 47 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A608: alloc_token_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A711: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 312 bytes in 1 blocks are still reachable in loss record 62 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x1095D0: dup_env (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109907: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 363 (256 direct, 107 indirect) bytes in 7 blocks are definitely lost in loss record 64 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10A6E9: tokens_matrix (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10CE8E: init_exec (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10D273: exec_cmd (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109CB1: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 1,026 bytes in 1 blocks are still reachable in loss record 79 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E35E: ft_calloc (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10ABB2: expand_var (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109C8B: process_command (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109D2C: ms_prompt (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x10995E: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== 3,043 bytes in 38 blocks are still reachable in loss record 86 of 111
+==1703==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==1703==    by 0x10E3B1: ft_strdup (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x1094C0: dup_env_str (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x1095F9: dup_env (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703==    by 0x109907: main (in /mnt/c/Users/vinie/Documents/codes/repository/42/MINISHELL/main/project/minishell)
+==1703== 
+==1703== LEAK SUMMARY:
+==1703==    definitely lost: 256 bytes in 7 blocks
+==1703==    indirectly lost: 107 bytes in 25 blocks
+==1703==      possibly lost: 0 bytes in 0 blocks
+==1703==    still reachable: 4,543 bytes in 51 blocks
+==1703==         suppressed: 216,375 bytes in 288 blocks
+==1703== 
+==1703== For lists of detected and suppressed errors, rerun with: -s
+==1703== ERROR SUMMARY: 189 errors from 11 contexts (suppressed: 0 from 0)
