@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
+#    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/09 17:43:00 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/10 16:11:16 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -137,8 +137,17 @@ $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
 			@echo "\n$(GREEN)✅ Execution completed! ✅$(RESET)\n"
 			@sleep 0.5
 			@echo "$(CYAN)🎉 Minishell created 🎉\n"
-			@sleep 2
-			@echo "$(RECYAN)NOTE:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET),\nleakreport by calling $(YELLOW)make val$(RESET), norminette_report by calling\n$(YELLOW)make norm$(RESET) or both with $(YELLOW)normival$(RESET) and entry\ndebug mode by calling $(YELLOW)make debug$(RESET)!\n\n"
+			@sleep 1
+			@echo "$(RECYAN)FYI:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET)"
+			@echo "if you want to see a leak report call $(YELLOW)make val$(RESET) to create $(YELLOW)leakreport.txt$(RESET)"
+			@echo "to check norminette, call $(YELLOW)make norm$(RESET) and see $(YELLOW)norminette.txt$(RESET)"
+			@echo "and to check both, valgrind and norminette, call $(YELLOW)normival$(RESET) and see both files created."
+			@echo "You can entry the debug mode by calling $(YELLOW)make debug$(RESET)!\n\n"
+			@sleep 1
+			@echo "$(GREEN)Check github.com/vgomes-p/minishell-42/tree/main/project for a few tests for Minishell$(RESET)\n\n"
+			@sleep 1
+			@echo "$(YELLOW)Now you can run $(CYAN)./minishell$(RESET)\n\n"
+
 
 $(LIBFT):
 			@make -C $(LIBFT_DIR)
@@ -151,8 +160,8 @@ val: $(NAME)
 			@echo "\n$(REWHITE)Leak report updated in leakreport.txt!$(RESET)\n"
 
 norm:
-			-@norminette > norminette_report.txt 2>&1
-			@echo "$(REWHITE)Norminette report saved in norminette_report.txt!$(RESET)"
+			-@norminette > norminette.txt 2>&1
+			@echo "$(REWHITE)Norminette report saved in norminette.txt!$(RESET)"
 
 normival: val norm
 
