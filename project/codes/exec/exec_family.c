@@ -65,6 +65,8 @@ void	child(t_minishell *shell, char **cmd, int **fd, int pos)
 		clean_child_res(shell, NULL, fd, shell->error_code);
 	}
 	ms_redirs(shell, shell->tokens, fd, pos);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	cls_fd(fd);
 	exec_extern(cmd, shell->env);
 	clean_child_res(shell, cmd, fd, shell->error_code);

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/09 17:07:36 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:34:03 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
 	if (!args)
 		return (-1);
 	ms_redirs(shell, tokens, fd, pos);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	if (lms_strcmp(args[0], "cd") == 0 || lms_strcmp(args[0], "echo") == 0
 		|| lms_strcmp(args[0], "env") == 0 || lms_strcmp(args[0], "exit") == 0)
 		ret = handle_builtin_command(args, shell);

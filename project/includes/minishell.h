@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/09 20:44:57 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:31:55 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,6 @@ void		free_env(char **env);
 
 //utils
 char		**dup_env(char **envp, size_t *envsz);
-void		handle_signal(int sig);
+void		interactive_signal_handler(int sig);
 
 #endif
