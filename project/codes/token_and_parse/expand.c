@@ -6,20 +6,11 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/09 17:37:12 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:18:25 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	handle_quoted_part(char *str, char *result, int *ind0, int *ind1)
-{
-	result[(*ind1)++] = str[(*ind0)++];
-	while (str[*ind0] && str[*ind0] != '\'')
-		result[(*ind1)++] = str[(*ind0)++];
-	if (str[*ind0])
-		result[(*ind1)++] = str[(*ind0)++];
-}
 
 static char	*extract_var_name(char *str, int *ind0)
 {
@@ -76,26 +67,51 @@ static void	handle_var(t_minishell *shell, char *str, char *result,
 	free(var_value);
 }
 
-char	*expand_var(t_minishell *shell, char *str)
+static char	*expand_inside(t_minishell *shell, char *str)
 {
 	char	*result;
-	int		indices[2];
+	int		index[2];
 
-	indices[0] = 0;
-	indices[1] = 0;
+	index[0] = 0;
+	index[1] = 0;
 	result = ft_calloc(ft_strlen(str) + 1024, sizeof(char));
 	if (!result)
 		return (str);
-	while (str[indices[0]])
+	while (str[index[0]])
 	{
-		if (str[indices[0]] == '\'' && !strchr(&str[indices[0] + 1], '\''))
-			handle_quoted_part(str, result, &indices[0], &indices[1]);
-		else if (str[indices[0]] == '$' && str[indices[0] + 1]
-			&& str[indices[0] + 1] != ' ')
-			handle_var(shell, str, result, indices);
+		if (str[index[0]] == '$' && str[index[0] + 1]
+			&& str[index[0] + 1] != ' ')
+			handle_var(shell, str, result, index);
 		else
-			result[indices[1]++] = str[indices[0]++];
+			result[index[1]++] = str[index[0]++];
 	}
 	free(str);
 	return (result);
+}
+
+char	*expand_var(t_minishell *shell, char *token)
+{
+	char	*result;
+	char	*inside;
+
+	if (token[0] == '\'' && token[ft_strlen(token) - 1] == '\'')
+	{
+		result = ft_substr(token, 1, ft_strlen(token) - 2);
+		free(token);
+		return (result);
+	}
+	else if (token[0] == '"' && token[ft_strlen(token) - 1] == '"')
+	{
+		inside = ft_substr(token, 1, ft_strlen(token) - 2);
+		free(token);
+		result = expand_inside(shell, inside);
+		free(inside);
+		return (result);
+	}
+	else
+	{
+		result = expand_inside(shell, token);
+		free(token);
+		return (result);
+	}
 }
