@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils_0.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:19:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/14 15:25:34 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:46:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*extract_token(const char *input, int *pos)
 	quote_ch = '\0';
 	if (!process_quotes(input, pos, &in_quotes, &quote_ch))
 		return (NULL);
-	return (clean_token(&input[start], *pos - start));
+	return (ft_substr(input, start, *pos - start));
 }
 
 t_token_tp	get_token_type(char *token, t_token *current, int is_first)
