@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/12 17:18:25 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:46:30 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,18 @@ static char	*extract_var_name(char *str, int *ind0)
 	char	*var_name;
 
 	var_start = &str[*ind0];
-	while (str[*ind0] && (ft_isalnum(str[*ind0]) || str[*ind0] == '_'))
+	if (str[*ind0] == '?')
+	{
 		(*ind0)++;
-	var_end = &str[*ind0];
-	var_name = ft_substr(var_start, 0, var_end - var_start);
+		var_name = ft_strdup("?");
+	}
+	else
+	{
+		while (str[*ind0] && (ft_isalnum(str[*ind0]) || str[*ind0] == '_'))
+			(*ind0)++;
+		var_end = &str[*ind0];
+		var_name = ft_substr(var_start, 0, var_end - var_start);
+	}
 	return (var_name);
 }
 
