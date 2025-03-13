@@ -41,7 +41,12 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 	while (++pos < exec->nbr_pros)
 	{
 		cmd_tokens = get_next_cmd(&current_tokens);
-		exec->cmd = tokens_matrix(cmd_tokens);
+		exec->cmd = prepare_args(cmd_tokens);
+		if (!exec->cmd)
+		{
+			free_tokens(cmd_tokens);
+			continue;
+		}
 		if (is_buildin(exec->cmd[0]))
 		{
 			exec_builtin(cmd_tokens, shell, exec->fd, 0);
