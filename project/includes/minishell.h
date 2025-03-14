@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/11 16:31:55 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/14 17:57:50 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,8 +203,9 @@ char		**tokens_matrix(t_token *token);
 t_token		*cpy_token_ls(t_token *tokens);
 void		addtoken_ls(t_token *list, t_token *new_token);
 //parse
-bool		valid_syntax(t_token *tokens);
 int			parser(t_token **head, char *str);
+//syntax
+bool		valid_syntax(t_token *tokens);
 //expand
 char		*expand_var(t_minishell *shell, char *str);
 
