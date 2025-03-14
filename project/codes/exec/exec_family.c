@@ -28,59 +28,106 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 	return (-1);
 }
 
-static int	handle_command(t_minishell *shell, t_exec *exec,
-				t_token *cmd_tokens, int pos)
-{
-	exec->cmd = prepare_args(cmd_tokens);
-	if (!exec->cmd)
-	{
-		free_tokens(cmd_tokens);
-		return (1);
-	}
-	if (is_buildin(exec->cmd[0]))
-	{
-		exec_builtin(cmd_tokens, shell, exec->fd, 0);
-		free_matrix(&exec->cmd);
-		free_tokens(cmd_tokens);
-		return (1);
-	}
-	exec->pid[pos] = fork();
-	if (exec->pid[pos] == 0)
-		child(shell, exec->cmd, exec->fd, pos);
-	free_matrix(&exec->cmd);
-	free_tokens(cmd_tokens);
-	return (0);
-}
+// static int	handle_command(t_minishell *shell, t_exec *exec,
+// 				t_token *cmd_tokens, int pos)
+// {
+// 	exec->cmd = prepare_args(cmd_tokens);
+// 	if (!exec->cmd)
+// 	{
+// 		free_tokens(cmd_tokens);
+// 		return (1);
+// 	}
+// 	if (is_buildin(exec->cmd[0]))
+// 	{
+// 		exec_builtin(cmd_tokens, shell, exec->fd, 0);
+// 		free_matrix(&exec->cmd);
+// 		free_tokens(cmd_tokens);
+// 		return (1);
+// 	}
+// 	exec->pid[pos] = fork();
+// 	if (exec->pid[pos] == 0)
+// 		child(shell, exec->cmd, exec->fd, pos);
+// 	free_matrix(&exec->cmd);
+// 	free_tokens(cmd_tokens);
+// 	return (0);
+// }
 
 void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 {
-	t_token	*cmd_tokens;
-	t_token	*current_tokens;
+	t_token		*cmd_tokens;
+	t_cmd_exec	cmd_exec;
 
 	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
 	if (!exec->pid)
 		return ;
-	current_tokens = exec->tokens_head;
 	pos = -1;
 	while (++pos < exec->nbr_pros)
 	{
-		cmd_tokens = get_next_cmd(&current_tokens);
-		if (handle_command(shell, exec, cmd_tokens, pos) == 1)
+		cmd_tokens = get_next_cmd(&exec->tokens_head);
+		if (!cmd_tokens)
 			continue ;
+		exec->cmd = prepare_args(cmd_tokens);
+		if (!exec->cmd)
+		{
+			free_tokens(cmd_tokens);
+			continue ;
+		}
+		cmd_exec.cmd = exec->cmd;
+		cmd_exec.fd = exec->fd;
+		cmd_exec.pos = pos;
+		cmd_exec.cmd_tokens = cmd_tokens;
+		exec->pid[pos] = fork();
+		if (exec->pid[pos] == 0)
+			child(shell, &cmd_exec);
+		free_matrix(&exec->cmd);
+		free_tokens(cmd_tokens);
 	}
+	cls_fd(exec->fd);
 }
+// void	exec_child(t_minishell *shell, t_exec *exec, int pos)
+// {
+// 	t_token *cmd_tokens;
+// 	t_cmd_exec cmd_exec;
 
-void	child(t_minishell *shell, char **cmd, int **fd, int pos)
+// 	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
+// 	if (!exec->pid)
+// 		return ;
+// 	pos = -1;
+// 	while (++pos < exec->nbr_pros)
+// 	{
+// 		cmd_tokens = get_next_cmd(&exec->tokens_head);
+// 		if (!cmd_tokens)
+// 			continue;
+// 		exec->cmd = prepare_args(cmd_tokens);
+// 		if (!exec->cmd)
+// 		{
+// 			free_tokens(cmd_tokens);
+// 			continue;
+// 		}
+// 		cmd_exec.cmd = exec->cmd;
+// 		cmd_exec.fd = exec->fd;
+// 		cmd_exec.pos = pos;
+// 		cmd_exec.cmd_tokens = cmd_tokens;
+// 		exec->pid[pos] = fork();
+// 		if (exec->pid[pos] == 0)
+// 			child(shell, &cmd_exec);
+// 		free_matrix(&exec->cmd);
+// 		free_tokens(cmd_tokens);
+// 	}
+// 	cls_fd(exec->fd);
+// }
+
+void	child(t_minishell *shell, t_cmd_exec *exec)
 {
-	if (!cmd || *cmd == NULL)
+	if (!exec->cmd || *exec->cmd == NULL)
 	{
 		handle_invalid_file(shell);
-		clean_child_res(shell, NULL, fd, shell->error_code);
+		clean_child_res(shell, NULL, exec->fd, shell->error_code);
 	}
-	ms_redirs(shell, shell->tokens, fd, pos);
+	ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
-	cls_fd(fd);
-	exec_extern(cmd, shell->env);
-	clean_child_res(shell, cmd, fd, shell->error_code);
+	cls_fd(exec->fd);
+	exec_extern(exec->cmd, shell->env);
+	clean_child_res(shell, exec->cmd, exec->fd, shell->error_code);
 }
