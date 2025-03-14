@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+         #
+#    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/12 10:47:40 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/14 17:58:07 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,8 @@ MAIN_DIR		=	codes/main/
 TOKEN_PARSE_SRCS	=	token.c \
 						token_utils_0.c token_utils_1.c token_utils_2.c \
 						expand.c \
-						parse.c
+						parse.c \
+						syntax.c
 TOKEN_PARSE_DIR		=	codes/token_and_parse/
 
 BUILDIN_SRCS		=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
