@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/14 17:57:50 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/14 18:33:08 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,14 @@ typedef struct s_expand
 	int		i;
 }	t_expand;
 
+typedef struct s_cmd_exec
+{
+	char	**cmd;
+	int		**fd;
+	int		pos;
+	t_token	*cmd_tokens;
+}	t_cmd_exec;
+
 typedef struct s_minishell
 {
 	int		pid;
@@ -144,7 +152,7 @@ char		*find_exec_path(char *cmd, char **envp);
 //exec_family
 int			exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd);
 void		exec_child(t_minishell *shell, t_exec *exec, int pos);
-void		child(t_minishell *shell, char **cmd, int **fd, int pos);
+void		child(t_minishell *shell, t_cmd_exec *exec);
 //exec_externs
 t_exec		init_exec(t_minishell *shell, t_token *tokens);
 void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
