@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/09 17:01:24 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 17:43:02 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int	pre_process_tks(char *input, t_minishell *shell)
 	if (!shell->tokens)
 	{
 		ft_putstr_fd(RED "Error: Tokenination has failed\n" RESET, 2);
+		shell->exit_stt = 2;
 		free(input);
 		return (0);
 	}
@@ -83,6 +84,7 @@ static int	pre_process_tks(char *input, t_minishell *shell)
 		ft_putstr_fd(RED "Syntax error\n" RESET, 2);
 		free_tokens(shell->tokens);
 		shell->tokens = NULL;
+		shell->exit_stt = 2;
 		free(input);
 		return (0);
 	}

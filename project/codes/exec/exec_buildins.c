@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:17:33 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/11 16:34:03 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:00:32 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,31 @@ static int	handle_more_builtins(char **args, t_minishell *shell)
 	return (ret);
 }
 
+static char	**prepare_builtin(t_token *tokens, t_minishell *shell,
+				int **fd, int pos)
+{
+	char	**args;
+	int		stdin_backup;
+	int		stdout_backup;
+
+	stdin_backup = dup(STDIN_FILENO);
+	stdout_backup = dup(STDOUT_FILENO);
+	if (ms_redirs(shell, tokens, fd, pos) != 0)
+	{
+		restore_std_fds(stdin_backup, stdout_backup);
+		return (NULL);
+	}
+	args = prepare_args(tokens);
+	if (!args)
+	{
+		restore_std_fds(stdin_backup, stdout_backup);
+		return (NULL);
+	}
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	return (args);
+}
+
 int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
 {
 	char	**args;
@@ -80,12 +105,9 @@ int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
 
 	stdin_backup = dup(STDIN_FILENO);
 	stdout_backup = dup(STDOUT_FILENO);
-	args = prepare_args(tokens);
+	args = prepare_builtin(tokens, shell, fd, pos);
 	if (!args)
 		return (-1);
-	ms_redirs(shell, tokens, fd, pos);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	if (lms_strcmp(args[0], "cd") == 0 || lms_strcmp(args[0], "echo") == 0
 		|| lms_strcmp(args[0], "env") == 0 || lms_strcmp(args[0], "exit") == 0)
 		ret = handle_builtin_command(args, shell);

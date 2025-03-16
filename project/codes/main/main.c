@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:37 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/11 16:32:18 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:45:40 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int	main(int argc, char **argv, char **envp)
 	shell.env = dup_env(envp, &shell.env_size);
 	shell.prompt = NULL;
 	shell.exit_stt = 0;
+	shell.cancelled_cmd = 0;
 	g_shell = &shell;
 	signal(SIGINT, interactive_signal_handler);
 	signal(SIGQUIT, SIG_IGN);

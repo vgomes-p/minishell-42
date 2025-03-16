@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:14 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/09 17:30:24 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 19:03:27 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	pros_redirs(t_minishell *shell, t_token *current)
 		process_heredoc(shell, current);
 }
 
-void	ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos)
+int	ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos)
 {
 	t_token	*current;
 
@@ -68,11 +68,20 @@ void	ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos)
 		if ((current->type == REDIR_IN || current->type == REDIR_OUT
 				|| current->type == REDIR_APPEND || current->type == HEREDOC)
 			&& current->next)
-			pros_redirs(shell, current);
+		{
+			if (current->type == HEREDOC)
+			{
+				if (process_heredoc(shell, current) != 0)
+					return (1);
+			}
+			else
+				pros_redirs(shell, current);
+		}
 		current = current->next;
 	}
 	if (pos > 0)
 		dup2(fd[pos - 1][0], STDIN_FILENO);
 	if (fd[pos])
 		dup2(fd[pos][1], STDOUT_FILENO);
+	return (0);
 }

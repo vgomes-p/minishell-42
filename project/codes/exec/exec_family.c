@@ -89,6 +89,10 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 
 void	child(t_minishell *shell, t_cmd_exec *exec)
 {
+	if (ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos) != 0)
+	{
+		exit(0);
+	}
 	if (!exec->cmd || *exec->cmd == NULL)
 	{
 		handle_invalid_file(shell);
@@ -98,7 +102,6 @@ void	child(t_minishell *shell, t_cmd_exec *exec)
 		exec_builtin_in_child(shell, exec);
 	else
 	{
-		ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos);
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		cls_fd(exec->fd);

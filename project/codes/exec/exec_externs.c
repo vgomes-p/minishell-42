@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 16:42:13 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:49:30 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,14 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 	pros_pos = -1;
 	while (++pros_pos < exec->nbr_pros)
 		waitpid(exec->pid[pros_pos], &exec->stts, 0);
-	if (WIFEXITED(exec->stts))
-		shell->exit_stt = WEXITSTATUS(exec->stts);
-	else if (WIFSIGNALED(exec->stts))
-		shell->exit_stt = 128 + WTERMSIG(exec->stts);
+	if (!shell->cancelled_cmd)
+	{
+		if (WIFEXITED(exec->stts))
+			shell->exit_stt = WEXITSTATUS(exec->stts);
+		else if (WIFSIGNALED(exec->stts))
+			shell->exit_stt = 128 + WTERMSIG(exec->stts);
+	}
+	shell->cancelled_cmd = 0;
 	free(exec->pid);
 }
 

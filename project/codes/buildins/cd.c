@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:13:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 11:55:13 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:10:16 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ void	ms_cd(char **args, t_minishell *shell)
 	if (!oldpwd)
 	{
 		perror(RED "cd" RESET);
+		shell->error_code = 1;
 		return ;
 	}
 	if (!args[1])
@@ -105,8 +106,10 @@ void	ms_cd(char **args, t_minishell *shell)
 	{
 		free(oldpwd);
 		perror(RED "cd" RESET);
+		shell->error_code = 1;
 		return ;
 	}
 	else
 		update_pwd(oldpwd, shell);
+	shell->error_code = 0;
 }

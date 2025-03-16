@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/14 18:33:08 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 18:51:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct s_minishell
 	int		error_code;
 	int		term_height;
 	char	*error_message;
+	int		cancelled_cmd;
 	t_token	*tokens;
 }	t_minishell;
 
@@ -184,9 +185,9 @@ void		ms_prompt(t_minishell *shell);
 
 /* REDIR DIR */
 //redirects
-void		ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos);
+int			ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos);
 //heredoc
-void		process_heredoc(t_minishell *shell, t_token *token);
+int			process_heredoc(t_minishell *shell, t_token *token);
 
 /* TOKEN_AND_PARSE DIR */
 //token
