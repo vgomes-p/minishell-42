@@ -6,27 +6,27 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/14 17:58:07 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/16 15:53:43 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			=	minishell
-CC				=	cc
-FLAGS			=	-Wall -Wextra -Werror -I $(H_DIR) -I $(LIBFT_DIR)
-DEBUG_FLAGS		=	-g3 -fsanitize=address
-RM				=	rm -rf
-MAKEFLAGS		=	--silent
+NAME				=	minishell
+CC					=	cc
+FLAGS				=	-Wall -Wextra -Werror -I $(H_DIR) -I $(LIBFT_DIR)
+DEBUG_FLAGS			=	-g3 -fsanitize=address
+RM					=	rm -rf
+MAKEFLAGS			=	--silent
 
 # path and files
-H_SRCS			=	minishell.h
-H_DIR			=	includes/
-HEADER			=	$(addprefix $(H_DIR), $(H_SRCS))
+H_SRCS				=	minishell.h
+H_DIR				=	includes/
+HEADER				=	$(addprefix $(H_DIR), $(H_SRCS))
 
-GENERAL_SRCS	=	utils.c all_free_0.c all_free_1.c
-GENERAL_DIR		=	codes/utils/
+GENERAL_SRCS		=	utils.c all_free_0.c all_free_1.c
+GENERAL_DIR			=	codes/utils/
 
-MAIN_SRCS		=	main.c prompt.c prompt_utils.c
-MAIN_DIR		=	codes/main/
+MAIN_SRCS			=	main.c prompt.c prompt_utils.c
+MAIN_DIR			=	codes/main/
 
 TOKEN_PARSE_SRCS	=	token.c \
 						token_utils_0.c token_utils_1.c token_utils_2.c \
