@@ -228,6 +228,14 @@ typedef struct s_expand
 	int		i;
 }	t_expand;
 
+typedef struct s_cmd_exec
+{
+	char	**cmd;
+	int		**fd;
+	int		pos;
+	t_token	*cmd_tokens;
+}	t_cmd_exec;
+
 typedef struct s_minishell
 {
 	int		pid;
@@ -394,92 +402,92 @@ void	interactive_signal_handler(int sig)
 }
 
 bool	process_quotes(const char *input, int *pos, bool *in_quotes,
-						char *quote_ch)
+	char *quote_ch)
 {
-	while (input[*pos] && (*in_quotes || input[*pos] != ' '))
-	{
-		if (is_quotes(input[*pos]))
-		{
-			if (!*in_quotes)
-			{
-				*in_quotes = true;
-				*quote_ch = input[*pos];
-			}
-			else if (input[*pos] == *quote_ch)
-				*in_quotes = false;
-		}
-		(*pos)++;
-	}
-	if (*in_quotes)
-	{
-		printf(RED "Error: quotes not closed\n" RESET);
-		return (false);
-	}
-	return (true);
+while (input[*pos] && (*in_quotes || input[*pos] != ' '))
+{
+if (is_quotes(input[*pos]))
+{
+if (!*in_quotes)
+{
+*in_quotes = true;
+*quote_ch = input[*pos];
+}
+else if (input[*pos] == *quote_ch)
+*in_quotes = false;
+}
+(*pos)++;
+}
+if (*in_quotes)
+{
+printf(RED "Error: quotes not closed\n" RESET);
+return (false);
+}
+return (true);
 }
 
 char	**process_tokens(const char *input, char **tokens)
 {
-	char	*token;
-	int		pos;
-	int		token_cnt;
+char	*token;
+int		pos;
+int		token_cnt;
 
-	pos = 0;
-	token_cnt = 0;
-	while (input[pos])
-	{
-		while (input[pos] == ' ')
-			pos++;
-		if (input[pos] == '\0')
-			break ;
-		token = extract_token(input, &pos);
-		if (token)
-			tokens[token_cnt++] = token;
-		else
-		{
-			cleanup_tokens(tokens, token_cnt);
-			return (NULL);
-		}
-	}
-	tokens[token_cnt] = NULL;
-	return (tokens);
+pos = 0;
+token_cnt = 0;
+while (input[pos])
+{
+while (input[pos] == ' ')
+pos++;
+if (input[pos] == '\0')
+break ;
+token = extract_token(input, &pos);
+if (token)
+tokens[token_cnt++] = token;
+else
+{
+cleanup_tokens(tokens, token_cnt);
+return (NULL);
+}
+}
+tokens[token_cnt] = NULL;
+return (tokens);
 }
 
 char	*extract_token(const char *input, int *pos)
 {
-	int		start;
-	bool	in_quotes;
-	char	quote_ch;
+int		start;
+bool	in_quotes;
+char	quote_ch;
 
-	start = *pos;
-	in_quotes = false;
-	quote_ch = '\0';
-	if (!process_quotes(input, pos, &in_quotes, &quote_ch))
-		return (NULL);
-	return (ft_substr(input, start, *pos - start));
+start = *pos;
+in_quotes = false;
+quote_ch = '\0';
+if (!process_quotes(input, pos, &in_quotes, &quote_ch))
+return (NULL);
+return (ft_substr(input, start, *pos - start));
 }
 
 t_token_tp	get_token_type(char *token, t_token *current, int is_first)
 {
-	t_token_tp	type;
+t_token_tp	type;
 
-	type = ARG;
-	if (is_operator(token))
-	{
-		if (lms_strcmp(token, "|") == 0)
-			type = PIPE;
-		else if (lms_strcmp(token, ">") == 0)
-			type = REDIR_OUT;
-		else if (lms_strcmp(token, ">>") == 0)
-			type = REDIR_APPEND;
-		else if (lms_strcmp(token, "<") == 0)
-			type = REDIR_IN;
-		else if (lms_strcmp(token, "<<") == 0)
-			type = HEREDOC;
-	}
-	else if (is_first || (current && current->type == PIPE))
-		type = CMD;
-	return (type);
+type = ARG;
+if (is_operator(token))
+{
+if (lms_strcmp(token, "|") == 0)
+type = PIPE;
+else if (lms_strcmp(token, ">") == 0)
+type = REDIR_OUT;
+else if (lms_strcmp(token, ">>") == 0)
+type = REDIR_APPEND;
+else if (lms_strcmp(token, "<") == 0)
+type = REDIR_IN;
+else if (lms_strcmp(token, "<<") == 0)
+type = HEREDOC;
+}
+else if (is_first || (current && current->type == PIPE))
+type = CMD;
+return (type);
 }
 
 bool	is_quotes(char ch)
@@ -698,6 +706,23 @@ t_token	*tokening(char *input)
 	return (head);
 }
 
+int	parser(t_token **head, char *str)
+{
+	*head = tokening(str);
+	if (!*head)
+	{
+		ft_putstr_fd(RED "error: unclosed quotes\n" RESET, 2);
+		return (1);
+	}
+	if (!valid_syntax(*head))
+	{
+		free_tokens(*head);
+		*head = NULL;
+		return (1);
+	}
+	return (0);
+}
+
 static bool	is_pipe_valid(t_token *current, bool cmd_before)
 {
 	if (!cmd_before)
@@ -778,23 +803,6 @@ bool	valid_syntax(t_token *tokens)
 		return (false);
 	}
 	return (true);
-}
-
-int	parser(t_token **head, char *str)
-{
-	*head = tokening(str);
-	if (!*head)
-	{
-		ft_putstr_fd(RED "error: unclosed quotes\n" RESET, 2);
-		return (1);
-	}
-	if (!valid_syntax(*head))
-	{
-		free_tokens(*head);
-		*head = NULL;
-		return (1);
-	}
-	return (0);
 }
 
 static char	*extract_var_name(char *str, int *ind0)
@@ -907,441 +915,6 @@ char	*expand_var(t_minishell *shell, char *token)
 		free(token);
 		return (result);
 	}
-}
-
-int	find_envar(const char *var, char **envp)
-{
-	char	*findkey;
-	int		varlen;
-	int		index;
-	char	*equal_sign;
-
-	equal_sign = ft_strchr(var, '=');
-	if (equal_sign)
-		varlen = equal_sign - var;
-	else
-		varlen = ft_strlen(var);
-	findkey = ft_calloc(varlen + 2, sizeof(char));
-	ft_strlcpy(findkey, var, varlen + 2);
-	findkey[varlen] = '=';
-	findkey[varlen + 1] = '\0';
-	index = 0;
-	while (envp[index] && ft_strncmp(envp[index], findkey, varlen + 1))
-		index++;
-	free(findkey);
-	return (index);
-}
-
-static int	copy_existing_env(char **nwenv, char **envp, int envsz)
-{
-	int	index1;
-
-	index1 = -1;
-	while (++index1 < envsz)
-	{
-		nwenv[index1] = ft_strdup(envp[index1]);
-		if (!nwenv[index1])
-		{
-			while (--index1 >= 0)
-				free(nwenv[index1]);
-			free(nwenv);
-			return (0);
-		}
-	}
-	return (1);
-}
-
-static int	add_new_envar(const char *var, char ***envp, int envsz)
-{
-	char	**nwenv;
-	int		index1;
-
-	nwenv = ft_calloc(envsz + 2, sizeof(char *));
-	if (!nwenv)
-		return (0);
-	if (!copy_existing_env(nwenv, *envp, envsz))
-		return (0);
-	nwenv[envsz] = ft_strdup(var);
-	if (!nwenv[envsz])
-	{
-		while (--envsz >= 0)
-			free(nwenv[envsz]);
-		free(nwenv);
-		return (0);
-	}
-	index1 = 0;
-	while (index1 > envsz)
-	{
-		free((*envp)[index1]);
-		index1++;
-	}
-	free(*envp);
-	*envp = nwenv;
-	return (1);
-}
-
-void	update_envar(const char *var, int index0, char ***envp)
-{
-	int		envsz;
-	int		index1;
-	char	**old_env;
-
-	envsz = 0;
-	while (*envp && (*envp)[envsz])
-		envsz++;
-	if (index0 < envsz)
-	{
-		free((*envp)[index0]);
-		(*envp)[index0] = ft_strdup(var);
-		return ;
-	}
-	old_env = *envp;
-	if (!add_new_envar(var, envp, envsz))
-		return ;
-	index1 = -1;
-	while (++index1 < envsz)
-		free(old_env[index1]);
-	free(old_env);
-}
-
-int	valid_name(const char *var)
-{
-	int	index;
-
-	index = 0;
-	if (!var || var[0] == '=' || ft_isdigit(var[0]))
-		return (0);
-	while (var[index] && var[index] != '=')
-	{
-		if (var[index] != '_' && !ft_isalnum(var[index]))
-			return (0);
-		index++;
-	}
-	return (1);
-}
-
-void	export_err(const char *arg)
-{
-	ft_putstr_fd(RED "export: " ORANGE "\"", STDERR_FILENO);
-	ft_putstr_fd((char *)arg, STDERR_FILENO);
-	ft_putstr_fd("\"" RED " not a valid indentifier\n" RESET, STDERR_FILENO);
-}
-
-static char	*get_new_pwd(char *oldpwd)
-{
-	char	*nwpwd;
-
-	nwpwd = getcwd(NULL, 0);
-	if (!nwpwd)
-	{
-		perror(RED "cd: getcwd" RESET);
-		free(oldpwd);
-		return (NULL);
-	}
-	return (nwpwd);
-}
-
-static int	update_oldpwd(char *oldpwd, t_minishell *shell)
-{
-	int		index_oldpwd;
-	char	*oldpwd_var;
-
-	index_oldpwd = find_envar("OLDPWD", shell->env);
-	oldpwd_var = ft_strjoin("OLDPWD=", oldpwd);
-	if (!oldpwd_var)
-		return (0);
-	update_envar(oldpwd_var, index_oldpwd, &shell->env);
-	free(oldpwd_var);
-	return (1);
-}
-
-static void	update_pwd(char *oldpwd, t_minishell *shell)
-{
-	char	*nwpwd;
-	int		pwd_index;
-	char	*pwd_var;
-
-	nwpwd = get_new_pwd(oldpwd);
-	if (!nwpwd)
-		return ;
-	if (!update_oldpwd(oldpwd, shell))
-	{
-		free(nwpwd);
-		free(oldpwd);
-		return ;
-	}
-	pwd_index = find_envar("PWD", shell->env);
-	pwd_var = ft_strjoin("PWD=", nwpwd);
-	if (!pwd_var)
-	{
-		free(nwpwd);
-		free(oldpwd);
-		return ;
-	}
-	update_envar(pwd_var, pwd_index, &shell->env);
-	free(pwd_var);
-	free(nwpwd);
-	free(oldpwd);
-}
-
-static void	handle_home_cd(char *oldpwd, t_minishell *shell)
-{
-	char	*home;
-
-	home = getenv("HOME");
-	if (!home)
-	{
-		ft_putstr_fd(RED "cd: HOME not set" RESET, 2);
-		free(oldpwd);
-		return ;
-	}
-	if (chdir(home) == -1)
-	{
-		free(oldpwd);
-		perror(RED "cd" RESET);
-		return ;
-	}
-	update_pwd(oldpwd, shell);
-}
-
-void	ms_cd(char **args, t_minishell *shell)
-{
-	char	*oldpwd;
-
-	oldpwd = getcwd(NULL, 0);
-	if (!oldpwd)
-	{
-		perror(RED "cd" RESET);
-		return ;
-	}
-	if (!args[1])
-		handle_home_cd(oldpwd, shell);
-	else if (chdir(args[1]) == -1)
-	{
-		free(oldpwd);
-		perror(RED "cd" RESET);
-		return ;
-	}
-	else
-		update_pwd(oldpwd, shell);
-}
-
-void	ms_echo(char **args)
-{
-	int	curr_arg;
-	int	nwline;
-
-	curr_arg = 1;
-	nwline = 1;
-	while (args[curr_arg] && lms_strcmp(args[curr_arg], "-n") == 0)
-	{
-		nwline = 0;
-		curr_arg++;
-	}
-	while (args[curr_arg])
-	{
-		lms_putstr(args[curr_arg]);
-		if (args[curr_arg + 1])
-			lms_putstr(" ");
-		curr_arg++;
-	}
-	if (nwline)
-		lms_putstr("\n");
-}
-
-void	ms_env(t_minishell *shell)
-{
-	int	curr_arg;
-
-	curr_arg = 0;
-	while (shell->env && shell->env[curr_arg])
-	{
-		ft_putendl_fd(shell->env[curr_arg], STDOUT_FILENO);
-		curr_arg++;
-	}
-}
-
-static int	validate_exit_args(char **args, t_minishell *shell)
-{
-	if (args[1] && args[2])
-	{
-		ft_putstr_fd(RED "exit: too many arguments\n" RESET, 2);
-		shell->exit_stt = 1;
-		return (0);
-	}
-	if (args[1] && !lms_isnum(args[1]))
-	{
-		ft_putstr_fd(RED "exit: the argument " ORANGE "\"", 2);
-		ft_putstr_fd(args[1], 2);
-		ft_putstr_fd("\"" RED " is not a valid integer\n", 2);
-		shell->exit_stt = 2;
-		return (0);
-	}
-	return (1);
-}
-
-void	ms_exit(char **args, t_minishell *shell)
-{
-	int	stat;
-
-	stat = 0;
-	if (!validate_exit_args(args, shell))
-		return ;
-	if (args[1])
-		stat = ft_atoi(args[1]);
-	shell->exit_stt = stat;
-	ft_putstr_fd(RECYAN "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
-	free(shell->prompt);
-	free_env(shell->env);
-	rl_clear_history();
-	exit(stat);
-}
-
-void	ms_export(t_minishell *shell, char **args, char ***envp)
-{
-	int	index0;
-	int	index1;
-
-	index0 = 1;
-	if (!args[1])
-	{
-		ms_env(shell);
-		return ;
-	}
-	while (args[index0])
-	{
-		if (valid_name(args[index0]))
-		{
-			index1 = find_envar(args[index0], *envp);
-			update_envar(args[index0], index1, envp);
-			shell->error_code = 0;
-		}
-		else
-		{
-			export_err(args[index0]);
-			shell->error_code = 42;
-		}
-		index0++;
-	}
-}
-
-void	ms_pwd(t_minishell *shell)
-{
-	char	*cwd;
-	int		pwd_index;
-	char	*pwd_env;
-
-	cwd = getcwd(NULL, 0);
-	if (!cwd)
-	{
-		ft_putstr_fd(RED "pwd: error" RESET, 2);
-		return ;
-	}
-	pwd_env = ft_strjoin("PWD=", cwd);
-	if (!pwd_env)
-	{
-		free(cwd);
-		return ;
-	}
-	ft_putstr_fd(cwd, STDOUT_FILENO);
-	ft_putstr_fd("\n", STDOUT_FILENO);
-	pwd_index = find_envar("PWD", shell->env);
-	update_envar(pwd_env, pwd_index, &shell->env);
-	free(pwd_env);
-	free(cwd);
-}
-
-static void	rmvar(char *var, char ***envp)
-{
-	size_t	index;
-	char	*tempvar;
-
-	index = 0;
-	if (!var || !envp || !*envp)
-		return ;
-	tempvar = ft_strjoin (var, "=");
-	if (!tempvar)
-		return ;
-	while ((*envp)[index] && ft_strncmp((*envp)[index],
-			tempvar, ft_strlen(tempvar)))
-		index++;
-	if ((*envp)[index])
-	{
-		free((*envp)[index]);
-		while ((*envp)[index])
-		{
-			(*envp)[index] = (*envp)[index + 1];
-			index++;
-		}
-		(*envp)[index] = NULL;
-	}
-	free(tempvar);
-}
-
-static void	unset_err(const char *arg)
-{
-	ft_putstr_fd(ORANGE "unset: " YELLOW "\"", STDERR_FILENO);
-	ft_putstr_fd((char *)arg, STDERR_FILENO);
-	ft_putstr_fd("\"" ORANGE " not found\n" RESET, STDERR_FILENO);
-}
-
-static void	unset_usage(void)
-{
-	ft_putstr_fd(YELLOW "usage: unser <var name>\n" RESET, STDERR_FILENO);
-}
-
-static int	validvar(const char *var, char ***envp)
-{
-	int		varlen;
-	char	*var_eq;
-	int		index;
-
-	if (!var || !envp || !*envp)
-		return (0);
-	varlen = ft_strlen(var);
-	var_eq = ft_strjoin(var, "=");
-	if (!var_eq)
-		return (0);
-	index = 0;
-	while ((*envp)[index])
-	{
-		if (ft_strncmp((*envp)[index], var_eq, varlen + 1) == 0)
-		{
-			free(var_eq);
-			return (1);
-		}
-		index++;
-	}
-	free(var_eq);
-	return (0);
-}
-
-void	ms_unset(t_minishell *shell, char **args, char ***envp)
-{
-	if (!args[1])
-	{
-		unset_usage();
-		shell->error_code = 1;
-		return ;
-	}
-	if (!envp || !*envp)
-	{
-		shell->error_code = 1;
-		return ;
-	}
-	while (*(++args))
-	{
-		if (validvar(*args, envp))
-		{
-			rmvar(*args, envp);
-		}
-		else
-		{
-			unset_err(*args);
-			shell->error_code = 1;
-		}
-	}
-	shell->error_code = 0;
 }
 
 static void	handle_redir_in(t_minishell *shell, t_token *current)
@@ -1473,53 +1046,6 @@ void	process_heredoc(t_minishell *shell, t_token *token)
 		return ;
 	dup2(fd, STDIN_FILENO);
 	close(fd);
-}
-
-char	*get_full_path(char *cmd, char **path_dir)
-{
-	int		pos;
-	char	*full_path;
-	char	*temp;
-
-	pos = -1;
-	full_path = NULL;
-	while (path_dir && path_dir[++pos])
-	{
-		temp = ft_strjoin(path_dir[pos], "/");
-		full_path = ft_strjoin(temp, cmd);
-		temp = free_ptr(temp);
-		if ((!access(full_path, F_OK)) && !access(full_path, X_OK))
-			break ;
-		full_path = free_ptr(full_path);
-	}
-	return (full_path);
-}
-
-char	*find_exec_path(char *cmd, char **envp)
-{
-	int		pos;
-	char	**path_dir;
-	char	*full_path;
-
-	if (cmd[0] == '/' || cmd[0] == '.')
-	{
-		if ((!access(cmd, F_OK)) && !access(cmd, X_OK) && ft_strlen(cmd) > 2)
-			return (cmd);
-		return (NULL);
-	}
-	pos = -1;
-	while (envp && envp[++pos])
-	{
-		if (!ft_strncmp("PATH=", envp[pos], 5))
-			break ;
-	}
-	if (envp[pos] == NULL)
-		return (NULL);
-	path_dir = ft_split(envp[pos] + 5, ':');
-	full_path = get_full_path(cmd, path_dir);
-	free_matrix(&path_dir);
-	path_dir = NULL;
-	return (full_path);
 }
 
 static int	count_args(t_token *tokens)
@@ -1697,44 +1223,44 @@ void	handle_invalid_file(t_minishell *shell)
 }
 
 static t_token	*handle_pipe_node(t_token **tokens, t_token *prev,
-								t_token *current, t_token *cmd_start)
+	t_token *current, t_token *cmd_start)
 {
-	t_token	*pipe_node;
+t_token	*pipe_node;
 
-	pipe_node = current;
-	if (prev)
-		prev->next = NULL;
-	else
-		cmd_start = NULL;
-	*tokens = current->next;
-	free(pipe_node->value);
-	free(pipe_node);
-	return (cmd_start);
+pipe_node = current;
+if (prev)
+prev->next = NULL;
+else
+cmd_start = NULL;
+*tokens = current->next;
+free(pipe_node->value);
+free(pipe_node);
+return (cmd_start);
 }
 
 t_token	*get_next_cmd(t_token **tokens)
 {
-	t_token	*current;
-	t_token	*cmd_start;
-	t_token	*prev;
+t_token	*current;
+t_token	*cmd_start;
+t_token	*prev;
 
-	if (!tokens || !*tokens)
-		return (NULL);
-	cmd_start = *tokens;
-	current = *tokens;
-	prev = NULL;
-	while (current && current->type != PIPE)
-	{
-		prev = current;
-		current = current->next;
-	}
-	if (current)
-		return (handle_pipe_node(tokens, prev, current, cmd_start));
-	else
-	{
-		*tokens = NULL;
-		return (cmd_start);
-	}
+if (!tokens || !*tokens)
+return (NULL);
+cmd_start = *tokens;
+current = *tokens;
+prev = NULL;
+while (current && current->type != PIPE)
+{
+prev = current;
+current = current->next;
+}
+if (current)
+return (handle_pipe_node(tokens, prev, current, cmd_start));
+else
+{
+*tokens = NULL;
+return (cmd_start);
+}
 }
 
 int	is_buildin(char *token)
@@ -1788,6 +1314,53 @@ int	is_dir(t_minishell *shell, char *cmd)
 		return (1);
 	}
 	return (0);
+}
+
+char	*get_full_path(char *cmd, char **path_dir)
+{
+	int		pos;
+	char	*full_path;
+	char	*temp;
+
+	pos = -1;
+	full_path = NULL;
+	while (path_dir && path_dir[++pos])
+	{
+		temp = ft_strjoin(path_dir[pos], "/");
+		full_path = ft_strjoin(temp, cmd);
+		temp = free_ptr(temp);
+		if ((!access(full_path, F_OK)) && !access(full_path, X_OK))
+			break ;
+		full_path = free_ptr(full_path);
+	}
+	return (full_path);
+}
+
+char	*find_exec_path(char *cmd, char **envp)
+{
+	int		pos;
+	char	**path_dir;
+	char	*full_path;
+
+	if (cmd[0] == '/' || cmd[0] == '.')
+	{
+		if ((!access(cmd, F_OK)) && !access(cmd, X_OK) && ft_strlen(cmd) > 2)
+			return (cmd);
+		return (NULL);
+	}
+	pos = -1;
+	while (envp && envp[++pos])
+	{
+		if (!ft_strncmp("PATH=", envp[pos], 5))
+			break ;
+	}
+	if (envp[pos] == NULL)
+		return (NULL);
+	path_dir = ft_split(envp[pos] + 5, ':');
+	full_path = get_full_path(cmd, path_dir);
+	free_matrix(&path_dir);
+	path_dir = NULL;
+	return (full_path);
 }
 
 static void	restore_std_fds(int stdin_backup, int stdout_backup)
@@ -1872,79 +1445,6 @@ int	exec_builtin(t_token *tokens, t_minishell *shell, int **fd, int pos)
 	restore_std_fds(stdin_backup, stdout_backup);
 	free_matrix(&args);
 	return (ret);
-}
-
-int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
-{
-	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
-		return (0);
-	if (nb_pros > 1)
-		return (-1);
-	if (is_buildin(cmd[0]))
-	{
-		exec_builtin(shell->tokens, shell, fd, 0);
-		sfree_int(fd);
-		fd = NULL;
-		return (0);
-	}
-	return (-1);
-}
-
-static int	handle_command(t_minishell *shell, t_exec *exec,
-				t_token *cmd_tokens, int pos)
-{
-	exec->cmd = prepare_args(cmd_tokens);
-	if (!exec->cmd)
-	{
-		free_tokens(cmd_tokens);
-		return (1);
-	}
-	if (is_buildin(exec->cmd[0]))
-	{
-		exec_builtin(cmd_tokens, shell, exec->fd, 0);
-		free_matrix(&exec->cmd);
-		free_tokens(cmd_tokens);
-		return (1);
-	}
-	exec->pid[pos] = fork();
-	if (exec->pid[pos] == 0)
-		child(shell, exec->cmd, exec->fd, pos);
-	free_matrix(&exec->cmd);
-	free_tokens(cmd_tokens);
-	return (0);
-}
-
-void	exec_child(t_minishell *shell, t_exec *exec, int pos)
-{
-	t_token	*cmd_tokens;
-	t_token	*current_tokens;
-
-	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
-	if (!exec->pid)
-		return ;
-	current_tokens = exec->tokens_head;
-	pos = -1;
-	while (++pos < exec->nbr_pros)
-	{
-		cmd_tokens = get_next_cmd(&current_tokens);
-		if (handle_command(shell, exec, cmd_tokens, pos) == 1)
-			continue ;
-	}
-}
-
-void	child(t_minishell *shell, char **cmd, int **fd, int pos)
-{
-	if (!cmd || *cmd == NULL)
-	{
-		handle_invalid_file(shell);
-		clean_child_res(shell, NULL, fd, shell->error_code);
-	}
-	ms_redirs(shell, shell->tokens, fd, pos);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	cls_fd(fd);
-	exec_extern(cmd, shell->env);
-	clean_child_res(shell, cmd, fd, shell->error_code);
 }
 
 static int	allocate_pipes(t_exec *exec)
@@ -2075,6 +1575,70 @@ void	exec_cmd(t_minishell *shell)
 	free_tokens(tokens_copy);
 }
 
+int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
+{
+	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
+		return (0);
+	if (nb_pros > 1)
+		return (-1);
+	if (is_buildin(cmd[0]))
+	{
+		exec_builtin(shell->tokens, shell, fd, 0);
+		sfree_int(fd);
+		fd = NULL;
+		return (0);
+	}
+	return (-1);
+}
+
+void	exec_child(t_minishell *shell, t_exec *exec, int pos)
+{
+	t_token		*cmd_tokens;
+	t_cmd_exec	cmd_exec;
+
+	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
+	if (!exec->pid)
+		return ;
+	pos = -1;
+	while (++pos < exec->nbr_pros)
+	{
+		cmd_tokens = get_next_cmd(&exec->tokens_head);
+		if (!cmd_tokens)
+			continue ;
+		exec->cmd = prepare_args(cmd_tokens);
+		if (!exec->cmd)
+		{
+			free_tokens(cmd_tokens);
+			continue ;
+		}
+		cmd_exec.cmd = exec->cmd;
+		cmd_exec.fd = exec->fd;
+		cmd_exec.pos = pos;
+		cmd_exec.cmd_tokens = cmd_tokens;
+		exec->pid[pos] = fork();
+		if (exec->pid[pos] == 0)
+			child(shell, &cmd_exec);
+		free_matrix(&exec->cmd);
+		free_tokens(cmd_tokens);
+	}
+	cls_fd(exec->fd);
+}
+
+void	child(t_minishell *shell, t_cmd_exec *exec)
+{
+	if (!exec->cmd || *exec->cmd == NULL)
+	{
+		handle_invalid_file(shell);
+		clean_child_res(shell, NULL, exec->fd, shell->error_code);
+	}
+	ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	cls_fd(exec->fd);
+	exec_extern(exec->cmd, shell->env);
+	clean_child_res(shell, exec->cmd, exec->fd, shell->error_code);
+}
+
 static char	*pathedprompt(t_minishell *shell)
 {
 	char	*cwd;
@@ -2202,4 +1766,3 @@ int	main(int argc, char **argv, char **envp)
 	free_env(shell.env);
 	return (0);
 }
-
