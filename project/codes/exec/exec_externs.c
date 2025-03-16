@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 15:39:23 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 16:42:13 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,32 +86,6 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 		shell->exit_stt = 128 + WTERMSIG(exec->stts);
 	free(exec->pid);
 }
-
-// static int	handle_exec_type(t_minishell *shell, t_exec *exec,
-// 									t_token *tokens_copy)
-// {
-// 	int	cmd_pos;
-
-// 	if (is_buildin(exec->cmd[0]))
-// 	{
-// 		exec_builtin(shell->tokens, shell, exec->fd, 0);
-// 		free_matrix(&exec->cmd);
-// 		sfree_int(exec->fd);
-// 		free_tokens(tokens_copy);
-// 		return (0);
-// 	}
-// 	cmd_pos = exec_parent(shell, exec->nbr_pros, exec->cmd, exec->fd);
-// 	if (cmd_pos > 0)
-// 		free_matrix(&exec->cmd);
-// 	if (cmd_pos == 0)
-// 	{
-// 		free_matrix(&exec->cmd);
-// 		sfree_int(exec->fd);
-// 		free_tokens(tokens_copy);
-// 		return (0);
-// 	}
-// 	return (cmd_pos);
-// }
 
 void	exec_cmd(t_minishell *shell)
 {

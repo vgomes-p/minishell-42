@@ -49,94 +49,43 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 	return (-1);
 }
 
-// static int	handle_command(t_minishell *shell, t_exec *exec,
-// 				t_token *cmd_tokens, int pos)
-// {
-// 	exec->cmd = prepare_args(cmd_tokens);
-// 	if (!exec->cmd)
-// 	{
-// 		free_tokens(cmd_tokens);
-// 		return (1);
-// 	}
-// 	if (is_buildin(exec->cmd[0]))
-// 	{
-// 		exec_builtin(cmd_tokens, shell, exec->fd, 0);
-// 		free_matrix(&exec->cmd);
-// 		free_tokens(cmd_tokens);
-// 		return (1);
-// 	}
-// 	exec->pid[pos] = fork();
-// 	if (exec->pid[pos] == 0)
-// 		child(shell, exec->cmd, exec->fd, pos);
-// 	free_matrix(&exec->cmd);
-// 	free_tokens(cmd_tokens);
-// 	return (0);
-// }
-
-void	exec_child(t_minishell *shell, t_exec *exec, int pos)
+static void	exec_each_child(t_minishell *shell, t_exec *exec, int pos)
 {
 	t_token		*cmd_tokens;
 	t_cmd_exec	cmd_exec;
 
+	cmd_tokens = get_next_cmd(&exec->tokens_head);
+	if (!cmd_tokens)
+		return ;
+	exec->cmd = prepare_args(cmd_tokens);
+	if (!exec->cmd)
+	{
+		free_tokens(cmd_tokens);
+		return ;
+	}
+	cmd_exec.cmd = exec->cmd;
+	cmd_exec.fd = exec->fd;
+	cmd_exec.pos = pos;
+	cmd_exec.cmd_tokens = cmd_tokens;
+	exec->pid[pos] = fork();
+	if (exec->pid[pos] == 0)
+		child(shell, &cmd_exec);
+	free_matrix(&exec->cmd);
+	free_tokens(cmd_tokens);
+}
+
+void	exec_child(t_minishell *shell, t_exec *exec, int pos)
+{
 	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
 	if (!exec->pid)
 		return ;
 	pos = -1;
 	while (++pos < exec->nbr_pros)
 	{
-		cmd_tokens = get_next_cmd(&exec->tokens_head);
-		if (!cmd_tokens)
-			continue ;
-		exec->cmd = prepare_args(cmd_tokens);
-		if (!exec->cmd)
-		{
-			free_tokens(cmd_tokens);
-			continue ;
-		}
-		cmd_exec.cmd = exec->cmd;
-		cmd_exec.fd = exec->fd;
-		cmd_exec.pos = pos;
-		cmd_exec.cmd_tokens = cmd_tokens;
-		exec->pid[pos] = fork();
-		if (exec->pid[pos] == 0)
-			child(shell, &cmd_exec);
-		free_matrix(&exec->cmd);
-		free_tokens(cmd_tokens);
+		exec_each_child(shell, exec, pos);
 	}
 	cls_fd(exec->fd);
 }
-// void	exec_child(t_minishell *shell, t_exec *exec, int pos)
-// {
-// 	t_token *cmd_tokens;
-// 	t_cmd_exec cmd_exec;
-
-// 	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
-// 	if (!exec->pid)
-// 		return ;
-// 	pos = -1;
-// 	while (++pos < exec->nbr_pros)
-// 	{
-// 		cmd_tokens = get_next_cmd(&exec->tokens_head);
-// 		if (!cmd_tokens)
-// 			continue;
-// 		exec->cmd = prepare_args(cmd_tokens);
-// 		if (!exec->cmd)
-// 		{
-// 			free_tokens(cmd_tokens);
-// 			continue;
-// 		}
-// 		cmd_exec.cmd = exec->cmd;
-// 		cmd_exec.fd = exec->fd;
-// 		cmd_exec.pos = pos;
-// 		cmd_exec.cmd_tokens = cmd_tokens;
-// 		exec->pid[pos] = fork();
-// 		if (exec->pid[pos] == 0)
-// 			child(shell, &cmd_exec);
-// 		free_matrix(&exec->cmd);
-// 		free_tokens(cmd_tokens);
-// 	}
-// 	cls_fd(exec->fd);
-// }
 
 void	child(t_minishell *shell, t_cmd_exec *exec)
 {
