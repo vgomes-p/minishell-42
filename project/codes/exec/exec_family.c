@@ -12,13 +12,34 @@
 
 #include "../../includes/minishell.h"
 
+void	exec_builtin_in_child(t_minishell *shell, t_cmd_exec *exec)
+{
+	ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos);
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	cls_fd(exec->fd);
+	if (lms_strcmp(exec->cmd[0], "cd") == 0)
+		ms_cd(exec->cmd, shell);
+	else if (lms_strcmp(exec->cmd[0], "echo") == 0)
+		ms_echo(exec->cmd);
+	else if (lms_strcmp(exec->cmd[0], "env") == 0)
+		ms_env(shell);
+	else if (lms_strcmp(exec->cmd[0], "exit") == 0)
+		ms_exit(exec->cmd, shell);
+	else if (lms_strcmp(exec->cmd[0], "pwd") == 0)
+		ms_pwd(shell);
+	else if (lms_strcmp(exec->cmd[0], "export") == 0)
+		ms_export(shell, exec->cmd, &shell->env);
+	else if (lms_strcmp(exec->cmd[0], "unset") == 0)
+		ms_unset(shell, exec->cmd, &shell->env);
+	exit(shell->exit_stt);
+}
+
 int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 {
 	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
 		return (0);
-	if (nb_pros > 1)
-		return (-1);
-	if (is_buildin(cmd[0]))
+	if (nb_pros == 1 && is_buildin(cmd[0]))
 	{
 		exec_builtin(shell->tokens, shell, fd, 0);
 		sfree_int(fd);
@@ -124,10 +145,15 @@ void	child(t_minishell *shell, t_cmd_exec *exec)
 		handle_invalid_file(shell);
 		clean_child_res(shell, NULL, exec->fd, shell->error_code);
 	}
-	ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	cls_fd(exec->fd);
-	exec_extern(exec->cmd, shell->env);
+	if (is_buildin(exec->cmd[0]))
+		exec_builtin_in_child(shell, exec);
+	else
+	{
+		ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos);
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		cls_fd(exec->fd);
+		exec_extern(exec->cmd, shell->env);
+	}
 	clean_child_res(shell, exec->cmd, exec->fd, shell->error_code);
 }
