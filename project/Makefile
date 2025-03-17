@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/16 20:37:28 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/17 16:19:47 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ MAIN_DIR			=	codes/main/
 TOKEN_PARSE_SRCS	=	token.c \
 						token_utils_0.c token_utils_1.c token_utils_2.c \
 						expand.c \
+						remove_quote.c \
 						parse.c \
 						syntax.c
 TOKEN_PARSE_DIR		=	codes/token_and_parse/

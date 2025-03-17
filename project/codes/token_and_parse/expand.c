@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 21:08:06 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/17 16:58:34 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ char	*expand_var(t_minishell *shell, char *token)
 	{
 		result = ft_substr(token, 1, ft_strlen(token) - 2);
 		free(token);
-		return (result);
+		return (remove_all_quotes(result));
 	}
 	else if (token[0] == '"' && token[ft_strlen(token) - 1] == '"')
 	{
@@ -115,12 +115,12 @@ char	*expand_var(t_minishell *shell, char *token)
 		free(token);
 		result = expand_inside(shell, inside);
 		free(inside);
-		return (result);
+		return (remove_all_quotes(result));
 	}
 	else
 	{
 		result = expand_inside(shell, token);
 		free(token);
-		return (result);
+		return (remove_all_quotes(result));
 	}
 }

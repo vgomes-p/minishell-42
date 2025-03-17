@@ -16,13 +16,13 @@ static bool	is_pipe_valid(t_token *current, bool cmd_before)
 {
 	if (!cmd_before)
 	{
-		printf(RED "Syntax error: unexpected token '|'\n" RESET);
+		printf(RED "Syntax error: unexpected token\n" RESET);
 		return (false);
 	}
 	if (!current->next || (current->next->type != CMD
 			&& current->next->type != ARG))
 	{
-		printf(RED "Syntax error: unexpected token '|'\n" RESET);
+		printf(RED "Syntax error: unexpected token\n" RESET);
 		return (false);
 	}
 	return (true);
@@ -65,7 +65,7 @@ static bool	check_first_token(t_token *tokens)
 		return (true);
 	if (tokens->type == PIPE)
 	{
-		printf(RED "Syntax error: unexpected token '|'\n" RESET);
+		printf(RED "Syntax error: unexpected token\n" RESET);
 		return (false);
 	}
 	return (true);
