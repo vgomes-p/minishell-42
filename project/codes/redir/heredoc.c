@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:17:29 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 21:16:05 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:42:32 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	write_heredoc_content(int fd, char *delimiter,
 
 	while (1)
 	{
-		line = readline("> ");
+		line = readline("miniheredoc> ");
 		if (!line)
 			return (1);
 		if (lms_strcmp(line, delimiter) == 0)
