@@ -1,0 +1,493 @@
+==404650== Memcheck, a memory error detector
+==404650== Copyright (C) 2002-2017, and GNU GPL'd, by Julian Seward et al.
+==404650== Using Valgrind-3.15.0 and LibVEX; rerun with -h for copyright info
+==404650== Command: ./minishell
+==404650== Parent PID: 404649
+==404650== 
+==404650== Invalid read of size 8
+==404650==    at 0x4015BB: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401F2B: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b199d0 is 0 bytes inside a block of size 48 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x4015ED: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401E9E: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401EFD: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401D85: ms_split_quotes (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401ED4: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid read of size 8
+==404650==    at 0x4015CE: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401F2B: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b199d0 is 0 bytes inside a block of size 48 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x4015ED: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401E9E: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401EFD: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401D85: ms_split_quotes (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401ED4: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid free() / delete / delete[] / realloc()
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x4015D6: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401F2B: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b19a40 is 0 bytes inside a block of size 6 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x4015D6: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401E9E: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401EFD: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406FE1: ft_substr (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4021D2: extract_token (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4020FE: process_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401DAE: ms_split_quotes (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401ED4: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid free() / delete / delete[] / realloc()
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x4015ED: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401F2B: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b199d0 is 0 bytes inside a block of size 48 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x4015ED: sfree (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401E9E: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401EFD: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401D85: ms_split_quotes (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401ED4: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid free() / delete / delete[] / realloc()
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x402B85: expand_var (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4019FE: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b19af0 is 0 bytes inside a block of size 6 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x402967: expand_inside (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402B78: expand_var (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4019FE: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401CFD: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401E2D: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401EFD: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404664== 
+==404664== HEAP SUMMARY:
+==404664==     in use at exit: 210,583 bytes in 296 blocks
+==404664==   total heap usage: 562 allocs, 269 frees, 236,326 bytes allocated
+==404664== 
+==404664== 4 bytes in 1 blocks are still reachable in loss record 1 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405024: exec_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405B4E: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 6 bytes in 1 blocks are still reachable in loss record 4 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401CFD: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 6 bytes in 1 blocks are still reachable in loss record 5 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x402681: alloc_token_str (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x40261E: tokens_matrix (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405717: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 8 bytes in 1 blocks are still reachable in loss record 8 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x4057DD: allocate_pipes (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405793: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 16 bytes in 1 blocks are still reachable in loss record 14 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x4025F2: tokens_matrix (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405717: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 32 bytes in 1 blocks are still reachable in loss record 19 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x401CD8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401E2D: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401EFD: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 32 bytes in 1 blocks are still reachable in loss record 20 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x401CD8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 552 bytes in 1 blocks are still reachable in loss record 34 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x40135B: dup_env (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x4017DA: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 1,029 bytes in 1 blocks are still reachable in loss record 42 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x40287A: expand_inside (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x402B78: expand_var (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x4019FE: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== 4,088 bytes in 68 blocks are still reachable in loss record 51 of 72
+==404664==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404664==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x4013FA: dup_env_str (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x401388: dup_env (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664==    by 0x4017DA: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404664== 
+==404664== LEAK SUMMARY:
+==404664==    definitely lost: 0 bytes in 0 blocks
+==404664==    indirectly lost: 0 bytes in 0 blocks
+==404664==      possibly lost: 0 bytes in 0 blocks
+==404664==    still reachable: 5,773 bytes in 77 blocks
+==404664==         suppressed: 204,810 bytes in 219 blocks
+==404664== 
+==404664== For lists of detected and suppressed errors, rerun with: -s
+==404664== ERROR SUMMARY: 6 errors from 5 contexts (suppressed: 0 from 0)
+==404650== Invalid free() / delete / delete[] / realloc()
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x405B7D: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b1a3e0 is 0 bytes inside a block of size 4 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x405A5D: cleanup_processes (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B5E: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405024: exec_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B4E: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid read of size 8
+==404650==    at 0x401553: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B86: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b19fa0 is 16 bytes inside a block of size 32 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x40156F: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405169: exec_each_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405070: exec_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B4E: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x401CD8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid read of size 8
+==404650==    at 0x40155F: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B86: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b19f90 is 0 bytes inside a block of size 32 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x40156F: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405169: exec_each_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405070: exec_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B4E: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x401CD8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid free() / delete / delete[] / realloc()
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x401566: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B86: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b19ff0 is 0 bytes inside a block of size 6 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x401566: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405169: exec_each_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405070: exec_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B4E: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401CFD: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== Invalid free() / delete / delete[] / realloc()
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x40156F: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B86: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Address 0x4b19f90 is 0 bytes inside a block of size 32 free'd
+==404650==    at 0x483CA3F: free (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x40156F: free_tokens (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405169: exec_each_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405070: exec_child (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B4E: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==  Block was alloc'd at
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x401CD8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 
+==404650== HEAP SUMMARY:
+==404650==     in use at exit: 205,936 bytes in 227 blocks
+==404650==   total heap usage: 562 allocs, 344 frees, 241,760 bytes allocated
+==404650== 
+==404650== 5 bytes in 1 blocks are still reachable in loss record 2 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401CFD: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 5 bytes in 1 blocks are still reachable in loss record 3 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402681: alloc_token_str (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40261E: tokens_matrix (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405717: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 5 bytes in 1 blocks are still reachable in loss record 4 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405DA5: fill_args_array (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405BF3: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40541B: prepare_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4052C1: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x404FC5: exec_parent (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B2C: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 6 bytes in 1 blocks are indirectly lost in loss record 5 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406EE7: ft_strdup (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402681: alloc_token_str (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40261E: tokens_matrix (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405717: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 8 bytes in 1 blocks are still reachable in loss record 7 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4057DD: allocate_pipes (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405793: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 16 bytes in 1 blocks are still reachable in loss record 13 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4025F2: tokens_matrix (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405717: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 16 bytes in 1 blocks are still reachable in loss record 14 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x405D13: allocate_args_array (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405BC7: prepare_args (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40541B: prepare_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4052C1: exec_builtin (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x404FC5: exec_parent (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405B2C: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 22 (16 direct, 6 indirect) bytes in 1 blocks are definitely lost in loss record 17 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4025F2: tokens_matrix (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405717: init_exec (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405ADD: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 32 bytes in 1 blocks are still reachable in loss record 19 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x401CD8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401E2D: create_token_list (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401EFD: tokening (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401B98: pre_process_tks (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40198C: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 32 bytes in 1 blocks are still reachable in loss record 20 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x401CD8: mktoken (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402771: cpy_token_ls (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x405AC5: exec_cmd (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401A2A: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== 1,028 bytes in 1 blocks are still reachable in loss record 41 of 70
+==404650==    at 0x483B7F3: malloc (in /usr/lib/x86_64-linux-gnu/valgrind/vgpreload_memcheck-amd64-linux.so)
+==404650==    by 0x406E86: ft_calloc (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x40287A: expand_inside (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x402B78: expand_var (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x4019FE: process_command (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401870: ms_prompt (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650==    by 0x401831: main (in /nfs/homes/vgomes-p/42/42.zip projects/MINISHELL/main/project/minishell)
+==404650== 
+==404650== LEAK SUMMARY:
+==404650==    definitely lost: 16 bytes in 1 blocks
+==404650==    indirectly lost: 6 bytes in 1 blocks
+==404650==      possibly lost: 0 bytes in 0 blocks
+==404650==    still reachable: 1,147 bytes in 9 blocks
+==404650==         suppressed: 204,767 bytes in 216 blocks
+==404650== 
+==404650== For lists of detected and suppressed errors, rerun with: -s
+==404650== ERROR SUMMARY: 18 errors from 11 contexts (suppressed: 0 from 0)
