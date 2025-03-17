@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/16 15:53:43 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/16 20:37:28 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,7 +38,8 @@ TOKEN_PARSE_DIR		=	codes/token_and_parse/
 BUILDIN_SRCS		=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
 BUILDIN_DIR			=	codes/buildins/
 
-REDIR_SRCS			=	heredoc.c redirect.c
+REDIR_SRCS			=	redirect.c \
+						heredoc.c heredoc_utils.c
 REDIR_DIR			=	codes/redir/
 
 EXEC_SRCS			=	cmd_path.c  exec_family.c exec_buildins.c exec_externs.c \

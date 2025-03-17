@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 18:51:13 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 20:36:50 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,10 @@ void		ms_prompt(t_minishell *shell);
 int			ms_redirs(t_minishell *shell, t_token *tokens, int **fd, int pos);
 //heredoc
 int			process_heredoc(t_minishell *shell, t_token *token);
+//heredoc_utils
+char		*unquote_delimiter(char *delimiter, int *quoted);
+int			open_heredoc_file(t_minishell *shell, int mode);
+int			validate_heredoc_delimiter(t_minishell *shell, t_token *token);
 
 /* TOKEN_AND_PARSE DIR */
 //token
@@ -216,6 +220,7 @@ int			parser(t_token **head, char *str);
 //syntax
 bool		valid_syntax(t_token *tokens);
 //expand
+char		*expand_inside(t_minishell *shell, char *str);
 char		*expand_var(t_minishell *shell, char *str);
 
 /* UTILS DIR */

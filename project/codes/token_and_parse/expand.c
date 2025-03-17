@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/19 15:59:12 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/12 17:46:30 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 21:08:06 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	handle_var(t_minishell *shell, char *str, char *result,
 	free(var_value);
 }
 
-static char	*expand_inside(t_minishell *shell, char *str)
+char	*expand_inside(t_minishell *shell, char *str)
 {
 	char	*result;
 	int		index[2];
@@ -87,8 +87,9 @@ static char	*expand_inside(t_minishell *shell, char *str)
 		return (str);
 	while (str[index[0]])
 	{
-		if (str[index[0]] == '$' && str[index[0] + 1]
-			&& str[index[0] + 1] != ' ')
+		if (str[index[0]] == '$' && (str[index[0] + 1] == '?'
+				|| ft_isalpha(str[index[0] + 1])
+				|| str[index[0] + 1] != '_'))
 			handle_var(shell, str, result, index);
 		else
 			result[index[1]++] = str[index[0]++];

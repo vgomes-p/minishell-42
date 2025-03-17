@@ -6,30 +6,36 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 13:17:29 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 19:02:32 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 21:16:05 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	open_heredoc_file(t_minishell *shell, int mode)
+static int	process_heredoc_line(int fd, char *line,
+				t_minishell *shell, int quoted)
 {
-	int	fd;
+	char	*expanded_ln;
 
-	if (mode == 0)
-		fd = open("__heredoc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
-	else
-		fd = open("__heredoc", O_RDONLY);
-	if (fd < 0)
+	if (quoted)
 	{
-		perror(RED "heredoc" RESET);
-		shell->error_code = 1;
-		return (-1);
+		ft_putstr_fd(line, fd);
+		free(line);
 	}
-	return (fd);
+	else
+	{
+		expanded_ln = expand_inside(shell, line);
+		if (!expanded_ln)
+			return (-1);
+		ft_putstr_fd(expanded_ln, fd);
+		free(expanded_ln);
+	}
+	ft_putstr_fd("\n", fd);
+	return (0);
 }
 
-static int	write_heredoc_content(int fd, char *delimiter)
+static int	write_heredoc_content(int fd, char *delimiter,
+				t_minishell *shell, int quoted)
 {
 	char	*line;
 
@@ -43,32 +49,18 @@ static int	write_heredoc_content(int fd, char *delimiter)
 			free(line);
 			break ;
 		}
-		ft_putstr_fd(line, fd);
-		ft_putstr_fd("\n", fd);
-		free(line);
+		if (process_heredoc_line(fd, line, shell, quoted) == -1)
+			return (1);
 	}
 	return (0);
 }
 
-static int	validate_heredoc_delimiter(t_minishell *shell, t_token *token)
+static int	setup_heredoc(t_minishell *shell, char *delimiter, int quoted)
 {
-	if (!token->next || !token->next->value)
-	{
-		ft_putstr_fd(RED "Syntax error: heredoc missing delimiter\n" RESET, 2);
-		shell->error_code = 2;
-		return (0);
-	}
-	return (1);
-}
+	int		fd;
+	int		stts;
+	void	(*old_sigquit)(int);
 
-static int	prepare_heredoc(t_minishell *shell, t_token *token,
-				char *delimiter, void (*old_sigquit)(int))
-{
-	int	fd;
-	int	stts;
-
-	if (!validate_heredoc_delimiter(shell, token))
-		return (1);
 	old_sigquit = signal(SIGQUIT, SIG_IGN);
 	fd = open_heredoc_file(shell, 0);
 	if (fd < 0)
@@ -76,7 +68,7 @@ static int	prepare_heredoc(t_minishell *shell, t_token *token,
 		signal(SIGQUIT, old_sigquit);
 		return (1);
 	}
-	stts = write_heredoc_content(fd, delimiter);
+	stts = write_heredoc_content(fd, delimiter, shell, quoted);
 	close(fd);
 	signal(SIGQUIT, old_sigquit);
 	if (stts == 1)
@@ -91,19 +83,27 @@ static int	prepare_heredoc(t_minishell *shell, t_token *token,
 int	process_heredoc(t_minishell *shell, t_token *token)
 {
 	char	*delimiter;
+	char	*unquoted;
+	int		quoted;
 	int		fd;
-	void	(*old_sigquit)(int);
 
-	old_sigquit = NULL;
-	if (!token->next)
+	if (!validate_heredoc_delimiter(shell, token))
 		return (1);
 	delimiter = token->next->value;
-	if (prepare_heredoc(shell, token, delimiter, old_sigquit) != 0)
+	unquoted = unquote_delimiter(delimiter, &quoted);
+	if (!unquoted)
 		return (1);
+	if (setup_heredoc(shell, unquoted, quoted) != 0)
+	{
+		free(unquoted);
+		return (1);
+	}
+	free(unquoted);
 	fd = open_heredoc_file(shell, 1);
 	if (fd < 0)
 		return (1);
 	dup2(fd, STDIN_FILENO);
 	close(fd);
+	unlink("__heredoc");
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 17:43:02 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/16 20:56:39 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,14 +94,18 @@ static int	pre_process_tks(char *input, t_minishell *shell)
 static void	process_command(char *input, t_minishell *shell)
 {
 	t_token	*current;
+	t_token	*prev;
 
 	if (!pre_process_tks(input, shell))
 		return ;
 	current = shell->tokens;
+	prev = NULL;
 	while (current)
 	{
-		if (current->type == CMD || current->type == ARG)
+		if ((current->type == CMD || current->type == ARG)
+			&& (!prev || prev->type != HEREDOC))
 			current->value = expand_var(shell, current->value);
+		prev = current;
 		current = current->next;
 	}
 	exec_cmd(shell);
