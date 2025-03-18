@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/18 01:12:12 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/18 02:13:56 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,7 @@ BUILDIN_SRCS		=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c u
 BUILDIN_DIR			=	codes/buildins/
 
 REDIR_SRCS			=	redirect.c \
-						heredoc.c heredoc_utils.c
+						heredoc.c heredoc_utils.c heredoc_utils1.c
 REDIR_DIR			=	codes/redir/
 
 EXEC_SRCS			=	cmd_path.c  exec_family.c exec_buildins.c exec_externs.c init_exec.c\

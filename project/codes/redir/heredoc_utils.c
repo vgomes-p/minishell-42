@@ -12,6 +12,13 @@
 
 #include "../../includes/minishell.h"
 
+void	heredoc_sigint_handler(int sig)
+{
+	(void)sig;
+	write(STDOUT_FILENO, "\n", 1);
+	exit(130);
+}
+
 char	*unquote_delimiter(char *delimiter, int *quoted)
 {
 	size_t	len;
@@ -53,4 +60,12 @@ int	validate_heredoc_delimiter(t_minishell *shell, t_token *token)
 		return (0);
 	}
 	return (1);
+}
+
+void	heredoc_warning(char *delimiter)
+{
+	ft_putstr_fd(YELLOW "warning: heredoc delimited by end-of-file (wanted '",
+		2);
+	ft_putstr_fd(delimiter, 2);
+	ft_putstr_fd("')\n" RESET, 2);
 }
