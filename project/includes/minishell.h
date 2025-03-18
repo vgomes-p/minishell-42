@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/18 02:53:34 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:21:54 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ void		free_matrix(char ***matrix);
 //all_free_1
 void		free_env(char **env);
 //utils
+void		cleanup_all(t_minishell *shell);
 char		**dup_env(char **envp, size_t *envsz);
 void		interactive_signal_handler(int sig);
 

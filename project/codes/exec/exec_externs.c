@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/18 01:13:04 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 17:02:26 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	exec_cmd(t_minishell *shell)
 	if (!tokens_copy)
 		return ;
 	exec = init_exec(shell, tokens_copy);
-	if (!exec.fd)
+	if (!exec.fd || !exec.cmd)
 	{
 		free_matrix(&exec.cmd);
 		free_tokens(tokens_copy);

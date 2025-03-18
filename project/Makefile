@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/18 14:06:33 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/18 17:32:08 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -157,8 +157,9 @@ $(LIBMS): $(LIBFT)
 			@make -C $(LIBMS_DIR)
 
 val: $(NAME)
-			valgrind --leak-check=full --show-leak-kinds=all --suppressions=ms.supp --log-file=leakreport.txt ./minishell
-			@echo "\n$(REWHITE)Leak report updated in leakreport.txt!$(RESET)\n"
+			-@rm leakreport.log
+			@echo "\n$(REWHITE) RUN THIS COMMAND: $(RESET)"
+			@echo "$(CYAN)valgrind --leak-check=full --show-leak-kinds=all --suppressions=ms.supp --log-file=leakreport.log ./minishell$(RESET)"
 
 norm:
 			@for file in $(LIBFT_DIR) $(LIBMS_DIR) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) $(HEADER); do \
@@ -168,9 +169,9 @@ norm:
 					echo "$(GREEN)✅ $$file$(RESET)"; \
 				fi; \
 			done
-			-@norminette > norminette.txt 2>&1
+			-@norminette > norminette.log 2>&1
 			@echo "$(CYAN)🆗 Norminette check complete! 🆗$(RESET)"
-			@echo "$(CYAN)Norminette report saved in norminette.txt!$(RESET)"
+			@echo "$(CYAN)Norminette report saved in norminette.log!$(RESET)"
 
 depend:
 			@$(CC) -MM $(FLAGS) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
@@ -188,8 +189,8 @@ fclean: clean
 			@clear
 			@$(RM) $(NAME)
 			@$(RM) dependencies.mk
-			@$(RM) leakreport.txt
-			@$(RM) norminette.txt
+			@$(RM) leakreport.log
+			@$(RM) norminette.log
 			@$(RM) build/
 			@make fclean -C $(LIBFT_DIR)
 			@make fclean -C $(LIBMS_DIR)

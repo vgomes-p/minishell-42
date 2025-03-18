@@ -66,7 +66,12 @@ static void	exec_each_child(t_minishell *shell, t_exec *exec, int pos)
 	cmd_exec.cmd_tokens = cmd_tokens;
 	exec->pid[pos] = fork();
 	if (exec->pid[pos] == 0)
+	{
 		child(shell, &cmd_exec);
+		free_matrix(&exec->cmd);
+		exit(shell->exit_stt);
+	}
+	free_matrix(&exec->cmd);
 }
 
 void	exec_child(t_minishell *shell, t_exec *exec, int pos)

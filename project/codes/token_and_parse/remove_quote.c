@@ -22,7 +22,10 @@ char	*remove_all_quotes(char *str)
 		return (NULL);
 	result = malloc(ft_strlen(str) + 1);
 	if (!result)
+	{
+		free(str);
 		return (NULL);
+	}
 	ind0 = 0;
 	ind1 = 0;
 	while (str[ind0])
