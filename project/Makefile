@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/17 16:19:47 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/18 01:12:12 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ REDIR_SRCS			=	redirect.c \
 						heredoc.c heredoc_utils.c
 REDIR_DIR			=	codes/redir/
 
-EXEC_SRCS			=	cmd_path.c  exec_family.c exec_buildins.c exec_externs.c \
+EXEC_SRCS			=	cmd_path.c  exec_family.c exec_buildins.c exec_externs.c init_exec.c\
 						exec_utils_0.c exec_utils_1.c exec_utils_2.c is_utils.c
 EXEC_DIR			=	codes/exec/
 

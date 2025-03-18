@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:18:44 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 17:50:19 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:13:21 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,5 @@ t_token	*tokening(char *input)
 		sfree(split);
 		return (NULL);
 	}
-	sfree(split);
 	return (head);
 }

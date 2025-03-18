@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 13:45:43 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/09 17:41:00 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 00:17:16 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	sfree(char **split)
 	while (split[pos])
 	{
 		free(split[pos]);
+		split[pos] = NULL;
 		pos++;
 	}
 	free(split);

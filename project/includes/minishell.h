@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/17 16:52:43 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:13:20 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char		*find_exec_path(char *cmd, char **envp);
 int			exec_builtin(t_token *tokens, t_minishell *shell,
 				int **fd, int pos);
 //exec_externs
-t_exec		init_exec(t_minishell *shell, t_token *tokens);
+int			allocate_pipes(t_exec *exec);
 void		cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos);
 void		exec_cmd(t_minishell *shell);
 //exec_family
@@ -171,6 +171,8 @@ void		handle_invalid_file(t_minishell *shell);
 //exec_utils_2
 t_token		*get_next_cmd(t_token **tokens);
 void		file_errmsg(t_minishell *shell, char *cmd);
+//init_exec
+t_exec		init_exec(t_minishell *shell, t_token *tokens);
 //is_utils
 int			is_buildin(char *token);
 int			is_redir(t_token *token);

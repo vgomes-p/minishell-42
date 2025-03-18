@@ -59,10 +59,7 @@ static void	exec_each_child(t_minishell *shell, t_exec *exec, int pos)
 		return ;
 	exec->cmd = prepare_args(cmd_tokens);
 	if (!exec->cmd)
-	{
-		free_tokens(cmd_tokens);
 		return ;
-	}
 	cmd_exec.cmd = exec->cmd;
 	cmd_exec.fd = exec->fd;
 	cmd_exec.pos = pos;
@@ -70,8 +67,6 @@ static void	exec_each_child(t_minishell *shell, t_exec *exec, int pos)
 	exec->pid[pos] = fork();
 	if (exec->pid[pos] == 0)
 		child(shell, &cmd_exec);
-	free_matrix(&exec->cmd);
-	free_tokens(cmd_tokens);
 }
 
 void	exec_child(t_minishell *shell, t_exec *exec, int pos)
@@ -90,9 +85,7 @@ void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 void	child(t_minishell *shell, t_cmd_exec *exec)
 {
 	if (ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos) != 0)
-	{
-		exit(0);
-	}
+		clean_child_res(shell, exec->cmd, exec->fd, 1);
 	if (!exec->cmd || *exec->cmd == NULL)
 	{
 		handle_invalid_file(shell);

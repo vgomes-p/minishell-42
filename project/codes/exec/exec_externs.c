@@ -6,13 +6,13 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 18:49:30 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 01:13:04 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-static int	allocate_pipes(t_exec *exec)
+int	allocate_pipes(t_exec *exec)
 {
 	int	pos;
 
@@ -35,35 +35,6 @@ static int	allocate_pipes(t_exec *exec)
 	while (++pos < exec->nbr_pros - 1)
 		pipe(exec->fd[pos]);
 	return (1);
-}
-
-t_exec	init_exec(t_minishell *shell, t_token *tokens)
-{
-	t_exec	exec;
-
-	(void)shell;
-	exec.tokens_head = tokens;
-	exec.temp = tokens;
-	exec.pid = NULL;
-	exec.stts = 0;
-	exec.nbr_pros = 1;
-	exec.cmd = tokens_matrix(exec.temp);
-	while (exec.temp)
-	{
-		if (exec.temp->type == PIPE)
-			exec.nbr_pros++;
-		exec.temp = exec.temp->next;
-	}
-	if (exec.nbr_pros <= 0)
-	{
-		free_matrix(&exec.cmd);
-		exec.fd = NULL;
-		return (exec);
-	}
-	if (!allocate_pipes(&exec))
-		free_matrix(&exec.cmd);
-	exec.temp = exec.tokens_head;
-	return (exec);
 }
 
 void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
@@ -91,6 +62,18 @@ void	cleanup_processes(t_exec *exec, t_minishell *shell, int cmd_pos)
 	free(exec->pid);
 }
 
+static void	cleanup_execution(t_exec *exec, t_minishell *shell,
+							int cmd_pos, t_token *tokens_copy)
+{
+	if (cmd_pos != 0)
+	{
+		exec_child(shell, exec, cmd_pos);
+		cleanup_processes(exec, shell, cmd_pos);
+	}
+	free_matrix(&exec->cmd);
+	free_tokens(tokens_copy);
+}
+
 void	exec_cmd(t_minishell *shell)
 {
 	int		cmd_pos;
@@ -100,6 +83,8 @@ void	exec_cmd(t_minishell *shell)
 	if (!shell->tokens || !shell->tokens->value || !*shell->tokens->value)
 		return ;
 	tokens_copy = cpy_token_ls(shell->tokens);
+	if (!tokens_copy)
+		return ;
 	exec = init_exec(shell, tokens_copy);
 	if (!exec.fd)
 	{
@@ -108,12 +93,5 @@ void	exec_cmd(t_minishell *shell)
 		return ;
 	}
 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
-	if (cmd_pos == 0)
-		return ;
-	exec_child(shell, &exec, cmd_pos);
-	cleanup_processes(&exec, shell, cmd_pos);
-	free_matrix(&exec.cmd);
-	sfree_int(exec.fd);
-	free(exec.pid);
-	free_tokens(tokens_copy);
+	cleanup_execution(&exec, shell, cmd_pos, tokens_copy);
 }
