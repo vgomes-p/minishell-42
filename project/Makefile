@@ -6,14 +6,13 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/18 02:13:56 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/18 12:08:30 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME				=	minishell
 CC					=	cc
 FLAGS				=	-Wall -Wextra -Werror -I $(H_DIR) -I $(LIBFT_DIR)
-DEBUG_FLAGS			=	-g3 -fsanitize=address
 RM					=	rm -rf
 MAKEFLAGS			=	--silent
 
@@ -143,8 +142,7 @@ $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
 			@sleep 1
 			@echo "$(RECYAN)FYI:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET)"
 			@echo "if you want to see a leak report call $(YELLOW)make val$(RESET) to create $(YELLOW)leakreport.txt$(RESET)"
-			@echo "to check norminette, call $(YELLOW)make norm$(RESET) and see $(YELLOW)norminette.txt$(RESET)"
-			@echo "and to check both, valgrind and norminette, call $(YELLOW)normival$(RESET) and see both files created."
+			@echo "to check norminette, call $(YELLOW)make norm$(RESET) and see the report saved in $(YELLOW)norminette.txt$(RESET)"
 			@echo "You can entry the debug mode by calling $(YELLOW)make debug$(RESET)!\n\n"
 			@sleep 1
 			@echo "$(GREEN)Check github.com/vgomes-p/minishell-42/tree/main/project for a few tests for Minishell$(RESET)\n\n"
@@ -163,14 +161,16 @@ val: $(NAME)
 			@echo "\n$(REWHITE)Leak report updated in leakreport.txt!$(RESET)\n"
 
 norm:
+			@for file in $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) $(HEADER); do \
+				if norminette $$file | grep -q "Error"; then \
+					echo "$(RED)❌ $$file$(RESET)"; \
+				else \
+					echo "$(GREEN)✅ $$file$(RESET)"; \
+				fi; \
+			done
 			-@norminette > norminette.txt 2>&1
-			@echo "$(REWHITE)Norminette report saved in norminette.txt!$(RESET)"
-
-normival: val norm
-
-debug: $(OBJ_M)
-			$(CC) $(FLAGS) $(DEBUG_FLAGS) $(OBJ_M) $(LIBFT) $(LIBMS) $(LFLAGS) $(TERMCAP) -o $(NAME)
-			@echo "\n$(REPINK)Execution completed: $(NAME) created in debug mode!$(RESET)\n"
+			@echo "$(CYAN)🆗 Norminette check complete! 🆗$(RESET)"
+			@echo "$(CYAN)Norminette report saved in norminette.txt!$(RESET)"
 
 depend:
 			@$(CC) -MM $(FLAGS) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
@@ -204,4 +204,4 @@ fclean: clean
 re:			fclean all
 
 
-.PHONY:		all clean fclean re depend val norm normival
+.PHONY:		all clean fclean re depend val norm
