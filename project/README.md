@@ -1,5 +1,5 @@
 # 🐚🧪 Minishell Test Suite 🧪🐚
-### This file contains a test suite with 92 execution commands to evaluate the behavior of the Minishell. The tests are designed to cover all the requirements defined by the project's guidelines, ensuring compliance with the expected specifications.
+### This file contains a test suite with 95 execution commands to evaluate the behavior of the Minishell. The tests are designed to cover all the requirements defined by the project's guidelines, ensuring compliance with the expected specifications.
 ### Run the tests and check if your Minishell is working correctly in all expected scenarios! 🚀
 
 ## <<< TEST SUITE 01 || Compile >>>
