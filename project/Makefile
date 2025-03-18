@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/18 12:08:30 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/18 14:06:33 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -161,7 +161,7 @@ val: $(NAME)
 			@echo "\n$(REWHITE)Leak report updated in leakreport.txt!$(RESET)\n"
 
 norm:
-			@for file in $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) $(HEADER); do \
+			@for file in $(LIBFT_DIR) $(LIBMS_DIR) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) $(HEADER); do \
 				if norminette $$file | grep -q "Error"; then \
 					echo "$(RED)❌ $$file$(RESET)"; \
 				else \

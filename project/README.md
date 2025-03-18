@@ -352,7 +352,7 @@ pwd
 #### 18: Execute redirections
 ``18.1``
 ```bash
-echo "teste" > testing.txt
+echo "test" > testing.txt
 ```
 ``18.2``
 ```bash
