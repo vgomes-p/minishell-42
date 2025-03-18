@@ -89,7 +89,7 @@ void	child(t_minishell *shell, t_cmd_exec *exec)
 	if (!exec->cmd || *exec->cmd == NULL)
 	{
 		handle_invalid_file(shell);
-		clean_child_res(shell, NULL, exec->fd, shell->error_code);
+		clean_child_res(shell, exec->cmd, exec->fd, shell->error_code);
 	}
 	if (is_buildin(exec->cmd[0]))
 		exec_builtin_in_child(shell, exec);

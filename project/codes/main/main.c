@@ -6,13 +6,21 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:37 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 18:45:40 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:47:40 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
 t_minishell	*g_shell = NULL;
+
+static void	cleanup_all(t_minishell *shell)
+{
+	free_env(shell->env);
+	free(shell->prompt);
+	free_tokens(shell->tokens);
+	rl_clear_history();
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -32,6 +40,6 @@ int	main(int argc, char **argv, char **envp)
 	{
 		ms_prompt(&shell);
 	}
-	free_env(shell.env);
+	cleanup_all(&shell);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bi_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:57:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/14 16:07:37 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/18 15:55:57 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static int	copy_existing_env(char **nwenv, char **envp, int envsz)
 static int	add_new_envar(const char *var, char ***envp, int envsz)
 {
 	char	**nwenv;
-	int		index1;
 
 	nwenv = ft_calloc(envsz + 2, sizeof(char *));
 	if (!nwenv)
@@ -72,12 +71,6 @@ static int	add_new_envar(const char *var, char ***envp, int envsz)
 		free(nwenv);
 		return (0);
 	}
-	index1 = 0;
-	while (index1 > envsz)
-	{
-		free((*envp)[index1]);
-		index1++;
-	}
 	free(*envp);
 	*envp = nwenv;
 	return (1);
@@ -86,8 +79,6 @@ static int	add_new_envar(const char *var, char ***envp, int envsz)
 void	update_envar(const char *var, int index0, char ***envp)
 {
 	int		envsz;
-	int		index1;
-	char	**old_env;
 
 	envsz = 0;
 	while (*envp && (*envp)[envsz])
@@ -98,13 +89,11 @@ void	update_envar(const char *var, int index0, char ***envp)
 		(*envp)[index0] = ft_strdup(var);
 		return ;
 	}
-	old_env = *envp;
-	if (!add_new_envar(var, envp, envsz))
-		return ;
-	index1 = -1;
-	while (++index1 < envsz)
-		free(old_env[index1]);
-	free(old_env);
+	else
+	{
+		if (!add_new_envar(var, envp, envsz))
+			return ;
+	}
 }
 
 int	valid_name(const char *var)
