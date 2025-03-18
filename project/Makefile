@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/18 17:32:08 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/18 17:44:04 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -141,8 +141,8 @@ $(NAME): $(OBJ_M) $(LIBFT) $(LIBMS)
 			@echo "$(CYAN)🎉 Minishell created 🎉\n"
 			@sleep 1
 			@echo "$(RECYAN)FYI:$(RESET) You can create a dependencies by calling $(YELLOW)make depend$(RESET)"
-			@echo "if you want to see a leak report call $(YELLOW)make val$(RESET) to create $(YELLOW)leakreport.txt$(RESET)"
-			@echo "to check norminette, call $(YELLOW)make norm$(RESET) and see the report saved in $(YELLOW)norminette.txt$(RESET)"
+			@echo "if you want to see a leak report call $(YELLOW)make val$(RESET) to create $(YELLOW)leakreport.log$(RESET)"
+			@echo "to check norminette, call $(YELLOW)make norm$(RESET) and see the report saved in $(YELLOW)norminette.log$(RESET)"
 			@echo "You can entry the debug mode by calling $(YELLOW)make debug$(RESET)!\n\n"
 			@sleep 1
 			@echo "$(GREEN)Check github.com/vgomes-p/minishell-42/tree/main/project for a few tests for Minishell$(RESET)\n\n"
