@@ -19,23 +19,12 @@ norminette .
 make
 ```
 
-<!-- norminette .
-make
-./minishell
-./minishell
-CTRL+D
-CTRL+D
-make debug (se suportado)
-make depend
-cat dependencies.mk
-make clean
-make fclean
-make -->
-
 ## <<< TEST SUITE 02 || Signal >>>
 #### 4
 > Ctrl+C
+
 > Ctrl+\
+
 > Ctrl+D
 
 ## <<< TEST SUITE 03 || Simple Command & Global variables >>>
@@ -385,6 +374,36 @@ cat < Makefile > out.txt
 ``18.6``
 ```bash
 cat << EOF
+```
+
+``18.7``
+```bash
+cat << 'EOF'
+```
+> input a $VAR, it must not expand
+
+``18.8``
+```bash
+cat << "EOF"
+```
+> input a $VAR, it must not expand
+
+``18.9``
+```bash
+cat << EOF > testing.txt
+```
+> input things, including a $VAR then check the file `testing.txt`
+```bash
+cat testing.txt
+```
+
+``18.10``
+```bash
+cat << EOF >> testing.txt
+```
+> input things, including a $VAR then check the file `testing.txt`
+```bash
+cat testing.txt
 ```
 
 ## <<< TEST SUITE 14 || Pipes >>>
