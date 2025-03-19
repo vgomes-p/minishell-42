@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:39:11 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/19 16:17:48 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:57:28 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,6 @@ void	exec_cmd(t_minishell *shell)
 		return ;
 	}
 	cmd_pos = exec_parent(shell, exec.nbr_pros, exec.cmd, exec.fd);
+	free_matrix(&exec.cmd);
 	cleanup_execution(&exec, shell, cmd_pos, tokens_copy);
 }
