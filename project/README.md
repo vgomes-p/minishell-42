@@ -64,7 +64,7 @@ sleep 2
 ```
 > Tabs
 ```bash
-
+				
 ```
 
 ## <<< TEST SUITE 04 || Arguments >>>
@@ -249,7 +249,15 @@ ls '-la
 ```bash
 'clear
 ```
-``12.5 [must display $USER]``
+``12.5 [must display user value]``
+```bash
+echo $USER
+```
+``12.6 [must display user value]``
+```bash
+echo "$USER"
+```
+``12.7 [must display $USER]``
 ```bash
 echo '$USER'
 ```
@@ -330,16 +338,9 @@ cd ..
 ```bash
 cd "this dir do not exit"
 ```
-``16.4 [must work]``
+``16.4 - check if OLDPWD and PWD are different``
 ```bash
-cd
-```
-``16.5 - check if OLDPWD and PWD are different``
-```bash
-echo $OLDPWD
-```
-```bash
-pwd
+env
 ```
 
 ## <<< TEST SUITE 12 || pwd >>>
