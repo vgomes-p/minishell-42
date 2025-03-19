@@ -6,7 +6,7 @@
 #    By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/13 16:31:58 by vgomes-p          #+#    #+#              #
-#    Updated: 2025/03/18 17:44:04 by vgomes-p         ###   ########.fr        #
+#    Updated: 2025/03/18 22:22:49 by vgomes-p         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,24 +35,24 @@ TOKEN_PARSE_SRCS	=	token.c \
 						syntax.c
 TOKEN_PARSE_DIR		=	codes/token_and_parse/
 
-BUILDIN_SRCS		=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
-BUILDIN_DIR			=	codes/buildins/
+BUILTIN_SRCS		=	bi_utils.c bi_utils1.c cd.c echo.c env.c exit.c pwd.c export.c unset.c
+BUILTIN_DIR			=	codes/builtins/
 
 REDIR_SRCS			=	redirect.c \
 						heredoc.c heredoc_utils.c heredoc_utils1.c
 REDIR_DIR			=	codes/redir/
 
-EXEC_SRCS			=	cmd_path.c  exec_family.c exec_buildins.c exec_externs.c init_exec.c\
+EXEC_SRCS			=	cmd_path.c  exec_family.c exec_builtins.c exec_externs.c init_exec.c\
 						exec_utils_0.c exec_utils_1.c exec_utils_2.c is_utils.c
 EXEC_DIR			=	codes/exec/
 
 OBJ_DIR				=	build/
-OBJ_M				=	$(addprefix $(OBJ_DIR), $(GENERAL_SRCS:.c=.o) $(MAIN_SRCS:.c=.o) $(TOKEN_PARSE_SRCS:.c=.o) $(BUILDIN_SRCS:.c=.o) $(REDIR_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
+OBJ_M				=	$(addprefix $(OBJ_DIR), $(GENERAL_SRCS:.c=.o) $(MAIN_SRCS:.c=.o) $(TOKEN_PARSE_SRCS:.c=.o) $(BUILTIN_SRCS:.c=.o) $(REDIR_SRCS:.c=.o) $(EXEC_SRCS:.c=.o))
 
 GENERAL				=	$(addprefix $(GENERAL_DIR), $(GENERAL_SRCS))
 MAIN				=	$(addprefix $(MAIN_DIR), $(MAIN_SRCS))
 TOKEN_PARSE			=	$(addprefix $(TOKEN_PARSE_DIR), $(TOKEN_PARSE_SRCS))
-BUILDIN				=	$(addprefix $(BUILDIN_DIR), $(BUILDIN_SRCS))
+BUILTIN				=	$(addprefix $(BUILTIN_DIR), $(BUILTIN_SRCS))
 REDIR				=	$(addprefix $(REDIR_DIR), $(REDIR_SRCS))
 EXEC				=	$(addprefix $(EXEC_DIR), $(EXEC_SRCS))
 
@@ -119,7 +119,7 @@ $(OBJ_DIR)%.o: $(TOKEN_PARSE_DIR)%.c $(HEADER)
 			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
 
-$(OBJ_DIR)%.o: $(BUILDIN_DIR)%.c $(HEADER)
+$(OBJ_DIR)%.o: $(BUILTIN_DIR)%.c $(HEADER)
 			@mkdir -p $(OBJ_DIR)
 			$(CC) $(FLAGS) -c $< -o $@
 			@$(call update_progress)
@@ -162,7 +162,7 @@ val: $(NAME)
 			@echo "$(CYAN)valgrind --leak-check=full --show-leak-kinds=all --suppressions=ms.supp --log-file=leakreport.log ./minishell$(RESET)"
 
 norm:
-			@for file in $(LIBFT_DIR) $(LIBMS_DIR) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) $(HEADER); do \
+			@for file in $(LIBFT_DIR) $(LIBMS_DIR) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILTIN) $(REDIR) $(EXEC) $(HEADER); do \
 				if norminette $$file | grep -q "Error"; then \
 					echo "$(RED)❌ $$file$(RESET)"; \
 				else \
@@ -174,7 +174,7 @@ norm:
 			@echo "$(CYAN)Norminette report saved in norminette.log!$(RESET)"
 
 depend:
-			@$(CC) -MM $(FLAGS) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILDIN) $(REDIR) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
+			@$(CC) -MM $(FLAGS) $(GENERAL) $(MAIN) $(TOKEN_PARSE) $(BUILTIN) $(REDIR) $(EXEC) | sed 's|^\(.*\)\.o:|$(OBJ_DIR)\1.o:|' > dependencies.mk
 			@echo "\n$(REWHITE)Dependencies updated in dependencies.mk!$(RESET)\n"
 
 all:		$(NAME)
