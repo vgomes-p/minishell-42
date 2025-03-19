@@ -12,29 +12,6 @@
 
 #include "../../includes/minishell.h"
 
-void	exec_builtin_in_child(t_minishell *shell, t_cmd_exec *exec)
-{
-	ms_redirs(shell, exec->cmd_tokens, exec->fd, exec->pos);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	cls_fd(exec->fd);
-	if (lms_strcmp(exec->cmd[0], "cd") == 0)
-		ms_cd(exec->cmd, shell);
-	else if (lms_strcmp(exec->cmd[0], "echo") == 0)
-		ms_echo(exec->cmd);
-	else if (lms_strcmp(exec->cmd[0], "env") == 0)
-		ms_env(shell);
-	else if (lms_strcmp(exec->cmd[0], "exit") == 0)
-		ms_exit(exec->cmd, shell);
-	else if (lms_strcmp(exec->cmd[0], "pwd") == 0)
-		ms_pwd(shell);
-	else if (lms_strcmp(exec->cmd[0], "export") == 0)
-		ms_export(shell, exec->cmd, &shell->env);
-	else if (lms_strcmp(exec->cmd[0], "unset") == 0)
-		ms_unset(shell, exec->cmd, &shell->env);
-	exit(shell->exit_stt);
-}
-
 int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 {
 	if (!ft_strncmp(cmd[0], "./", 2) && is_dir(shell, cmd[0]) == 1)
@@ -49,23 +26,31 @@ int	exec_parent(t_minishell *shell, int nb_pros, char **cmd, int **fd)
 	return (-1);
 }
 
-static void	exec_each_child(t_minishell *shell, t_exec *exec, int pos)
+static void	prepare_cmd_tokens(t_exec *exec)
 {
-	t_token		*cmd_tokens;
+	int	ind;
+
+	ind = 0;
+	while (ind < exec->nbr_pros)
+	{
+		exec->cmd_tokens[ind] = get_next_cmd(&exec->tokens_head);
+		if (!exec->cmd_tokens[ind])
+			break ;
+		ind++;
+	}
+	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
+}
+
+static void	util_exec_child(t_minishell *shell, t_exec *exec, int ind)
+{
 	t_cmd_exec	cmd_exec;
 
-	cmd_tokens = get_next_cmd(&exec->tokens_head);
-	if (!cmd_tokens)
-		return ;
-	exec->cmd = prepare_args(cmd_tokens);
+	exec->cmd = prepare_args(exec->cmd_tokens[ind]);
 	if (!exec->cmd)
 		return ;
-	cmd_exec.cmd = exec->cmd;
-	cmd_exec.fd = exec->fd;
-	cmd_exec.pos = pos;
-	cmd_exec.cmd_tokens = cmd_tokens;
-	exec->pid[pos] = fork();
-	if (exec->pid[pos] == 0)
+	cmd_exec = (t_cmd_exec){exec->cmd, exec->fd, ind, exec->cmd_tokens[ind]};
+	exec->pid[ind] = fork();
+	if (exec->pid[ind] == 0)
 	{
 		child(shell, &cmd_exec);
 		free_matrix(&exec->cmd);
@@ -76,13 +61,22 @@ static void	exec_each_child(t_minishell *shell, t_exec *exec, int pos)
 
 void	exec_child(t_minishell *shell, t_exec *exec, int pos)
 {
-	exec->pid = ft_calloc(exec->nbr_pros, sizeof(pid_t));
+	int	ind;
+
+	(void)pos;
+	prepare_cmd_tokens(exec);
 	if (!exec->pid)
 		return ;
-	pos = -1;
-	while (++pos < exec->nbr_pros)
+	ind = 0;
+	while (ind < exec->nbr_pros)
 	{
-		exec_each_child(shell, exec, pos);
+		if (!exec->cmd_tokens[ind])
+		{
+			ind++;
+			continue ;
+		}
+		util_exec_child(shell, exec, ind);
+		ind++;
 	}
 	cls_fd(exec->fd);
 }

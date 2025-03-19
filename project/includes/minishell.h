@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/19 03:39:32 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/19 16:11:15 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ typedef struct s_exec
 	pid_t	*pid;
 	int		nbr_pros;
 	t_token	*tokens_head;
+	t_token	**cmd_tokens;
 }	t_exec;
 
 typedef struct s_expand
@@ -173,6 +174,8 @@ void		handle_invalid_file(t_minishell *shell);
 //exec_utils_2
 t_token		*get_next_cmd(t_token **tokens);
 void		file_errmsg(t_minishell *shell, char *cmd);
+//family_utils
+void		exec_builtin_in_child(t_minishell *shell, t_cmd_exec *exec);
 //init_exec
 t_exec		init_exec(t_minishell *shell, t_token *tokens);
 //is_utils

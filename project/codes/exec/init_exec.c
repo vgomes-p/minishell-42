@@ -37,7 +37,7 @@ static t_exec	init_exec_data(t_minishell *shell, t_token *tokens)
 	return (exec);
 }
 
-t_exec	init_exec(t_minishell *shell, t_token *tokens)
+static t_exec	init_exec_struct(t_minishell *shell, t_token *tokens)
 {
 	t_exec	exec;
 
@@ -53,6 +53,34 @@ t_exec	init_exec(t_minishell *shell, t_token *tokens)
 	if (!allocate_pipes(&exec))
 	{
 		free_matrix(&exec.cmd);
+		exec.fd = NULL;
+		return (exec);
+	}
+	return (exec);
+}
+
+t_exec	init_exec(t_minishell *shell, t_token *tokens)
+{
+	t_exec	exec;
+	int		ind;
+
+	exec = init_exec_struct(shell, tokens);
+	if (!exec.cmd || exec.nbr_pros <= 0 || !exec.fd)
+		return (exec);
+	exec.cmd_tokens = ft_calloc(exec.nbr_pros, sizeof(t_token *));
+	if (!exec.cmd_tokens)
+	{
+		free_matrix(&exec.cmd);
+		if (exec.fd)
+		{
+			ind = 0;
+			while (ind < exec.nbr_pros - 1)
+			{
+				free(exec.fd[ind]);
+				ind++;
+			}
+			free(exec.fd);
+		}
 		exec.fd = NULL;
 		return (exec);
 	}
