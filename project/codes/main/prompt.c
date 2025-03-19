@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/22 16:23:34 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/16 20:56:39 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/19 03:51:51 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ static void	process_command(char *input, t_minishell *shell)
 {
 	t_token	*current;
 	t_token	*prev;
+	char	*nw_value;
 
 	if (!pre_process_tks(input, shell))
 		return ;
@@ -104,7 +105,10 @@ static void	process_command(char *input, t_minishell *shell)
 	{
 		if ((current->type == CMD || current->type == ARG)
 			&& (!prev || prev->type != HEREDOC))
-			current->value = expand_var(shell, current->value);
+		{
+			nw_value = expand_var(shell, current->value);
+			current->value = nw_value;
+		}
 		prev = current;
 		current = current->next;
 	}
@@ -114,11 +118,14 @@ static void	process_command(char *input, t_minishell *shell)
 	free(input);
 }
 
-void	ms_prompt(t_minishell *shell)
+int	ms_prompt(t_minishell *shell)
 {
 	char	*input;
 
 	handle_input(shell, &input);
 	if (input)
 		process_command(input, shell);
+	if (shell->should_exit)
+		return (1);
+	return (0);
 }

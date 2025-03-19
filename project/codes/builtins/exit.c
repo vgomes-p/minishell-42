@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgomes-p <vgomes-p@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:14:24 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/02/21 11:56:40 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/19 03:38:16 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,6 @@ void	ms_exit(char **args, t_minishell *shell)
 	if (args[1])
 		stat = ft_atoi(args[1]);
 	shell->exit_stt = stat;
+	shell->should_exit = 1;
 	ft_putstr_fd(RECYAN "\n\n\nSee you soon, goodbye!\n\n\n" RESET, 1);
-	free(shell->prompt);
-	free_env(shell->env);
-	rl_clear_history();
-	exit(stat);
 }

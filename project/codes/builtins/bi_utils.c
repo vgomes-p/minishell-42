@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:57:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/18 15:55:57 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/19 03:21:52 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,9 @@ static int	copy_existing_env(char **nwenv, char **envp, int envsz)
 static int	add_new_envar(const char *var, char ***envp, int envsz)
 {
 	char	**nwenv;
+	int		ind;
 
+	ind = 0;
 	nwenv = ft_calloc(envsz + 2, sizeof(char *));
 	if (!nwenv)
 		return (0);
@@ -70,6 +72,11 @@ static int	add_new_envar(const char *var, char ***envp, int envsz)
 			free(nwenv[envsz]);
 		free(nwenv);
 		return (0);
+	}
+	while (ind < envsz)
+	{
+		free((*envp)[ind]);
+		ind++;
 	}
 	free(*envp);
 	*envp = nwenv;

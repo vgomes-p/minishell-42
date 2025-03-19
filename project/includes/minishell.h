@@ -6,7 +6,7 @@
 /*   By: vgomes-p <vgomes-p@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/13 15:00:13 by vgomes-p          #+#    #+#             */
-/*   Updated: 2025/03/18 17:21:54 by vgomes-p         ###   ########.fr       */
+/*   Updated: 2025/03/19 03:39:32 by vgomes-p         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ typedef struct s_minishell
 	int		term_height;
 	char	*error_message;
 	int		cancelled_cmd;
+	int		should_exit;
 	t_token	*tokens;
 }	t_minishell;
 
@@ -183,7 +184,7 @@ int			is_dir(t_minishell *shell, char *cmd);
 //prompt_utils.c
 void		welcome(void);
 //prompt.c
-void		ms_prompt(t_minishell *shell);
+int			ms_prompt(t_minishell *shell);
 
 /* REDIR DIR */
 //heredoc_utils
