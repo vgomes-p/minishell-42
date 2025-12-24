@@ -1,21 +1,20 @@
 ![cover](images/cover-minishell.png)
+Minishell-42 is a minimalist Unix-style shell implemented in C, created to mimic basic behaviors of shells such as bash. It was developed as part of the 42 curriculum and focuses on understanding core system programming concepts like process control, file descriptors, built-ins, redirections, pipes, environment variables, and signal handling.
 
-> Para esse projeto eu criei uma biblioteca socorro (https://github.com/vgomes-p/libms-42)
-
-
-# RUNNING MINISHELL
 ![print_minishell](images/minishell_print.png)
-## Requirements
-#### - Linux, macOS or Windows with WSL installed
-#### - cc or another compatible compiler
-#### - 'make' installed
-#### - 'readline' installed (see the end of readme)
-### 1 - Clone this repository
+# 📥 Requirements
+Before building and running the project:
+- A Unix-like system (Linux, macOS, or Windows with WSL)
+- A C compiler (`cc`, `gcc`, or similar)
+- `make` installed
+- GNU Readline library for command line input handling (see the end of readme)
+
+### 1 - Cloning the Repository
 ```bash
 git clone git@github.com:vgomes-p/minishell-42.git
 ```
 
-### 2 - Get into the project dir
+### 2 - Navigate into the project directory
 ```bash
 cd minishell-42/project
 ```
@@ -24,19 +23,23 @@ cd minishell-42/project
 ```bash
 make
 ```
+This will generate the `minishell` executable.
 
-### 4 - Now call the program
+### 4 - Running the Shell
 ```bash
 ./minishell
 ```
 
-# OTHER FUNCTIONS MINISHELL
-### 1 - Debug mode
-> To get into the debug mode, run:
+# Makefile Shortcuts
+### Rebuild in debug mode
 ```bash
 make debug
 ```
-### 2 - Dependencies
+### Recreate the binary
+```bash
+make re
+```
+### Create dependencies read file
 > To see the program dependencies, run:
 ```bash
 make depend
@@ -46,19 +49,7 @@ make depend
 cat dependencies.mk
 ```
 > or open the <dependencies.mk> on your favorite file reader.
-
-### 3 - Recreate
-> To recreate minishell, run:
-```bash
-make re
-```
-
-# CLEANING MINISHELL
-### 1 - Go to the main dir
-```bash
-cd minishell-42/project
-```
-### 2 - Run the command clean or full clean
+### Clean build artifacts
 ```bash
 make clean
 ```
@@ -67,21 +58,17 @@ or
 make fclean
 ```
 
-### 3 - Close the terminal
-```bash
-exit
-```
-# INSTALLING READLINE
+# Installing Readline (If Needed)
 ### 1 - Run the following commands
-### Linux and Windows with WSL installed
+### On Linux / WSL
 ```bash
 sudo apt-get update
 ```
 ```bash
 sudo apt install libreadline-dev
 ```
-### macOS
+### On macOS
 ```bash
 brew install readline
-
 ```
+> Machine may require linking include and lib paths depending on your environment.
